@@ -1,6 +1,6 @@
 ﻿namespace Data.Enums;
 
-public enum BedSheets
+public enum ShortTripAvailability
 {
     Available,
     Unavailable,

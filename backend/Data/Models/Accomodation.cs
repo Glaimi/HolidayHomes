@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Data.Enums;
 
 namespace Data.Models;
 
@@ -9,7 +10,6 @@ public class Accomodation
     public string? Hints { get; set; }
 
     public int SquareMeter { get; set; }
-    public int NumberOfSanitaryFacilities { get; set; }
     public int NumberOfBedrooms { get; set; }
     public int NumberOfBeds { get; set; }
     public int NumberOfMixedRooms { get; set; }
@@ -27,5 +27,8 @@ public class Accomodation
     public Address Address { get; set; }
     public List<SeasonPricing> SeasonPricings { get; set; } = new List<SeasonPricing>();
 
+    public BedSheetsAvailability BedSheetsAvailability { get; set; }
+    public ShortTripAvailability ShortTripAvailability { get; set; }
+    public TowelsAvailability TowelsAvailability { get; set; }
 
 }

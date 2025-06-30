@@ -1,7 +1,8 @@
 ﻿namespace Data.Enums;
 
-public enum ShortTrip
+public enum TowelsAvailability
 {
+
     Available,
     Unavailable,
     ExtraCharge

@@ -1,8 +1,7 @@
 ﻿namespace Data.Enums;
 
-public enum Towels
+public enum BedSheetsAvailability
 {
-
     Available,
     Unavailable,
     ExtraCharge
