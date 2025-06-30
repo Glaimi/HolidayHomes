@@ -9,5 +9,7 @@ public class Season
     public DateOnly StartsAt { get; set; }
     public DateOnly EndsAt { get; set; }
 
+    //      1 : n
+    // Season : SeasonPricing
     public List<SeasonPricing> SeasonPricings { get; set; } = new List<SeasonPricing>();
 }

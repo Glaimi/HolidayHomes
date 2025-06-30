@@ -3,7 +3,7 @@ using Data.Enums;
 
 namespace Data.Models;
 
-public class Accomodation
+public class Accommodation
 {
     public int Id { get; set; }
     [MaxLength(255)] public string? Name { get; set; }
@@ -23,12 +23,34 @@ public class Accomodation
     public bool IsParkingAvailable { get; set; }
     public bool IsSaunaAvailable { get; set; }
 
-    public List<LandLord> LandLords { get; set; } = new List<LandLord>();
-    public Address Address { get; set; }
-    public List<SeasonPricing> SeasonPricings { get; set; } = new List<SeasonPricing>();
-
     public BedSheetsAvailability BedSheetsAvailability { get; set; }
     public ShortTripAvailability ShortTripAvailability { get; set; }
     public TowelsAvailability TowelsAvailability { get; set; }
 
+    //             n : 1
+    // Accommodation : AccommodationType
+    public int AccommodationTypeId { get; set; }
+    public AccommodationType AccommodationType { get; set; }
+
+    //             n : 1
+    // Accommodation : KitchenType
+    public int KitchenTypeId { get; set; }
+    public KitchenType KitchenType { get; set; }
+
+    //             n : m
+    // Accommodation : LandLord
+    public List<LandLord> LandLords { get; set; } = new List<LandLord>();
+
+    //             1 : n
+    // Accommodation : SeasonPricing
+    public List<SeasonPricing> SeasonPricings { get; set; } = new List<SeasonPricing>();
+
+    //             1 : n
+    // Accommodation : AccommodationSanitaryInfo
+    public List<AccommodationSanitaryInfo> AccommodationSanitaryInfos { get; set; } =
+        new List<AccommodationSanitaryInfo>();
+
+    //             1 : n
+    // Accommodation : Image
+    public List<Image> Images { get; set; } = new List<Image>();
 }

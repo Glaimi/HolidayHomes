@@ -8,6 +8,7 @@ public class LandLord
     [MaxLength(255)] public string? FirstName { get; set; }
     [MaxLength(255)] public string? LastName { get; set; }
 
-    public List<Accomodation> Accomodations { get; set; }= new List<Accomodation>();
-
+    //        n : m
+    // LandLord : Accommodation
+    public List<Accommodation> Accommodations { get; set; }= new List<Accommodation>();
 }
