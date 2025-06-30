@@ -23,9 +23,9 @@ public class Accommodation
     public bool IsParkingAvailable { get; set; }
     public bool IsSaunaAvailable { get; set; }
 
-    public BedSheetsAvailability BedSheetsAvailability { get; set; }
-    public ShortTripAvailability ShortTripAvailability { get; set; }
-    public TowelsAvailability TowelsAvailability { get; set; }
+    public Availability BedSheetsAvailability { get; set; }
+    public Availability ShortTripAvailability { get; set; }
+    public Availability TowelsAvailability { get; set; }
 
     //             n : 1
     // Accommodation : AccommodationType
