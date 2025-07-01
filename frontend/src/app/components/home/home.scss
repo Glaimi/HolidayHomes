@@ -1,41 +1,39 @@
+
+
 .container-home {
   min-height: calc(100vh - 140px);
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin: 0;
+  margin-top: 4rem;
   padding: 0;
 }
 
-/*
 .hero-image {
   position: relative;
   width: 100%;
   height: 70vh;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-*/
-.hero-image{
-  background: url(assets/background-1.jpg);
-
 }
 
 .hero-title {
   color: white;
-  font-size: 2rem;
-  align-items: center;
-  /*background-color: rgba(0, 0, 0, 0.6);*/
+  font-size: 3rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  /*background: url("/assets/background-1.jpg");/
+  /*background-color: rgba(234, 233, 233, 0.4);*/
+  backdrop-filter: blur(3px);
   padding: 1rem 2rem;
   border-radius: 0.5rem;
-  margin-bottom: 25rem;
-  max-width: 90%;
+  margin-bottom: 29rem;
+  margin-left: 1.6rem;
+  max-width: 45%;
 }
-
 
 .content-text {
   display: flex;
@@ -57,10 +55,28 @@
 }
 
 /* Response */
+@media (max-width: 1600px) {
+  .hero-title {
+    font-size: 2.8rem;
+    margin-bottom: 27rem;
+    max-width: 47%;
+  }
+
+}
+@media (max-width: 932px) {
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 24rem;
+    max-width: 55%;
+  }
+
+}
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     padding: 0.8rem;
+    margin-bottom: 25rem;
+    max-width: 60%;
   }
 
   .content-text {
@@ -68,8 +84,14 @@
     align-items: center;
   }
 }
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 1rem;
+    margin-bottom: 20rem;
+  }
 
-/* پەڕەی تەواو */
+}
+
 body, html {
   margin: 0;
   padding: 0;
@@ -77,42 +99,122 @@ body, html {
 }
 
 /*
-
-.landing {
-  height: 100vh;
+.container-home {
+  min-height: calc(100vh - 140px);
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 4rem;
+  padding: 0;
 }
 
-
-.landing-image {
-  height: 50vh;
-  background-image: url('/assets/OIP.webp');
+.hero-image {
+  position: relative;
+  width: 100%;
+  height: 70vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
-
-.landing-title {
+.hero-title {
   color: white;
-  font-size: 2rem;
+  font-size: 3rem;
+  text-align: left;
+  direction: ltr;
   background-color: rgba(0, 0, 0, 0.4);
-  padding: 1rem 2rem;
+  backdrop-filter: blur(3px);
+  padding: 1.5rem 3rem;
   border-radius: 0.5rem;
-  text-align: center;
-  z-index: 1;
+  margin-left: 5%;
+  margin-right: auto;
+  margin-bottom: 29rem;
+  max-width: 45%;
+  box-sizing: border-box;
 }
 
+.content-text {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  text-align: center;
+}
 
-.landing-text {
-  height: 50vh;
-  padding: 2rem;
-  background-color: #f5f5f5;
+.content-text div {
+  flex: 1 1 250px;
+  max-width: 300px;
+}
+
+.content-text p {
+  font-size: 1rem;
   color: #333;
-  font-size: 1.1rem;
-  overflow-y: auto;
-} */
+}
+*/
+/* Response */
+/*
+@media (max-width: 1600px) {
+  .hero-title {
+    font-size: 2.8rem;
+    margin-bottom: 27rem;
+    max-width: 47%;
+    text-align: left;
+    direction: ltr;
+    margin-left: 5%;
+    margin-right: auto;
+  }
+
+}
+@media (max-width: 932px) {
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 24rem;
+    max-width: 55%;
+    text-align: left;
+    direction: ltr;
+    margin-left: 5%;
+    margin-right: auto;
+  }
+
+}
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 1.5rem;
+    padding: 1rem;
+    margin-bottom: 25rem;
+    max-width: 60%;
+    text-align: left;
+    direction: ltr;
+    margin-left: 5%;
+    margin-right: auto;
+  }
+
+  .content-text {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 1.2rem;
+    margin-bottom: 20rem;
+    text-align: left;
+    direction: ltr;
+    margin-left: 5%;
+    margin-right: auto;
+    padding: 0.8rem;
+  }
+
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+*/
