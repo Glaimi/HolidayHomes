@@ -13,6 +13,7 @@
   font-size: 1rem;
   color: #216AF2;
   font-weight: 600;
+
 }
 .header-top .container{
   display: flex;
@@ -23,6 +24,7 @@
 .header-main{
   background: #216AF2;
   transition: transform 0.3s ease, opacity 0.3s ease;
+
 }
 .header-main .container{
   display: flex;
@@ -30,8 +32,22 @@
   align-items: center;
 }
 .container{
-
   left: 0;
+  font-size: 1.2rem;
+}
+.content-left, .content-middle, .content-right{
+  display: flex;
+  gap: .5rem;
+  cursor: pointer;
+}
+.content-middle, a{
+  text-decoration: none;
+  color: #216AF2;
+}
+
+.content-left i, .content-middle i, .content-right i{
+  color: #F5932F;
+  padding-top: .2rem;
 }
 .header-brand{
   display: flex;

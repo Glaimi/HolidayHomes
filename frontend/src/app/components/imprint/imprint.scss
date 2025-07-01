@@ -1,3 +1,31 @@
 section{
   min-height: calc(100vh - 140px);
+  margin: 12rem 15rem 5rem 15rem;
+  font-size: 1.5rem;
+}
+h2{
+  padding: 2rem 4rem;
+  font-family: "Courgette", cursive;
+}
+
+.contact{
+  font-size: 1.2rem;
+}
+.contact a{
+  color: #216AF2;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.title {
+  font-size: 2rem;
+  color: #216AF2;
+}
+.email ,a{
+  color: #216AF2;
+  padding-bottom: 2rem;
+}
+
+.bank{
+  color: #216AF2;
 }
