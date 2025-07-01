@@ -7,15 +7,18 @@ import {AccomodationList} from './components/accomodation-list/accomodation-list
 export const routes: Routes = [
   {
     path: '',
-    component: Home
+    component: Home,
+    title: 'Home Page'
   },
   {
     path: 'imprint',
-    component: Imprint
+    component: Imprint,
+    title: 'imprint'
   },
   {
     path: 'accomodation-list',
-    component: AccomodationList
+    component: AccomodationList,
+    title: 'accomodation-list'
   },
   {
     path: '**', redirectTo: '',
