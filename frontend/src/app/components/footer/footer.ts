@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -8,5 +9,13 @@ import { Component } from '@angular/core';
   styleUrl: './footer.scss'
 })
 export class Footer {
+
+  constructor(private router: Router) {}
+
+  goToImprint(event: Event){
+    event.preventDefault();
+    this.router.navigate(['/imprint']);
+  }
+
 
 }

@@ -2,6 +2,9 @@
   <div class="header-top">
     <div class="container">
       <div class="content-left">
+        <span class="email">Tel: 0421 123 456 789</span>
+      </div>
+      <div class="content-middle">
         <span class="email">info&#64;HolidayHome.de</span>
       </div>
       <div class="content-right">
@@ -12,8 +15,13 @@
   <div class="header-main">
     <div class="container">
       <div class="header-brand">
-        <img src="/Logos/HolidayHomeLogo_Wellen.png" alt="">
+        <img (click)="goBack()" src="/Logos/HolidayHomeLogo-Wellen-1.png" alt="Holiday Home Logo" class="logo">
       </div>
+      <nav class="header-nav">
+        <button (click)="goToAccomodation()" class="nav-button">
+          Liste der Ferienwohnungen
+        </button>
+      </nav>
     </div>
   </div>
 </header>
