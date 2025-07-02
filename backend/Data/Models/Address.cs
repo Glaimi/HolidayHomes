@@ -10,6 +10,5 @@ public class Address
 
     //       1 : 1
     // Address : Accommodation
-    public int AccomodationId { get; set; }
-    public Accommodation Accommodation { get; set; }
+    public Accommodation? Accommodation { get; set; }
 }

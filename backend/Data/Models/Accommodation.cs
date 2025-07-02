@@ -28,6 +28,11 @@ public class Accommodation
     public Availability ShortTripAvailability { get; set; }
     public Availability TowelsAvailability { get; set; }
 
+    //             1 : 1
+    // Accommodation : Address
+    public int AddressId { get; set; }
+    public Address Address { get; set; }
+
     //             n : 1
     // Accommodation : AccommodationType
     public int AccommodationTypeId { get; set; }
