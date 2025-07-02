@@ -13,6 +13,7 @@ public class ExcelWorksheetParser
     // Predefined constants using to access the worksheet data.
     private readonly string _worksheetName = "Stammdaten";
     private readonly int _headerHeight = 14;
+    private IXLWorksheet _worksheet;
 
     public ExcelWorksheetParser(AccommodationTypeService accommodationTypeService,
         KitchenTypeService kitchenTypeService)
@@ -21,70 +22,79 @@ public class ExcelWorksheetParser
         _kitchenTypeService = kitchenTypeService;
     }
 
-    public async Task<List<Accommodation>> ToAccommodationsList(IXLWorksheet worksheet)
+    public async Task<List<Accommodation>> ToAccommodationsList(string filePath)
     {
-        // Determine the number of the last row that has data.
-        int lastColumnNumber = worksheet.LastRowUsed()?.RowNumber() ?? _headerHeight + 1;
+        XLWorkbook workbook = new XLWorkbook(filePath);
 
-        // Get the rows after the header that have data.
-        IXLRow[] rows = worksheet.Rows(_headerHeight + 1, lastColumnNumber).ToArray();
-
-        List<Accommodation> accommodations = [];
-
-        for (int i = 0; i < rows.Length; i++)
+        if (workbook.TryGetWorksheet(_worksheetName, out _worksheet))
         {
-            string accommodationTypeValue = GetStringFromCell(rows, i, "A");
-            string kitchenTypeValue = GetStringFromCell(rows, i, "K");
+            // Determine where to start reading.
+            int firstRowNumber = _headerHeight + 1;
 
-            var accommodation = new Accommodation
+            // Determine where to stop reading.
+            int lastRowNumber = _worksheet.LastRowUsed()?.RowNumber() ?? 0;
+
+            List<Accommodation> accommodations = [];
+
+            // Iterate through the rows.
+            for (int rowNumber = firstRowNumber; rowNumber <= lastRowNumber; rowNumber++)
             {
-                Name = GetStringFromCell(rows, i, "V"),
-                Hints = GetStringFromCell(rows, i, "C"),
-                LandLordName = GetStringFromCell(rows, i, "A"),
-                SquareMeter = GetIntFromCell(rows, i, "G"),
-                NumberOfBedrooms = GetIntFromCell(rows, i, "H"),
-                NumberOfBeds = GetIntFromCell(rows, i, "F"),
-                NumberOfMixedRooms = GetIntFromCell(rows, i, "J"),
-                NumberOfLivingRooms = GetIntFromCell(rows, i, "I"),
-                IsDogAllowed = GetBoolFromCell(rows, i, "X"),
-                IsWifiAvailable = GetBoolFromCell(rows, i, "W"),
-                IsNonSmoking = GetBoolFromCell(rows, i, "Y"),
-                IsTelevisionAvailable = GetBoolFromCell(rows, i, "Z"),
-                IsWashingMachineAvailable = GetBoolFromCell(rows, i, "AA"),
-                IsParkingAvailable = GetBoolFromCell(rows, i, "AB"),
-                IsSaunaAvailable = GetBoolFromCell(rows, i, "AC"),
-                BedSheetsAvailability = GetAvailabilityFromCell(rows, i, "T"),
-                ShortTripAvailability = GetAvailabilityFromCell(rows, i, "S"),
-                TowelsAvailability = GetAvailabilityFromCell(rows, i, "U"),
-                AccommodationType = await _accommodationTypeService
-                    .GetAccommodationTypeByTitleOrDefaultAsync(accommodationTypeValue),
-                KitchenType = await _kitchenTypeService.GetKitchenTypeByTitleOrDefaultAsync(kitchenTypeValue)
-            };
+                string accommodationTypeColumnValue = GetStringFromCell(rowNumber, "A");
+                string kitchenTypeColumnValue = GetStringFromCell(rowNumber, "K");
+                string sanitaryTypeColumnValue = GetStringFromCell(rowNumber, "L");
 
-            accommodations.Add(accommodation);
+                Accommodation accommodation = new Accommodation()
+                {
+                    LandLordName = GetStringFromCell(rowNumber, "B"),
+                    NumberOfBeds = GetIntFromCell(rowNumber, "F"),
+                    SquareMeter = GetIntFromCell(rowNumber, "G"),
+                    NumberOfBedrooms = GetIntFromCell(rowNumber, "H"),
+                    NumberOfLivingRooms = GetIntFromCell(rowNumber, "I"),
+                    NumberOfMixedRooms = GetIntFromCell(rowNumber, "J"),
+                    ShortTripAvailability = GetAvailabilityFromCell(rowNumber, "S"),
+                    BedSheetsAvailability = GetAvailabilityFromCell(rowNumber, "T"),
+                    TowelsAvailability = GetAvailabilityFromCell(rowNumber, "U"),
+                    Hints = GetStringFromCell(rowNumber, "V"),
+                    IsWifiAvailable = GetBoolFromCell(rowNumber, "W"),
+                    IsDogAllowed = GetBoolFromCell(rowNumber, "X"),
+                    IsNonSmoking = GetBoolFromCell(rowNumber, "Y"),
+                    IsTelevisionAvailable = GetBoolFromCell(rowNumber, "Z"),
+                    IsWashingMachineAvailable = GetBoolFromCell(rowNumber, "AA"),
+                    IsParkingAvailable = GetBoolFromCell(rowNumber, "AB"),
+                    IsSaunaAvailable = GetBoolFromCell(rowNumber, "AC"),
+                    KitchenType = await _kitchenTypeService.GetKitchenTypeByTitleOrDefaultAsync(kitchenTypeColumnValue),
+                    AccommodationType =
+                        await _accommodationTypeService.GetAccommodationTypeByTitleOrDefaultAsync(
+                            accommodationTypeColumnValue)
+                };
+
+                accommodations.Add(accommodation);
+            }
+
+            return accommodations;
         }
 
-        return accommodations;
+        throw new FileFormatException($"The initial data file doesn't contain the sheet {_worksheetName}!");
     }
 
-    private string GetStringFromCell(IXLRow[] rows, int rowNumber, string columnLetter)
+    private string GetStringFromCell(int rowNumber, string columnLetter)
     {
-        return rows[rowNumber].Cell(columnLetter).Value.ToString();
+        return _worksheet.Row(rowNumber).Cell(columnLetter).Value.ToString();
     }
 
-    private int GetIntFromCell(IXLRow[] rows, int rowNumber, string columnLetter)
+    private int GetIntFromCell(int rowNumber, string columnLetter)
     {
-        if (int.TryParse(GetStringFromCell(rows, rowNumber, columnLetter), out int number))
+        if (int.TryParse(GetStringFromCell(rowNumber, columnLetter), out int number))
         {
             return number;
         }
 
-        throw new FormatException($"Zeile {rowNumber}, Spalte {columnLetter} enthält keine Ganzzahl.");
+        throw new FormatException($"Row {rowNumber}, column {columnLetter} doesn't contain an integer.");
     }
 
-    private decimal GetDecimalFromCell(IXLRow[] rows, int rowNumber, string columnLetter)
+    private decimal GetDecimalFromCell(int rowNumber, string columnLetter)
     {
-        if (decimal.TryParse(GetStringFromCell(rows, rowNumber, columnLetter), out decimal number))
+        if (decimal.TryParse(GetStringFromCell(rowNumber, columnLetter), out decimal number))
         {
             return number;
         }
@@ -92,28 +102,28 @@ public class ExcelWorksheetParser
         throw new FormatException($"Zeile {rowNumber}, Spalte {columnLetter} enthält keine Dezimalzahl.");
     }
 
-    private bool GetBoolFromCell(IXLRow[] rows, int rowNumber, string columnLetter)
+    private bool GetBoolFromCell(int rowNumber, string columnLetter)
     {
-        string value = GetStringFromCell(rows, rowNumber, columnLetter).ToLower();
+        string value = GetStringFromCell(rowNumber, columnLetter).ToLower();
 
         return value switch
         {
             "ja" => true,
             "nein" or "" => false,
-            _ => throw new FormatException($"Zeile {rowNumber}, Spalte {columnLetter} enthält ungültige Daten.")
+            _ => throw new FormatException($"Row {rowNumber}, column {columnLetter} contains invalid data.")
         };
     }
 
-    private Availability GetAvailabilityFromCell(IXLRow[] rows, int rowNumber, string columnLetter)
+    private Availability GetAvailabilityFromCell(int rowNumber, string columnLetter)
     {
-        string value = GetStringFromCell(rows, rowNumber, columnLetter).ToLower();
+        string value = GetStringFromCell(rowNumber, columnLetter).ToLower();
 
         return value switch
         {
             "ja" or "vorhanden" => Availability.Available,
             "nicht vorhanden" or "" => Availability.Unavailable,
             "gegen aufpreis" => Availability.ExtraCharge,
-            _ => throw new FormatException($"Zeile {rowNumber}, Spalte {columnLetter} enthält ungültige Daten.")
+            _ => throw new FormatException($"Row {rowNumber}, column {columnLetter} contains invalid data.")
         };
     }
 }

@@ -54,7 +54,7 @@ using (var scope = app.Services.CreateScope())
     string fullPath = Path.GetFullPath(relativePath);
     DataInitializerService dataInitializerService = scope.ServiceProvider.GetRequiredService<DataInitializerService>();
 
-    await dataInitializerService.Initialize(fullPath);
+    await dataInitializerService.InitializeAsync(fullPath);
 }
 
 // Configure the HTTP request pipeline.

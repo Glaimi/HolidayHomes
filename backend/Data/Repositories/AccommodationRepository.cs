@@ -22,4 +22,8 @@ public class AccommodationRepository
         //return null;
     }
 
+    public async Task SaveAccommodationAsync(Accommodation accommodation)
+    {
+        throw new NotImplementedException();
+    }
 }
