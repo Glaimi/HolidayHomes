@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import {NgStyle} from '@angular/common';
 
 @Component({
@@ -11,5 +12,8 @@ import {NgStyle} from '@angular/common';
   styleUrl: './home.scss'
 })
 export class Home {
+
+
+
 
 }
