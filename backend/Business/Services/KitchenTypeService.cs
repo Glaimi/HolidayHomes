@@ -12,8 +12,10 @@ public class KitchenTypeService
         _kitchenTypeRepository = kitchenTypeRepository;
     }
 
-    public async Task<KitchenType?> GetKitchenTypeByTitleAsync(string title)
+    public async Task<KitchenType> GetKitchenTypeByTitleOrDefaultAsync(string title)
     {
-        return await _kitchenTypeRepository.GetKitchenTypeByTitleAsync(title);
+        KitchenType? kitchenType =  await _kitchenTypeRepository.GetKitchenTypeByTitleAsync(title);
+
+        return kitchenType ?? new KitchenType { Id = 0, Title = title };
     }
 }

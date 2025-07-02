@@ -1,5 +1,6 @@
 using Business.Mappers;
 using Business.Services;
+using Business.Tools;
 using Data.Contexts;
 using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -38,9 +39,23 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<AccommodationService>();
 builder.Services.AddScoped<AccommodationRepository>();
 builder.Services.AddScoped<AccommodationMapper>();
-
+builder.Services.AddScoped<AccommodationTypeRepository>();
+builder.Services.AddScoped<AccommodationTypeService>();
+builder.Services.AddScoped<KitchenTypeRepository>();
+builder.Services.AddScoped<KitchenTypeService>();
+builder.Services.AddTransient<DataInitializerService>();
+builder.Services.AddTransient<ExcelWorksheetParser>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    string? relativePath = builder.Configuration.GetValue<string>("InitialDataFilePath", "");
+    string fullPath = Path.GetFullPath(relativePath);
+    DataInitializerService dataInitializerService = scope.ServiceProvider.GetRequiredService<DataInitializerService>();
+
+    await dataInitializerService.Initialize(fullPath);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
