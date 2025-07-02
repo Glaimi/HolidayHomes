@@ -13,6 +13,14 @@ public class KitchenTypeRepository
         _dataContext = dataContext;
     }
 
+    public async Task<KitchenType> SaveKitchenTypeAsync(KitchenType kitchenType)
+    {
+        _dataContext.KitchenTypes.Add(kitchenType);
+        await _dataContext.SaveChangesAsync();
+
+        return kitchenType;
+    }
+
     public async Task<KitchenType?> GetKitchenTypeByTitleAsync(string title)
     {
         return await _dataContext.KitchenTypes.FirstOrDefaultAsync(kt => kt.Title.ToLower().Equals(title.ToLower()));

@@ -13,6 +13,14 @@ public class AccommodationTypeRepository
         _dataContext = dataContext;
     }
 
+    public async Task<AccommodationType> SaveAccommodationTypeAsync(AccommodationType accommodationType)
+    {
+        _dataContext.AccommodationTypes.Add(accommodationType);
+        await _dataContext.SaveChangesAsync();
+
+        return accommodationType;
+    }
+
     public async Task<AccommodationType?> GetAccommodationTypeByTitleAsync(string title)
     {
         return await _dataContext.AccommodationTypes

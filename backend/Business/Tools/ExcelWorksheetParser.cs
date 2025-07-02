@@ -41,11 +41,12 @@ public class ExcelWorksheetParser
             {
                 string accommodationTypeColumnValue = GetStringFromCell(rowNumber, "A");
                 string kitchenTypeColumnValue = GetStringFromCell(rowNumber, "K");
-                string sanitaryTypeColumnValue = GetStringFromCell(rowNumber, "L");
+                // string sanitaryTypeColumnValue = GetStringFromCell(rowNumber, "L");
 
                 Accommodation accommodation = new Accommodation()
                 {
                     LandLordName = GetStringFromCell(rowNumber, "B"),
+                    Name = GetStringFromCell(rowNumber, "C"),
                     NumberOfBeds = GetIntFromCell(rowNumber, "F"),
                     SquareMeter = GetIntFromCell(rowNumber, "G"),
                     NumberOfBedrooms = GetIntFromCell(rowNumber, "H"),
@@ -62,9 +63,9 @@ public class ExcelWorksheetParser
                     IsWashingMachineAvailable = GetBoolFromCell(rowNumber, "AA"),
                     IsParkingAvailable = GetBoolFromCell(rowNumber, "AB"),
                     IsSaunaAvailable = GetBoolFromCell(rowNumber, "AC"),
-                    KitchenType = await _kitchenTypeService.GetKitchenTypeByTitleOrDefaultAsync(kitchenTypeColumnValue),
+                    KitchenType = await _kitchenTypeService.GetKitchenTypeByTitleAsync(kitchenTypeColumnValue),
                     AccommodationType =
-                        await _accommodationTypeService.GetAccommodationTypeByTitleOrDefaultAsync(
+                        await _accommodationTypeService.GetAccommodationTypeByTitleAsync(
                             accommodationTypeColumnValue)
                 };
 
