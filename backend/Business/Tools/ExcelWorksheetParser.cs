@@ -7,6 +7,7 @@ namespace Business.Tools;
 
 public class ExcelWorksheetParser
 {
+    private readonly AddressService _addressService;
     private readonly AccommodationTypeService _accommodationTypeService;
     private readonly KitchenTypeService _kitchenTypeService;
 
@@ -15,9 +16,10 @@ public class ExcelWorksheetParser
     private readonly int _headerHeight = 14;
     private IXLWorksheet _worksheet;
 
-    public ExcelWorksheetParser(AccommodationTypeService accommodationTypeService,
+    public ExcelWorksheetParser(AddressService addressService, AccommodationTypeService accommodationTypeService,
         KitchenTypeService kitchenTypeService)
     {
+        _addressService = addressService;
         _accommodationTypeService = accommodationTypeService;
         _kitchenTypeService = kitchenTypeService;
     }
