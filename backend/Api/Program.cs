@@ -1,4 +1,7 @@
+using Business.Mappers;
+using Business.Services;
 using Data.Contexts;
+using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -31,6 +34,11 @@ builder.Services.AddDbContext<HolidayHomeDbContext>(optionsBuilder =>
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<AccommodationService>();
+builder.Services.AddScoped<AccommodationRepository>();
+builder.Services.AddScoped<AccommodationMapper>();
+
 
 var app = builder.Build();
 

@@ -7,6 +7,7 @@ public class Accommodation
 {
     public int Id { get; set; }
     [MaxLength(255)] public string? Name { get; set; }
+    public string LandLordName { get; set; }
     public string? Hints { get; set; }
 
     public int SquareMeter { get; set; }
@@ -36,10 +37,6 @@ public class Accommodation
     // Accommodation : KitchenType
     public int KitchenTypeId { get; set; }
     public KitchenType KitchenType { get; set; }
-
-    //             n : m
-    // Accommodation : LandLord
-    public List<LandLord> LandLords { get; set; } = new List<LandLord>();
 
     //             1 : n
     // Accommodation : SeasonPricing

@@ -11,7 +11,6 @@ public class HolidayHomeDbContext : DbContext
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Image> Images { get; set; }
     public DbSet<KitchenType> KitchenTypes { get; set; }
-    public DbSet<LandLord> LandLords { get; set; }
     public DbSet<SanitaryType> SanitaryTypes { get; set; }
     public DbSet<Season> Seasons { get; set; }
     public DbSet<SeasonPricing> SeasonPricings { get; set; }
