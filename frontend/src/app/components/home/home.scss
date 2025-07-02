@@ -6,6 +6,7 @@
   width: 100%;
   margin-top: 3rem;
   padding: 0;
+  font-family: "Roboto", sans-serif;
 }
 
 .hero-image {
@@ -21,7 +22,8 @@
 
 .hero-title {
   color: white;
-  font-size: 3rem;
+  font-size: 2.8rem;
+  font-weight: 800;
   background-color: rgba(0, 0, 0, 0.4);
   /*background: url("/assets/background-1.jpg");/
   /*background-color: rgba(234, 233, 233, 0.4);*/
@@ -52,9 +54,17 @@
   color: #333;
 }
 .container{
-  padding: 2rem 2rem;
+  padding: 5rem 15rem;
+  font-size: 1.5rem;
 }
-
+.imprint p{
+  color: #216AF2;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+li{
+  list-style: none;
+}
 
 
 /* Response */
@@ -65,7 +75,9 @@
     margin-bottom: 27rem;
     max-width: 50%;
   }
-
+  .container{
+    padding: 5rem 12rem;
+  }
 }
 /* Laptops and small desktops */
 @media (min-width: 769px) and (max-width: 1200px) {
@@ -73,6 +85,12 @@
     font-size: 2.2rem;
     margin-bottom: 19rem;
     max-width: 55%;
+  }
+  .container{
+    padding: 5rem 8rem;
+  }
+  .imprint, p{
+    font-size: 1.5rem;
   }
 }
 
@@ -83,6 +101,12 @@
     margin-bottom: 18rem;
     max-width: 55%;
   }
+  .container{
+    padding: 4rem 5rem;
+  }
+  .imprint, p{
+    font-size: 1.4rem;
+  }
 }
 
 /* Mobile devices */
@@ -92,6 +116,13 @@
     margin-bottom: 19rem;
     margin-left: 1rem;
     max-width: 70%;
+  }
+  .container{
+    padding: 4rem 2rem;
+  }
+  .imprint, p{
+    font-size: 1rem;
+    font-weight: 300;
   }
 }
 /*

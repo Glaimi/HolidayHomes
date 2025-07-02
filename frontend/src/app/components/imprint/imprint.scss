@@ -1,7 +1,7 @@
 section{
   min-height: calc(100vh - 140px);
   margin: 12rem 15rem 5rem 15rem;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
 }
 h2{
   padding: 2rem 4rem;
@@ -9,7 +9,7 @@ h2{
 }
 
 .contact{
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 }
 .contact a{
   color: #216AF2;
@@ -35,8 +35,8 @@ h2{
 /* Large desktops and wide screens */
 @media (min-width: 1201px) {
   section{
-    margin: 12rem 12rem 5rem 12rem;
-    font-size: 1.2rem;
+    margin: 10rem 12rem 5rem 12rem;
+    font-size: 1.5rem;
   }
   h2{
     padding: 2rem 3rem;
