@@ -12,6 +12,7 @@ public class AccommodationMapper
         {
             Id = entity.Id,
             Name = entity.Name,
+            AddressId = entity.AddressId,
             Hints = entity.Hints,
             LandLordName = entity.LandLordName,
             SquareMeter = entity.SquareMeter,

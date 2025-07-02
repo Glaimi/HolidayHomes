@@ -100,12 +100,12 @@ namespace Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Accommodations");
+                    b.ToTable("Accommodations", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.AccommodationSanitaryInfo", b =>
                 {
-                    b.Property<int>("AccomodationId")
+                    b.Property<int>("AccommodationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SanitaryTypeId")
@@ -117,13 +117,13 @@ namespace Data.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("AccomodationId", "SanitaryTypeId");
+                    b.HasKey("AccommodationId", "SanitaryTypeId");
 
                     b.HasIndex("AccommodationId");
 
                     b.HasIndex("SanitaryTypeId");
 
-                    b.ToTable("AccommodationSanitaryInfos");
+                    b.ToTable("AccommodationSanitaryInfos", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.AccommodationType", b =>
@@ -141,7 +141,7 @@ namespace Data.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("AccommodationTypes");
+                    b.ToTable("AccommodationTypes", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.Address", b =>
@@ -163,7 +163,7 @@ namespace Data.Migrations
                     b.HasIndex("Street", "City")
                         .IsUnique();
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.Image", b =>
@@ -190,7 +190,7 @@ namespace Data.Migrations
                     b.HasIndex("FilePath")
                         .IsUnique();
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.KitchenType", b =>
@@ -208,7 +208,7 @@ namespace Data.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("KitchenTypes");
+                    b.ToTable("KitchenTypes", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.SanitaryType", b =>
@@ -226,7 +226,7 @@ namespace Data.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("SanitaryTypes");
+                    b.ToTable("SanitaryTypes", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.Season", b =>
@@ -247,12 +247,12 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Seasons");
+                    b.ToTable("Seasons", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.SeasonPricing", b =>
                 {
-                    b.Property<int>("AccomodationId")
+                    b.Property<int>("AccommodationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SeasonId")
@@ -267,13 +267,13 @@ namespace Data.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("REAL");
 
-                    b.HasKey("AccomodationId", "SeasonId");
+                    b.HasKey("AccommodationId", "SeasonId");
 
                     b.HasIndex("AccommodationId");
 
                     b.HasIndex("SeasonId");
 
-                    b.ToTable("SeasonPricings");
+                    b.ToTable("SeasonPricings", (string)null);
                 });
 
             modelBuilder.Entity("Data.Models.Accommodation", b =>

@@ -35,8 +35,8 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddScoped<AccommodationService>();
-builder.Services.AddScoped<AccommodationRepository>();
+builder.Services.AddScoped<IAccommodationService, AccommodationService>();
+builder.Services.AddScoped<IAccommodationRepository, AccommodationMockRepository>();
 builder.Services.AddScoped<AccommodationMapper>();
 
 

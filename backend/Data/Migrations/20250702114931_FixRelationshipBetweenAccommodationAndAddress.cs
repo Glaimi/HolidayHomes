@@ -23,7 +23,7 @@ namespace Data.Migrations
                 table: "Addresses");
 
             migrationBuilder.DropColumn(
-                name: "AccomodationId",
+                name: "AccommodationId",
                 table: "Addresses");
 
             migrationBuilder.AddColumn<int>(
@@ -71,7 +71,7 @@ namespace Data.Migrations
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
-                name: "AccomodationId",
+                name: "AccommodationId",
                 table: "Addresses",
                 type: "INTEGER",
                 nullable: false,

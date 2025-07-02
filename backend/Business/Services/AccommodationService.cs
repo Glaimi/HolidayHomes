@@ -4,12 +4,12 @@ using Data.Repositories;
 
 namespace Business.Services;
 
-public class AccommodationService
+public class AccommodationService : IAccommodationService
 {
-    private AccommodationRepository _accommodationRepository;
-    private AccommodationMapper _accommodationMapper;
+    private readonly IAccommodationRepository _accommodationRepository;
+    private readonly AccommodationMapper _accommodationMapper;
 
-    public AccommodationService(AccommodationRepository accommodationRepository, AccommodationMapper accommodationMapper)
+    public AccommodationService(IAccommodationRepository accommodationRepository, AccommodationMapper accommodationMapper)
     {
         _accommodationRepository = accommodationRepository;
         _accommodationMapper = accommodationMapper;
@@ -18,6 +18,8 @@ public class AccommodationService
     public async Task<List<AccommodationDto>> GetAllAccommodations()
     {
         var accommodations = await _accommodationRepository.GetAllAccommodations();
-        return accommodations.Select(a => _accommodationMapper.MapEntityToDto(a)).ToList();
+        return accommodations
+            .Select(a => _accommodationMapper.MapEntityToDto(a))
+            .ToList();
     }
 }

@@ -2,24 +2,27 @@
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Data.Repositories;
 
-public class AccommodationRepository
+public class AccommodationRepository : IAccommodationRepository
 {
-    private HolidayHomeDbContext _dataContext;
+    private readonly HolidayHomeDbContext _dataContext;
 
     public AccommodationRepository(HolidayHomeDbContext dataContext)
     {
         _dataContext = dataContext;
     }
 
-    public async Task<List<Accommodation>> GetAllAccommodations()
+
+
+    public async Task<IEnumerable<Accommodation>> GetAllAccommodations()
     {
-        List<Accommodation> allAccommodations =
-            // await _dataContext.Accommodations.Include(a => a.NumberOfMixedRooms).ToListAsync();
-            await _dataContext.Accommodations.ToListAsync();
-        return allAccommodations;
-        //return null;
+        return await _dataContext.Accommodations
+            .AsNoTracking()
+            .ToListAsync();
+
     }
+
 
 }

@@ -7,7 +7,7 @@ public class Accommodation
 {
     public int Id { get; set; }
     [MaxLength(255)] public string? Name { get; set; }
-    public string LandLordName { get; set; }
+    public string? LandLordName { get; set; }
     public string? Hints { get; set; }
 
     public int SquareMeter { get; set; }
@@ -31,17 +31,17 @@ public class Accommodation
     //             1 : 1
     // Accommodation : Address
     public int AddressId { get; set; }
-    public Address Address { get; set; }
+    public Address? Address { get; set; }
 
     //             n : 1
     // Accommodation : AccommodationType
     public int AccommodationTypeId { get; set; }
-    public AccommodationType AccommodationType { get; set; }
+    public AccommodationType? AccommodationType { get; set; }
 
     //             n : 1
     // Accommodation : KitchenType
     public int KitchenTypeId { get; set; }
-    public KitchenType KitchenType { get; set; }
+    public KitchenType? KitchenType { get; set; }
 
     //             1 : n
     // Accommodation : SeasonPricing

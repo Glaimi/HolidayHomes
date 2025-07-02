@@ -15,12 +15,17 @@ public class HolidayHomeDbContext : DbContext
     public DbSet<Season> Seasons { get; set; }
     public DbSet<SeasonPricing> SeasonPricings { get; set; }
 
-    public HolidayHomeDbContext(DbContextOptions<HolidayHomeDbContext> options): base(options) {}
+    public HolidayHomeDbContext(DbContextOptions<HolidayHomeDbContext> options) : base(options) { }
+
+    public HolidayHomeDbContext()
+    {
+        throw new NotImplementedException();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<AccommodationSanitaryInfo>().HasKey(asi => new { asi.AccomodationId, asi.SanitaryTypeId });
+        modelBuilder.Entity<AccommodationSanitaryInfo>().HasKey(asi => new { AccomodationId = asi.AccommodationId, asi.SanitaryTypeId });
         modelBuilder.Entity<SeasonPricing>().HasKey(sp => new { sp.AccomodationId, sp.SeasonId });
         modelBuilder.Entity<Accommodation>().HasIndex(a => new { a.Name }).IsUnique();
         modelBuilder.Entity<AccommodationType>().HasIndex(at => new { at.Title }).IsUnique();
