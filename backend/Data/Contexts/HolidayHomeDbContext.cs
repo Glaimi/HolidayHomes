@@ -17,11 +17,7 @@ public class HolidayHomeDbContext : DbContext
 
     public HolidayHomeDbContext(DbContextOptions<HolidayHomeDbContext> options) : base(options) { }
 
-    public HolidayHomeDbContext()
-    {
-        throw new NotImplementedException();
-    }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // base.OnModelCreating(modelBuilder);

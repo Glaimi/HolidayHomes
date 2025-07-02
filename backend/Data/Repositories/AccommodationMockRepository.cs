@@ -2,10 +2,18 @@
 
 namespace Data.Repositories;
 
+
+/// <summary>
+/// A mock implementation of the <see cref="IAccommodationRepository"/> interface.
+/// Used for testing purposes without accessing a real database.
+/// </summary>
 public class AccommodationMockRepository : IAccommodationRepository
 {
     private readonly List<Accommodation> _mockAccommodations;
 
+    /// <summary>
+    /// Initializes the repository with a predefined list of mock accommodations.
+    /// </summary>
     public AccommodationMockRepository()
     {
         _mockAccommodations = new List<Accommodation>
@@ -58,6 +66,12 @@ public class AccommodationMockRepository : IAccommodationRepository
         };
     }
 
+    /// <summary>
+    /// Retrieves all predefined mock accommodations.
+    /// </summary>
+    /// <returns>
+    /// A task containing an enumerable collection of <see cref="Accommodation"/> objects.
+    /// </returns>
     public async Task<IEnumerable<Accommodation>> GetAllAccommodations()
     {
         return await Task.FromResult(_mockAccommodations.AsEnumerable());

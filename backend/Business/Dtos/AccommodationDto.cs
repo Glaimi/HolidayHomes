@@ -2,6 +2,10 @@
 
 namespace Business.Dtos;
 
+/// <summary>
+/// Represents a data transfer object (DTO) for accommodation entities.
+/// Used to expose only the necessary fields via the API.
+/// </summary>
 public class AccommodationDto
 {
     public int Id { get; set; }
