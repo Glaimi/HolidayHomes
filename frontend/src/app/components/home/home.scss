@@ -1,12 +1,10 @@
-
-
 .container-home {
   min-height: calc(130vh - 140px);
   display: block;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 4rem;
+  margin-top: 3rem;
   padding: 0;
 }
 
@@ -53,13 +51,18 @@
   font-size: 1rem;
   color: #333;
 }
+.container{
+  padding: 2rem 2rem;
+}
+
+
 
 /* Response */
 /* Large desktops and wide screens */
 @media (min-width: 1201px) {
   .hero-title {
     font-size: 2.6rem;
-    margin-bottom: 20rem;
+    margin-bottom: 27rem;
     max-width: 50%;
   }
 
