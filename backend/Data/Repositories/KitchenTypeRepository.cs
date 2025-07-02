@@ -1,0 +1,20 @@
+﻿using Data.Contexts;
+using Data.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Data.Repositories;
+
+public class KitchenTypeRepository
+{
+    private HolidayHomeDbContext _dataContext;
+
+    public KitchenTypeRepository(HolidayHomeDbContext dataContext)
+    {
+        _dataContext = dataContext;
+    }
+
+    public async Task<KitchenType?> GetKitchenTypeByTitleAsync(string title)
+    {
+        return await _dataContext.KitchenTypes.FirstOrDefaultAsync(kt => kt.Title.ToLower().Equals(title.ToLower()));
+    }
+}
