@@ -22,8 +22,11 @@ public class AccommodationRepository
         //return null;
     }
 
-    public async Task SaveAccommodationAsync(Accommodation accommodation)
+    public async Task<Accommodation> SaveAccommodationAsync(Accommodation accommodation)
     {
-        throw new NotImplementedException();
+        _dataContext.Accommodations.Add(accommodation);
+        await _dataContext.SaveChangesAsync();
+
+        return accommodation;
     }
 }
