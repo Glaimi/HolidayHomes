@@ -8,10 +8,6 @@ public class AccommodationRepository : IAccommodationRepository
 {
     private HolidayHomeDbContext _dataContext;
 
-    //    /// <summary>
-    //    /// Initializes a new instance of the <see cref="AccommodationRepository"/> class.
-    //    /// </summary>
-    //    /// <param name="dataContext">Injected database context used for data access.</param>
     public AccommodationRepository(HolidayHomeDbContext dataContext)
     {
         _dataContext = dataContext;
@@ -23,21 +19,6 @@ public class AccommodationRepository : IAccommodationRepository
         await _dataContext.SaveChangesAsync();
 
         return accommodation;
-    }
-
-    /// <summary>
-    /// Retrieves all accommodation entities from the database.
-    /// </summary>
-    /// <returns>
-    /// A task that represents the asynchronous operation.
-    /// The task result contains a list of <see cref="Accommodation"/> entities.
-    /// </returns>
-    public async Task<IEnumerable<Accommodation>> GetAllAccommodations()
-    {
-        return await _dataContext.Accommodations
-            .AsNoTracking()
-            .ToListAsync();
-
     }
 
     public async Task<IEnumerable<Accommodation>> GetAllAccommodationsAsync()
