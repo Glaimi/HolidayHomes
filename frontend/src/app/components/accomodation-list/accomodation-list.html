@@ -1,23 +1,11 @@
-<main>
-<!--  <div class="listings-grid">-->
-<!--    &lt;!&ndash; Card 1 &ndash;&gt;-->
-<!--    <div class="listing-card">-->
-<!--      <h3>Ferienwohnung am Kurpark</h3>-->
-<!--      <p class="location">Kurparkstraße 12, 34576 Bad Arolsen</p>-->
-<!--      <img src="https://media.architecturaldigest.com/photos/5b10174775a4f940de3da9e3/master/pass/DF-10511.jpg"-->
-<!--           alt="Ferienwohnung">-->
-<!--      <div class="details">-->
-<!--        <span>Anzahl der Betten: 3</span>-->
-<!--        <span>85 m²</span>-->
-<!--      </div>-->
-<!--      <p class="price">ab 120€ pro Nacht</p>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Card 2 &ndash;&gt;-->
-<!--    <div class="listing-card">-->
-<!--      <h3>Landhaus am See</h3>-->
-<!--      <p class="location">Seestr. 45, 34576 Bad Arolsen</p>-->
-<!--      <img src="https://s.wsj.net/public/resources/images/B3-DG518_never0_HD_20190225171347.jpg" alt="Landhaus">-->
+<div class="accomodation-list-container">
+  <div class="accomodation-grid">
+    <app-accomodation
+      *ngFor="let accomodation of accomodations"
+      [accomodation]="accomodation">
+    </app-accomodation>
+  </div>
+</div>
 <!--      <div class="details">-->
 <!--        <span>Anzahl der Betten: 2</span>-->
 <!--        <span>120 m²</span>-->
@@ -46,5 +34,4 @@
       <p>Keine Unterkünfte gefunden.</p>
     }
   </section>
-</main>
 
