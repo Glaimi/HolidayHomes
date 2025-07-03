@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Data.Models;
-using Microsoft.AspNetCore.Hosting;
-
+﻿using Data.Models;
 using Data.Repositories;
+
 namespace Business.Services
 {
     /// Service for image import and management.

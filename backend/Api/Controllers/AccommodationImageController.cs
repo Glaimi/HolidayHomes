@@ -17,10 +17,10 @@ namespace Api.Controllers
     public class AccommodationImageController : ControllerBase
     {
         private readonly ImageService _imageService;
-        private readonly AccommodationService _accommodationService;
+        private readonly IAccommodationService _accommodationService;
         private readonly IWebHostEnvironment _env;
 
-        public AccommodationImageController(ImageService imageService, AccommodationService accommodationService, IWebHostEnvironment env)
+        public AccommodationImageController(ImageService imageService, IAccommodationService accommodationService, IWebHostEnvironment env)
         {
             _imageService = imageService;
             _accommodationService = accommodationService;
