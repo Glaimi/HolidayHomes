@@ -48,6 +48,15 @@ builder.Services.AddScoped<AddressService>();
 builder.Services.AddTransient<DataInitializerService>();
 builder.Services.AddTransient<ExcelWorksheetParser>();
 
+// Configure CORS to allow connections from localhost.
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(optionsBuilder =>
+    {
+        optionsBuilder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
+    });
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -67,9 +76,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
+app.UseCors();
 app.MapControllers();
-
 app.Run();
