@@ -25,6 +25,6 @@ public class Image
     /// </summary>
     //     n : 1
     // Image : Accommodation
-    public int AccommodationId { get; set; }
+    public int? AccommodationId { get; set; }
     public Accommodation Accommodation { get; set; }
 }

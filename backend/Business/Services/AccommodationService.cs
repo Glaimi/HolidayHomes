@@ -39,4 +39,14 @@ public class AccommodationService : IAccommodationService
             .Select(a => _accommodationMapper.MapEntityToDto(a))
             .ToList();
     }
+
+    /// <summary>
+    /// Gets the name of an accommodation by its ID.
+    /// </summary>
+    public async Task<string?> GetAccommodationNameByIdAsync(int accommodationId)
+    {
+        var accommodations = await _accommodationRepository.GetAllAccommodationsAsync();
+        var accommodation = accommodations.FirstOrDefault(a => a.Id == accommodationId);
+        return accommodation?.Name;
+    }
 }
