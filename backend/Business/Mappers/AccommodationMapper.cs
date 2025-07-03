@@ -3,8 +3,17 @@ using Data.Models;
 
 namespace Business.Mappers;
 
+/// <summary>
+/// Responsible for mapping Accommodation entities to DTOs.
+/// This helps decouple the domain model from the API layer.
+/// </summary>
 public class AccommodationMapper
 {
+    /// <summary>
+    /// Maps an Accommodation entity to an AccommodationDto.
+    /// </summary>
+    /// <param name="entity">The Accommodation entity to be mapped.</param>
+    /// <returns>The corresponding AccommodationDto.</returns>
 
     public AccommodationDto MapEntityToDto(Accommodation entity)
     {
@@ -12,6 +21,7 @@ public class AccommodationMapper
         {
             Id = entity.Id,
             Name = entity.Name,
+            AddressId = entity.AddressId,
             Hints = entity.Hints,
             LandLordName = entity.LandLordName,
             SquareMeter = entity.SquareMeter,
