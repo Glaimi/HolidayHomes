@@ -31,7 +31,7 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<AccommodationDto>>> GetAllAccommodations()
         {
-            var accommodations = await _accommodationService.GetAllAccommodations();
+            var accommodations = await _accommodationService.GetAllAccommodationsAsync();
             return Ok(accommodations);
         }
     }

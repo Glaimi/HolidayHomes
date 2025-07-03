@@ -2,6 +2,7 @@
 using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(HolidayHomeDbContext))]
-    partial class HolidayHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250703073323_ReplaceDateOnlyWithDayAndMonthInSeason")]
+    partial class ReplaceDateOnlyWithDayAndMonthInSeason
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
@@ -25,7 +28,7 @@ namespace Data.Migrations
                     b.Property<int>("AccommodationTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("AddressId")
+                    b.Property<int>("AddressId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BedSheetsAvailability")
@@ -125,12 +128,7 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Abbreviation")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
@@ -140,20 +138,6 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("AccommodationTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Abbreviation = "FH",
-                            Title = "Ferienhaus"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Abbreviation = "FW",
-                            Title = "Ferienwohnung"
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.Address", b =>
@@ -211,12 +195,7 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Abbreviation")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
@@ -226,20 +205,6 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("KitchenTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Abbreviation = "Kü",
-                            Title = "Küche"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Abbreviation = "Kn",
-                            Title = "Kochnische"
-                        });
                 });
 
             modelBuilder.Entity("Data.Models.SanitaryType", b =>
@@ -318,7 +283,9 @@ namespace Data.Migrations
 
                     b.HasOne("Data.Models.Address", "Address")
                         .WithOne("Accommodation")
-                        .HasForeignKey("Data.Models.Accommodation", "AddressId");
+                        .HasForeignKey("Data.Models.Accommodation", "AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Data.Models.KitchenType", "KitchenType")
                         .WithMany()

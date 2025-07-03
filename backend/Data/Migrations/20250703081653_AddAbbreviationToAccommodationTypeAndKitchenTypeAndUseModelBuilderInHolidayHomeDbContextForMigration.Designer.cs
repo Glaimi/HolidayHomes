@@ -2,6 +2,7 @@
 using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(HolidayHomeDbContext))]
-    partial class HolidayHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250703081653_AddAbbreviationToAccommodationTypeAndKitchenTypeAndUseModelBuilderInHolidayHomeDbContextForMigration")]
+    partial class AddAbbreviationToAccommodationTypeAndKitchenTypeAndUseModelBuilderInHolidayHomeDbContextForMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
@@ -25,7 +28,7 @@ namespace Data.Migrations
                     b.Property<int>("AccommodationTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("AddressId")
+                    b.Property<int>("AddressId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BedSheetsAvailability")
@@ -130,7 +133,6 @@ namespace Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
@@ -216,7 +218,6 @@ namespace Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
@@ -318,7 +319,9 @@ namespace Data.Migrations
 
                     b.HasOne("Data.Models.Address", "Address")
                         .WithOne("Accommodation")
-                        .HasForeignKey("Data.Models.Accommodation", "AddressId");
+                        .HasForeignKey("Data.Models.Accommodation", "AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Data.Models.KitchenType", "KitchenType")
                         .WithMany()

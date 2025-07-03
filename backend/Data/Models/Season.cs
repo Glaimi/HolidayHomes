@@ -14,15 +14,27 @@ public class Season
     /// </summary>
     [MaxLength(255)] public string? Title { get; set; }
 
-    /// <summary>
-    /// Start date of the season.
-    /// </summary>
-    public DateOnly StartsAt { get; set; }
 
     /// <summary>
-    /// End date of the season.
+    /// Day of the month when the season starts (1-31).
     /// </summary>
-    public DateOnly EndsAt { get; set; }
+    public int StartDay { get; set; }
+
+    /// <summary>
+    /// Month when the season starts (1 = January, 12 = December).
+    /// </summary>
+    public int StartMonth { get; set; }
+
+    /// <summary>
+    /// Day of the month when the season ends (1-31).
+    /// </summary>
+    public int EndDay { get; set; }
+
+    /// <summary>
+    /// Month when the season ends (1 = January, 12 = December).
+    /// </summary>
+    public int EndMonth { get; set; }
+    
 
     /// <summary>
     /// Navigation property representing the one-to-many relationship

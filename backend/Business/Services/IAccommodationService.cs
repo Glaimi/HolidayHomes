@@ -4,6 +4,6 @@ namespace Business.Services;
 
 public interface IAccommodationService
 {
-    Task<List<AccommodationDto>> GetAllAccommodations();
+    Task<List<AccommodationDto>> GetAllAccommodationsAsync();
 
 }
