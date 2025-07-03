@@ -1,0 +1,36 @@
+.accomodation-list-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+
+  .accomodation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1200px) {
+  .accomodation-list-container .accomodation-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .accomodation-list-container .accomodation-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .accomodation-list-container .accomodation-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+}

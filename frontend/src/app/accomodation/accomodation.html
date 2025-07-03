@@ -1,0 +1,44 @@
+<div class="accommodation-card">
+  <div class="card-image">
+    <div class="card-property">
+
+      <h3 class="property-title">{{accomodation.name}}</h3>
+      <p class="property-address">{{accomodation.street}}, {{accomodation.city}}</p>
+      <!--<img [src]="accomodation.image" [alt]="'Exterior of ' + accomodation.name" class="property-image">-->
+
+      <!--<div class="price-tag">{{accomodation.seasonPricing}}</div>-->
+    </div>
+    <div class="favorite-icon" (click)="toggleFavorite($event)">
+      <fa-icon [icon]="isFavorite ? faSolidHeart : faRegularHeart"></fa-icon>
+    </div>
+  </div>
+
+  <div class="card-content">
+
+    <img [src]="accomodation.image" [alt]="'Exterior of ' + accomodation.name" class="property-image">
+
+    <div class="property-features">
+      <div class="feature">
+        <fa-icon [icon]="faBed"></fa-icon>
+        <span>{{accomodation.numberOfBeds}} Betten</span>
+      </div>
+      <div class="feature">
+        <fa-icon [icon]="faExpand"></fa-icon>
+        <span>{{accomodation.squareMeter}} m²</span>
+      </div>
+
+    </div>
+
+    <div class="property-footer">
+      <div class="property-type">
+        <fa-icon [icon]="faHome"></fa-icon>
+        <span>{{accomodation.type}}</span>
+      </div>
+      <!--<button class="view-details-btn" [routerLink]="['/accommodation', accomodation.id]">
+        Details anzeigen
+      </button>-->
+    </div>
+  </div>
+</div>
+
+
