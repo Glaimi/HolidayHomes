@@ -25,7 +25,7 @@ namespace Data.Migrations
                     b.Property<int>("AccommodationTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("AddressId")
+                    b.Property<int>("AddressId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BedSheetsAvailability")
@@ -130,7 +130,6 @@ namespace Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
@@ -216,7 +215,6 @@ namespace Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
@@ -318,7 +316,9 @@ namespace Data.Migrations
 
                     b.HasOne("Data.Models.Address", "Address")
                         .WithOne("Accommodation")
-                        .HasForeignKey("Data.Models.Accommodation", "AddressId");
+                        .HasForeignKey("Data.Models.Accommodation", "AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Data.Models.KitchenType", "KitchenType")
                         .WithMany()

@@ -1,18 +1,19 @@
 import {SanitaryTypeModel} from './sanitary-type-model';
 import {PicturesModel} from './pictures-model';
 import {SeasonPricingModel} from './season-pricing-model';
+import {AdressModel} from './adress-model';
 
 
 export interface AccomodationModel {
   id: number;
   name: string;
-  image: PicturesModel[];
+  image: string;
   numberOfBeds: number;
   shortTrip: boolean;
   numberOfMixedRooms: number;
   numberOfLivingRooms: number;
   hints: string;
-  towelsAvailability: boolean;
+  towelsAvailable: boolean;
   isWashingMachineAvailable: boolean;
   isTelevisionAvailable: boolean;
   bedSheetsAvailability: boolean;
@@ -24,11 +25,12 @@ export interface AccomodationModel {
   isWifiAvailable: boolean;
   numberOfSanitaryFacilities: number;
   squareMeter: number;
-  sanitaryType: SanitaryTypeModel[];
-  accomodationType: string;
+  sanitaryType: string;
+  type: string;
   landLordName: string;
-  seasonPricing: SeasonPricingModel[];
-  adress: string;
+  seasonPricing: string;
+  street: string;
+  city: string;
   kitchenType: string;
 
 
