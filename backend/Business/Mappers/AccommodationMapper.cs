@@ -20,11 +20,14 @@ public class AccommodationMapper
         return new AccommodationDto
         {
             Id = entity.Id,
+            Type = entity.AccommodationType!.Title,
             Name = entity.Name,
-            AddressId = entity.AddressId,
+            Street = entity.Address!.Street,
+            City = entity.Address!.City,
             Hints = entity.Hints,
             LandLordName = entity.LandLordName,
             SquareMeter = entity.SquareMeter,
+            Kitchen = entity.KitchenType!.Title,
             NumberOfBedrooms = entity.NumberOfBedrooms,
             NumberOfBeds = entity.NumberOfBeds,
             NumberOfMixedRooms = entity.NumberOfMixedRooms,
@@ -39,8 +42,6 @@ public class AccommodationMapper
             BedSheetsAvailability = entity.BedSheetsAvailability,
             ShortTripAvailability = entity.ShortTripAvailability,
             TowelsAvailability = entity.TowelsAvailability,
-            AccommodationTypeId = entity.AccommodationTypeId,
-            KitchenTypeId = entity.KitchenTypeId
         };
     }
 }

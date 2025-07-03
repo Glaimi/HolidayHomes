@@ -11,6 +11,11 @@ public class AccommodationMockRepository : IAccommodationRepository
 {
     private readonly List<Accommodation> _mockAccommodations;
 
+    public async Task<Accommodation> SaveAccommodationAsync(Accommodation accommodation)
+    {
+        return accommodation;
+    }
+
     /// <summary>
     /// Initializes the repository with a predefined list of mock accommodations.
     /// </summary>
@@ -72,8 +77,13 @@ public class AccommodationMockRepository : IAccommodationRepository
     /// <returns>
     /// A task containing an enumerable collection of <see cref="Accommodation"/> objects.
     /// </returns>
-    public async Task<IEnumerable<Accommodation>> GetAllAccommodations()
+    public async Task<IEnumerable<Accommodation>> GetAllAccommodationsAsync()
     {
         return await Task.FromResult(_mockAccommodations.AsEnumerable());
+    }
+
+    public async Task<int> GetAccommodationsCountAsync()
+    {
+        return _mockAccommodations.Count;
     }
 }
