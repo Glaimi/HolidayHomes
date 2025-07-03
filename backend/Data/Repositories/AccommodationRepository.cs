@@ -22,4 +22,11 @@ public class AccommodationRepository
         //return null;
     }
 
+    public async Task<Accommodation> SaveAccommodationAsync(Accommodation accommodation)
+    {
+        _dataContext.Accommodations.Add(accommodation);
+        await _dataContext.SaveChangesAsync();
+
+        return accommodation;
+    }
 }
