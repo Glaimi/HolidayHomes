@@ -8,30 +8,30 @@ import {KitchenTypeModel} from './kitchen-type-model';
 export interface AccomodationModel {
   id: number;
   name: string;
-  picture: PicturesModel[];
+  image: PicturesModel[];
   numberOfBeds: number;
   shortTrip: boolean;
   numberOfMixedRooms: number;
   numberOfLivingRooms: number;
   hints: string;
-  towels: boolean;
-  washingMachine: boolean;
-  television: boolean;
-  bedSheets: boolean;
-  nonSmoking: boolean;
-  sauna: boolean;
-  parking: boolean;
-  dogsAllowed: boolean;
+  towelsAvailability: boolean;
+  isWashingMachineAvailable: boolean;
+  isTelevisionAvailable: boolean;
+  bedSheetsAvailability: boolean;
+  isNonSmoking: boolean;
+  isSaunaAvailable: boolean;
+  isParkingAvailable: boolean;
+  isDogAllowed: boolean;
   numberOfBedrooms: number;
-  wifi: boolean;
+  isWifiAvailable: boolean;
   numberOfSanitaryFacilities: number;
   squareMeter: number;
   sanitaryType: SanitaryTypeModel[];
-  accomodationType: AccomodationModel[];
-  landlord: LandlordModel[];
+  accomodationType: string;
+  landLordName: string;
   seasonPricing: SeasonPricingModel[];
-  adress: AdressModel[];
-  kitchenType: KitchenTypeModel[];
+  adress: string;
+  kitchenType: string;
 
 
 
