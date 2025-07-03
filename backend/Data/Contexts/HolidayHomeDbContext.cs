@@ -22,7 +22,7 @@ public class HolidayHomeDbContext : DbContext
     {
         // base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<AccommodationSanitaryInfo>().HasKey(asi => new { AccomodationId = asi.AccommodationId, asi.SanitaryTypeId });
-        modelBuilder.Entity<SeasonPricing>().HasKey(sp => new { sp.AccomodationId, sp.SeasonId });
+        modelBuilder.Entity<SeasonPricing>().HasKey(sp => new { AccomodationId = sp.AccommodationId, sp.SeasonId });
         modelBuilder.Entity<Accommodation>().HasIndex(a => new { a.Name }).IsUnique();
         modelBuilder.Entity<AccommodationType>().HasIndex(at => new { at.Title }).IsUnique();
         modelBuilder.Entity<Address>().HasIndex(a => new { a.Street, a.City }).IsUnique();

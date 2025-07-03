@@ -33,7 +33,7 @@ public class SeasonPricing
     /// </summary>
     //             n : 1
     // SeasonPricing : Accommodation
-    public int AccomodationId { get; set; }
+    public int AccommodationId { get; set; }
 
     /// <summary>
     /// Navigation property to the related Accommodation entity.
