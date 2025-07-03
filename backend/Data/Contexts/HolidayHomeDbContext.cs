@@ -17,7 +17,7 @@ public class HolidayHomeDbContext : DbContext
 
     public HolidayHomeDbContext(DbContextOptions<HolidayHomeDbContext> options) : base(options) { }
 
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // base.OnModelCreating(modelBuilder);
@@ -29,5 +29,36 @@ public class HolidayHomeDbContext : DbContext
         modelBuilder.Entity<Image>().HasIndex(i => new { i.FilePath }).IsUnique();
         modelBuilder.Entity<KitchenType>().HasIndex(kt => new { kt.Title }).IsUnique();
         modelBuilder.Entity<SanitaryType>().HasIndex(st => new { st.Title }).IsUnique();
+
+        modelBuilder.Entity<AccommodationType>().HasData(
+            new AccommodationType
+            {
+                Id = 1 ,
+                Title = "Ferienhaus",
+                Abbreviation = "FH",
+            },
+
+            new AccommodationType
+            {
+                Id = 2 ,
+                Title = "Ferienwohnung",
+                Abbreviation = "FW",
+            }
+            );
+        modelBuilder.Entity<KitchenType>().HasData(
+            new KitchenType
+            {
+                Id = 1 ,
+                Title = "Küche",
+                Abbreviation = "Kü",
+
+            },
+            new KitchenType
+            {
+                Id = 2 ,
+                Title = "Kochnische",
+                Abbreviation = "Kn",
+            }
+        );
     }
 }

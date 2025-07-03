@@ -15,6 +15,12 @@ public class AccommodationType
     [MaxLength(255)] public string? Title { get; set; }
 
     /// <summary>
+    /// Short abbreviation or code for the accommodation type (e.g., "APT", "HSE").
+    /// Useful for filtering or compact displays in the UI.
+    /// </summary>
+    public string Abbreviation { get; set; }
+
+    /// <summary>
     /// Collection of accommodations associated with this accommodation type (1:n relationship).
     /// </summary>
     public List<Accommodation> Accommodations { get; set; } = new List<Accommodation>();
