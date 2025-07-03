@@ -1,1 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+  margin: 0;
+  padding: 0;
+
+}
+/* Default (Large screens - Desktop) */
+body {
+  font-size: 16px;
+}
+
+/* Large desktops and wide screens */
+@media (min-width: 1200px) {
+  body {
+    font-size: 17px;
+
+  }
+}
+
+/* Laptops and small desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+  body {
+    font-size: 16px;
+
+  }
+}
+
+/* Tablets (iPads, etc.) */
+@media (min-width: 768px) and (max-width: 991px) {
+  body {
+    font-size: 15px;
+
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+
+  }
+}

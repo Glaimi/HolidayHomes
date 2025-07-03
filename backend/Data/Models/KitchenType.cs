@@ -4,10 +4,19 @@ namespace Data.Models;
 
 public class KitchenType
 {
+    /// <summary>
+    /// Unique identifier for the kitchen type.
+    /// </summary>
     public int Id { get; set; }
-    [MaxLength(255)] public string? Title { get; set; }
 
-    //           1 : n
-    // KitchenType : Accommodation
-    public List<AccommodationType> Accommodations { get; set; } = new List<AccommodationType>();
+    /// <summary>
+    /// Short abbreviation or code for the kitchen type (e.g., "KT", "FULL").
+    /// Useful for display in compact UI elements.
+    /// </summary>
+    public string Abbreviation { get; set; }
+
+    /// <summary>
+    /// Title or name of the kitchen type (e.g., Open Kitchen, Closed Kitchen), max length 255 characters.
+    /// </summary>
+    [MaxLength(255)] public string? Title { get; set; }
 }

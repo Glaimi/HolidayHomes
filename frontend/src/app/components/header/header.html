@@ -1,0 +1,37 @@
+<header class="header" [class.isScrolled]="isScrolled">
+  <div class="header-top" [class.hidden]="isScrolled">
+    <div class="container">
+      <div class="content-left">
+
+        <span class="email">
+          <i class="fa-solid fa-phone"></i>
+          Tel: 0421 123 456 789</span>
+      </div>
+      <div class="content-middle">
+        <a href="mailto:info&#64;HolidayHome.de" class="email">
+          <i class="fa-solid fa-envelope"></i>
+          info&#64;HolidayHome.de
+        </a>
+      </div>
+      <div class="content-right">
+
+        <span class="address">
+          <i class="fa-solid fa-location-dot"></i>
+          Trendermaaschweg 15, 25845 Nordstrand
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="header-main">
+    <div class="container">
+      <div class="header-brand">
+        <img (click)="goBack()" src="/Logos/HolidayHomeLogo-Wellen-2.png" alt="Holiday Home Logo" class="logo">
+      </div>
+      <nav class="header-nav">
+        <button (click)="goToAccomodation()" class="nav-button">
+          Liste der Ferienwohnungen
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>

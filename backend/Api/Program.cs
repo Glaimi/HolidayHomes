@@ -1,4 +1,8 @@
+using Business.Mappers;
+using Business.Services;
+using Business.Tools;
 using Data.Contexts;
+using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -32,7 +36,37 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddScoped<IAccommodationService, AccommodationService>();
+builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
+builder.Services.AddScoped<AccommodationMapper>();
+builder.Services.AddScoped<AccommodationTypeRepository>();
+builder.Services.AddScoped<AccommodationTypeService>();
+builder.Services.AddScoped<KitchenTypeRepository>();
+builder.Services.AddScoped<KitchenTypeService>();
+builder.Services.AddScoped<AddressRepository>();
+builder.Services.AddScoped<AddressService>();
+builder.Services.AddTransient<DataInitializerService>();
+builder.Services.AddTransient<ExcelWorksheetParser>();
+
+// Configure CORS to allow connections from localhost.
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(optionsBuilder =>
+    {
+        optionsBuilder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
+    });
+});
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    string? relativePath = builder.Configuration.GetValue<string>("InitialDataFilePath", "");
+    string fullPath = Path.GetFullPath(relativePath);
+    DataInitializerService dataInitializerService = scope.ServiceProvider.GetRequiredService<DataInitializerService>();
+
+    await dataInitializerService.InitializeAsync(fullPath);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -42,9 +76,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
+app.UseCors();
 app.MapControllers();
-
 app.Run();
