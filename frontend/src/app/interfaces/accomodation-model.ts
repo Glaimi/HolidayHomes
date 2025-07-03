@@ -1,9 +1,7 @@
 import {SanitaryTypeModel} from './sanitary-type-model';
 import {PicturesModel} from './pictures-model';
-import {LandlordModel} from './landlord-model';
 import {SeasonPricingModel} from './season-pricing-model';
-import {AdressModel} from './adress-model';
-import {KitchenTypeModel} from './kitchen-type-model';
+
 
 export interface AccomodationModel {
   id: number;
