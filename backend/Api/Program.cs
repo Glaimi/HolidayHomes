@@ -37,12 +37,14 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IAccommodationService, AccommodationService>();
-builder.Services.AddScoped<IAccommodationRepository, AccommodationMockRepository>();
+builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
 builder.Services.AddScoped<AccommodationMapper>();
 builder.Services.AddScoped<AccommodationTypeRepository>();
 builder.Services.AddScoped<AccommodationTypeService>();
 builder.Services.AddScoped<KitchenTypeRepository>();
 builder.Services.AddScoped<KitchenTypeService>();
+builder.Services.AddScoped<AddressRepository>();
+builder.Services.AddScoped<AddressService>();
 builder.Services.AddTransient<DataInitializerService>();
 builder.Services.AddTransient<ExcelWorksheetParser>();
 

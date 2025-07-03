@@ -30,9 +30,9 @@ public class AccommodationService : IAccommodationService
     /// Retrieves all accommodations and maps them to DTOs.
     /// </summary>
     /// <returns>List of accommodation DTOs</returns>
-    public async Task<List<AccommodationDto>> GetAllAccommodations()
+    public async Task<List<AccommodationDto>> GetAllAccommodationsAsync()
     {
-        var accommodations = await _accommodationRepository.GetAllAccommodations();
+        var accommodations = await _accommodationRepository.GetAllAccommodationsAsync();
 
         // Maps each accommodation entity to its corresponding DTO
         return accommodations

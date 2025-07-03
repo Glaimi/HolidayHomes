@@ -21,9 +21,9 @@ public class AccommodationTypeRepository
         return accommodationType;
     }
 
-    public async Task<AccommodationType?> GetAccommodationTypeByTitleAsync(string title)
+    public async Task<AccommodationType?> GetAccommodationTypeByAbbreviationAsync(string abbreviation)
     {
         return await _dataContext.AccommodationTypes
-            .FirstOrDefaultAsync(at => at.Title.ToLower().Equals(title.ToLower()));
+            .FirstOrDefaultAsync(at => at.Abbreviation.ToLower().Equals(abbreviation.ToLower()));
     }
 }

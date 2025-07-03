@@ -14,7 +14,7 @@ public class ExcelWorksheetParser
     // Predefined constants using to access the worksheet data.
     private readonly string _worksheetName = "Stammdaten";
     private readonly int _headerHeight = 14;
-    private IXLWorksheet _worksheet;
+    private IXLWorksheet? _worksheet;
 
     public ExcelWorksheetParser(AddressService addressService, AccommodationTypeService accommodationTypeService,
         KitchenTypeService kitchenTypeService)
@@ -41,14 +41,33 @@ public class ExcelWorksheetParser
             // Iterate through the rows.
             for (int rowNumber = firstRowNumber; rowNumber <= lastRowNumber; rowNumber++)
             {
-                string accommodationTypeColumnValue = GetStringFromCell(rowNumber, "A");
-                string kitchenTypeColumnValue = GetStringFromCell(rowNumber, "K");
-                // string sanitaryTypeColumnValue = GetStringFromCell(rowNumber, "L");
+                AccommodationType? accommodationType =
+                    await _accommodationTypeService.GetAccommodationTypeByAbbreviationAsync(
+                        GetStringFromCell(rowNumber, "A"));
+
+                if (accommodationType == null)
+                {
+                    throw new FileFormatException($"Row {rowNumber} contains an unknown accommodation type.");
+                }
+
+                KitchenType? kitchenType =
+                    await _kitchenTypeService.GetKitchenTypeByAbbreviationAsync(GetStringFromCell(rowNumber, "K"));
+
+                if (kitchenType == null)
+                {
+                    throw new FileFormatException($"Row {rowNumber} contains an unknown kitchen type.");
+                }
+
+                Address address = await _addressService.GetAddressByStreetAndCityAsync(
+                    GetStringFromCell(rowNumber, "D"),
+                    GetStringFromCell(rowNumber, "E")
+                );
 
                 Accommodation accommodation = new Accommodation()
                 {
                     LandLordName = GetStringFromCell(rowNumber, "B"),
                     Name = GetStringFromCell(rowNumber, "C"),
+                    Address = address,
                     NumberOfBeds = GetIntFromCell(rowNumber, "F"),
                     SquareMeter = GetIntFromCell(rowNumber, "G"),
                     NumberOfBedrooms = GetIntFromCell(rowNumber, "H"),
@@ -65,10 +84,8 @@ public class ExcelWorksheetParser
                     IsWashingMachineAvailable = GetBoolFromCell(rowNumber, "AA"),
                     IsParkingAvailable = GetBoolFromCell(rowNumber, "AB"),
                     IsSaunaAvailable = GetBoolFromCell(rowNumber, "AC"),
-                    KitchenType = await _kitchenTypeService.GetKitchenTypeByTitleAsync(kitchenTypeColumnValue),
-                    AccommodationType =
-                        await _accommodationTypeService.GetAccommodationTypeByTitleAsync(
-                            accommodationTypeColumnValue)
+                    KitchenType = kitchenType,
+                    AccommodationType = accommodationType
                 };
 
                 accommodations.Add(accommodation);
@@ -82,7 +99,7 @@ public class ExcelWorksheetParser
 
     private string GetStringFromCell(int rowNumber, string columnLetter)
     {
-        return _worksheet.Row(rowNumber).Cell(columnLetter).Value.ToString();
+        return _worksheet!.Row(rowNumber).Cell(columnLetter).Value.ToString();
     }
 
     private int GetIntFromCell(int rowNumber, string columnLetter)
@@ -102,7 +119,7 @@ public class ExcelWorksheetParser
             return number;
         }
 
-        throw new FormatException($"Zeile {rowNumber}, Spalte {columnLetter} enthält keine Dezimalzahl.");
+        throw new FormatException($"Row {rowNumber}, column {columnLetter} doesn't contain a floating point number.");
     }
 
     private bool GetBoolFromCell(int rowNumber, string columnLetter)

@@ -12,19 +12,8 @@ public class AccommodationTypeService
         _accommodationTypeRepository = accommodationTypeRepository;
     }
 
-    public async Task<AccommodationType> GetAccommodationTypeByTitleAsync(string title)
+    public async Task<AccommodationType?> GetAccommodationTypeByAbbreviationAsync(string abbreviation)
     {
-        AccommodationType? accommodationType =
-            await _accommodationTypeRepository.GetAccommodationTypeByTitleAsync(title);
-
-        if (accommodationType == null)
-        {
-            AccommodationType typeToAdd = new AccommodationType() { Title = title };
-            await _accommodationTypeRepository.SaveAccommodationTypeAsync(typeToAdd);
-
-            return typeToAdd;
-        }
-
-        return accommodationType;
+        return await _accommodationTypeRepository.GetAccommodationTypeByAbbreviationAsync(abbreviation);
     }
 }

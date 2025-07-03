@@ -21,8 +21,9 @@ public class KitchenTypeRepository
         return kitchenType;
     }
 
-    public async Task<KitchenType?> GetKitchenTypeByTitleAsync(string title)
+    public async Task<KitchenType?> GetKitchenTypeByAbbreviationAsync(string abbreviation)
     {
-        return await _dataContext.KitchenTypes.FirstOrDefaultAsync(kt => kt.Title.ToLower().Equals(title.ToLower()));
+        return await _dataContext.KitchenTypes.FirstOrDefaultAsync(kt =>
+            kt.Abbreviation.ToLower().Equals(abbreviation.ToLower()));
     }
 }

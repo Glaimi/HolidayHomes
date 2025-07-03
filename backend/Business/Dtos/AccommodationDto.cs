@@ -9,10 +9,13 @@ namespace Business.Dtos;
 public class AccommodationDto
 {
     public int Id { get; set; }
+    public string? Type { get; set; }
     public string? Name { get; set; }
+    public string? Street { get; set; }
+    public string? City { get; set; }
     public string? Hints { get; set; }
-    public int AddressId { get; set; }
     public string? LandLordName { get; set; }
+    public string? Kitchen { get; set; }
 
     public int SquareMeter { get; set; }
     public int NumberOfBedrooms { get; set; }
@@ -31,9 +34,4 @@ public class AccommodationDto
     public Availability BedSheetsAvailability { get; set; }
     public Availability ShortTripAvailability { get; set; }
     public Availability TowelsAvailability { get; set; }
-
-    public int AccommodationTypeId { get; set; }
-    public int KitchenTypeId { get; set; }
-
-
 }

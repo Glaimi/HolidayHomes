@@ -7,10 +7,10 @@ namespace Business.Services;
 
 public class DataInitializerService
 {
-    private AccommodationRepository _accommodationRepository;
+    private IAccommodationRepository _accommodationRepository;
     private ExcelWorksheetParser _parser;
 
-    public DataInitializerService(AccommodationRepository accommodationRepository, ExcelWorksheetParser parser)
+    public DataInitializerService(IAccommodationRepository accommodationRepository, ExcelWorksheetParser parser)
     {
         _accommodationRepository = accommodationRepository;
         _parser = parser;
@@ -18,6 +18,11 @@ public class DataInitializerService
 
     public async Task InitializeAsync(string filePath)
     {
+        if (await _accommodationRepository.GetAccommodationsCountAsync() > 0)
+        {
+            return;
+        }
+
         if (File.Exists(filePath))
         {
             List<Accommodation> accommodations = await _parser.ToAccommodationsList(filePath);

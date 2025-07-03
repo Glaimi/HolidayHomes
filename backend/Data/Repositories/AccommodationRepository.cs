@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories;
 
-public class AccommodationRepository
+public class AccommodationRepository : IAccommodationRepository
 {
     private HolidayHomeDbContext _dataContext;
 
@@ -13,20 +13,27 @@ public class AccommodationRepository
         _dataContext = dataContext;
     }
 
-    public async Task<List<Accommodation>> GetAllAccommodations()
-    {
-        List<Accommodation> allAccommodations =
-            // await _dataContext.Accommodations.Include(a => a.NumberOfMixedRooms).ToListAsync();
-            await _dataContext.Accommodations.ToListAsync();
-        return allAccommodations;
-        //return null;
-    }
-
     public async Task<Accommodation> SaveAccommodationAsync(Accommodation accommodation)
     {
         _dataContext.Accommodations.Add(accommodation);
         await _dataContext.SaveChangesAsync();
 
         return accommodation;
+    }
+
+    public async Task<IEnumerable<Accommodation>> GetAllAccommodationsAsync()
+    {
+        return _dataContext.Accommodations
+            .Include(a => a.AccommodationType)
+            .Include(a => a.Address)
+            .Include(a => a.KitchenType)
+            .Include(a => a.Images)
+            .Include(a => a.SeasonPricings)
+            .ThenInclude(sp => sp.Season);
+    }
+
+    public Task<int> GetAccommodationsCountAsync()
+    {
+        return _dataContext.Accommodations.CountAsync();
     }
 }
