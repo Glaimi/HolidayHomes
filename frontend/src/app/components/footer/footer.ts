@@ -6,7 +6,8 @@ import {Router} from '@angular/router';
   imports: [],
   templateUrl: './footer.html',
   standalone: true,
-  styleUrl: './footer.scss'
+  styleUrl: './footer.scss',
+
 })
 export class Footer {
 

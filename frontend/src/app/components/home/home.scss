@@ -7,6 +7,7 @@
   margin-top: 3rem;
   padding: 0;
   font-family: "Roboto", sans-serif;
+
 }
 
 .hero-image {
@@ -30,9 +31,10 @@
   backdrop-filter: blur(3px);
   padding: 1rem 2rem;
   border-radius: 0.5rem;
-  margin-bottom: 29rem;
+  margin-bottom: 33rem;
   margin-left: 1.6rem;
   max-width: 45%;
+
 }
 
 .content-text {
@@ -56,6 +58,7 @@
 .container{
   padding: 5rem 15rem;
   font-size: 1.5rem;
+  line-height: 2.1rem;
 }
 .imprint p{
   color: #216AF2;
@@ -69,25 +72,33 @@ li{
 
 /* Response */
 /* Large desktops and wide screens */
-@media (min-width: 1201px) {
+@media (min-width: 1200px) {
   .hero-title {
     font-size: 2.6rem;
-    margin-bottom: 27rem;
+    margin-bottom: 18rem;
     max-width: 50%;
   }
   .container{
     padding: 5rem 12rem;
   }
+  .hero-title {
+    font-size: 2.6rem;
+    font-weight: 600;
+  }
 }
 /* Laptops and small desktops */
-@media (min-width: 769px) and (max-width: 1200px) {
+@media (min-width: 769px) and (max-width: 1199px) {
   .hero-title {
     font-size: 2.2rem;
-    margin-bottom: 19rem;
+    margin-bottom: 15rem;
     max-width: 55%;
   }
   .container{
     padding: 5rem 8rem;
+    }
+  .hero-title {
+    font-size: 2.4rem;
+    font-weight: 600;
   }
   .imprint, p{
     font-size: 1.5rem;
@@ -98,7 +109,7 @@ li{
 @media (min-width: 481px) and (max-width: 768px) {
   .hero-title {
     font-size: 1.8rem;
-    margin-bottom: 18rem;
+    margin-bottom: 16rem;
     max-width: 55%;
   }
   .container{

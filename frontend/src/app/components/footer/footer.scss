@@ -22,6 +22,10 @@
   font-size: 1rem;
   cursor: pointer;
 }
+
+.footer-links a:hover{
+  text-decoration: underline;
+}
 .footer-bottom{
   display: flex;
   flex-direction: column;
