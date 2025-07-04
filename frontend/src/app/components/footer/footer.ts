@@ -18,5 +18,10 @@ export class Footer {
     this.router.navigate(['/imprint']);
   }
 
+  goToDataPrivacy(event: Event){
+    event.preventDefault();
+    this.router.navigate(['/data.privacy']);
+  }
+
 
 }

@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import {Home} from './components/home/home';
 import {Imprint} from './components/imprint/imprint';
-
 import {AccomodationList} from './components/accomodation-list/accomodation-list';
+import {DataPrivacy} from './components/data.privacy/data.privacy';
 
 export const routes: Routes = [
   {
@@ -13,12 +13,17 @@ export const routes: Routes = [
   {
     path: 'imprint',
     component: Imprint,
-    title: 'imprint'
+    title: 'Imprint'
   },
   {
     path: 'accomodation-list',
     component: AccomodationList,
-    title: 'accomodation-list'
+    title: 'Accomodation List'
+  },
+  {
+    path: 'data.privacy',
+    component: DataPrivacy,
+    title: 'Data Privacy'
   },
   {
     path: '**', redirectTo: '',
