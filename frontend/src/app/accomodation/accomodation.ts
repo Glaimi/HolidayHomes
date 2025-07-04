@@ -9,7 +9,8 @@ import {
   faWifi, 
   faParking, 
   faHome,
-  faHeart as faSolidHeart
+  faHeart as faSolidHeart,
+  faLocationDot
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
 import { AccomodationModel } from '../interfaces/accomodation-model';
@@ -26,6 +27,7 @@ export class Accomodation {
   
   // Font Awesome Icons
   faMapMarkerAlt = faMapMarkerAlt;
+  faLocationDot = faLocationDot;
   faBed = faBed;
   faExpand = faExpand;
   faWifi = faWifi;
