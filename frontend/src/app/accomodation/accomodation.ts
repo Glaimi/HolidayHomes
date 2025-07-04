@@ -2,12 +2,12 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { 
-  faMapMarkerAlt, 
-  faBed, 
-  faExpand, 
-  faWifi, 
-  faParking, 
+import {
+  faMapMarkerAlt,
+  faBed,
+  faExpand,
+  faWifi,
+  faParking,
   faHome,
   faHeart as faSolidHeart,
   faLocationDot
@@ -24,7 +24,7 @@ import { AccomodationModel } from '../interfaces/accomodation-model';
 })
 export class Accomodation {
   @Input() accomodation!: AccomodationModel;
-  
+
   // Font Awesome Icons
   faMapMarkerAlt = faMapMarkerAlt;
   faLocationDot = faLocationDot;
@@ -35,9 +35,9 @@ export class Accomodation {
   faHome = faHome;
   faSolidHeart = faSolidHeart;
   faRegularHeart = faRegularHeart;
-  
+
   isFavorite = false;
-  
+
   toggleFavorite(event: Event) {
     event.stopPropagation();
     this.isFavorite = !this.isFavorite;

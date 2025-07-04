@@ -31,6 +31,9 @@ builder.Services.AddDbContext<HolidayHomeDbContext>(optionsBuilder =>
 });
 
 // Add services to the container.
+builder.Services.AddScoped<ImageService>();
+builder.Services.AddScoped<ImageRepository>();
+builder.Services.AddScoped<AccommodationRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -74,8 +77,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-
+// UseStaticFiles is for ImageService to serve images.
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAuthorization();
 app.UseCors();
 app.MapControllers();

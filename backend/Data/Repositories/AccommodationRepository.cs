@@ -25,21 +25,6 @@ public class AccommodationRepository : IAccommodationRepository
         return accommodation;
     }
 
-    /// <summary>
-    /// Retrieves all accommodation entities from the database.
-    /// </summary>
-    /// <returns>
-    /// A task that represents the asynchronous operation.
-    /// The task result contains a list of <see cref="Accommodation"/> entities.
-    /// </returns>
-    public async Task<IEnumerable<Accommodation>> GetAllAccommodations()
-    {
-        return await _dataContext.Accommodations
-            .AsNoTracking()
-            .ToListAsync();
-
-    }
-
     public async Task<IEnumerable<Accommodation>> GetAllAccommodationsAsync()
     {
         return _dataContext.Accommodations

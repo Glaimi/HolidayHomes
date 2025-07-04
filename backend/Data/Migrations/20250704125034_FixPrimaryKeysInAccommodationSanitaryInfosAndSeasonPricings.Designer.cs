@@ -2,6 +2,7 @@
 using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(HolidayHomeDbContext))]
-    partial class HolidayHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250704125034_FixPrimaryKeysInAccommodationSanitaryInfosAndSeasonPricings")]
+    partial class FixPrimaryKeysInAccommodationSanitaryInfosAndSeasonPricings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
