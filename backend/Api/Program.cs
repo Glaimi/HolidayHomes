@@ -77,8 +77,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-
+// UseStaticFiles is for ImageService to serve images.
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAuthorization();
 app.UseCors();
 app.MapControllers();
