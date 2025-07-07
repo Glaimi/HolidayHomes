@@ -1,44 +1,81 @@
-<div class="accommodation-card">
-  <div class="card-image">
-    <div class="card-property">
-
+<section>
+  <div class="accommodation-card">
+    <div class="card-header">
       <h3 class="property-title">{{accomodation.name}}</h3>
-      <p class="property-address">{{accomodation.street}}, {{accomodation.city}}</p>
-      <!--<img [src]="accomodation.image" [alt]="'Exterior of ' + accomodation.name" class="property-image">-->
 
-      <!--<div class="price-tag">{{accomodation.seasonPricing}}</div>-->
+      <div class="property-address">
+        <span>{{accomodation.street}}, <fa-icon [icon]="faLocationDot"></fa-icon> {{accomodation.city}}</span>
+      </div>
+      <div class="favorite-icon" (click)="toggleFavorite($event)">
+        <fa-icon [icon]="isFavorite ? faSolidHeart : faRegularHeart"></fa-icon>
+      </div>
     </div>
-    <div class="favorite-icon" (click)="toggleFavorite($event)">
-      <fa-icon [icon]="isFavorite ? faSolidHeart : faRegularHeart"></fa-icon>
+
+    <div class="card-image">
+      <div class="image-container">
+        <div *ngIf="accommodationImages.length > 0; else noImagesTemplate">
+          <img
+            [src]="accommodationImages[currentImageIndex]"
+            [alt]="'Image of ' + accomodation.name"
+            class="property-image"
+            (error)="onImageError($event)"
+          >
+        </div>
+        <ng-template #noImagesTemplate>
+          <div class="no-image">
+            <fa-icon [icon]="faImage" size="3x"></fa-icon>
+            <p>No images available for this property</p>
+          </div>
+        </ng-template>
+
+        <!-- Navigation Arrows -->
+        <button
+          *ngIf="accommodationImages.length > 1"
+          class="nav-arrow left-arrow"
+          (click)="$event.stopPropagation(); previousImage()"
+          aria-label="Previous image">
+          &lt;
+        </button>
+        <button
+          *ngIf="accommodationImages.length > 1"
+          class="nav-arrow right-arrow"
+          (click)="$event.stopPropagation(); nextImage()"
+          aria-label="Next image">
+          &gt;
+        </button>
+
+        <!-- Image Indicators -->
+        <div *ngIf="accommodationImages.length > 1" class="image-indicators">
+          <span
+            *ngFor="let img of accommodationImages; let i = index"
+            [class.active]="i === currentImageIndex"
+            (click)="$event.stopPropagation(); currentImageIndex = i">
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-content">
+      <div class="property-features">
+        <div class="feature">
+          <fa-icon [icon]="faBed"></fa-icon>
+          <span>{{accomodation.numberOfBeds}} Betten</span>
+        </div>
+        <div class="feature">
+          <fa-icon [icon]="faExpand"></fa-icon>
+          <span>{{accomodation.squareMeter}} m²</span>
+        </div>
+      </div>
+
+      <div class="property-footer">
+        <div class="property-type">
+          <fa-icon [icon]="faHome"></fa-icon>
+          <span>{{accomodation.type}}</span>
+        </div>
+
+      </div>
     </div>
   </div>
-
-  <div class="card-content">
-
-    <img [src]="accomodation.image" [alt]="'Exterior of ' + accomodation.name" class="property-image">
-
-    <div class="property-features">
-      <div class="feature">
-        <fa-icon [icon]="faBed"></fa-icon>
-        <span>{{accomodation.numberOfBeds}} Betten</span>
-      </div>
-      <div class="feature">
-        <fa-icon [icon]="faExpand"></fa-icon>
-        <span>{{accomodation.squareMeter}} m²</span>
-      </div>
-
-    </div>
-
-    <div class="property-footer">
-      <div class="property-type">
-        <fa-icon [icon]="faHome"></fa-icon>
-        <span>{{accomodation.type}}</span>
-      </div>
-      <!--<button class="view-details-btn" [routerLink]="['/accommodation', accomodation.id]">
-        Details anzeigen
-      </button>-->
-    </div>
-  </div>
-</div>
+</section>
 
 
