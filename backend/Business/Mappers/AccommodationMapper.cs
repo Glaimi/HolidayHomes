@@ -1,4 +1,5 @@
 ﻿using Business.Dtos;
+using Business.Services;
 using Data.Models;
 
 namespace Business.Mappers;
@@ -9,13 +10,19 @@ namespace Business.Mappers;
 /// </summary>
 public class AccommodationMapper
 {
+    private readonly SeasonPricingService _seasonPricingService;
+
+    public AccommodationMapper(SeasonPricingService seasonPricingService)
+    {
+        _seasonPricingService = seasonPricingService;
+    }
+
     /// <summary>
     /// Maps an Accommodation entity to an AccommodationDto.
     /// </summary>
     /// <param name="entity">The Accommodation entity to be mapped.</param>
     /// <returns>The corresponding AccommodationDto.</returns>
-
-    public AccommodationDto MapEntityToDto(Accommodation entity)
+    public async Task<AccommodationDto> MapEntityToDto(Accommodation entity)
     {
         return new AccommodationDto
         {
@@ -42,6 +49,8 @@ public class AccommodationMapper
             BedSheetsAvailability = entity.BedSheetsAvailability,
             ShortTripAvailability = entity.ShortTripAvailability,
             TowelsAvailability = entity.TowelsAvailability,
+            SeasonPricings = await _seasonPricingService.GetSeasonPricingsByAccommodationIdAsync(entity.Id),
+            CurrentPrice = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(entity.Id, DateTime.Now)
         };
     }
 }

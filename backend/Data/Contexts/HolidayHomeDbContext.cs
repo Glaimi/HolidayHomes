@@ -45,7 +45,8 @@ public class HolidayHomeDbContext : DbContext
                 Title = "Ferienwohnung",
                 Abbreviation = "FW",
             }
-            );
+        );
+
         modelBuilder.Entity<KitchenType>().HasData(
             new KitchenType
             {
@@ -59,6 +60,21 @@ public class HolidayHomeDbContext : DbContext
                 Id = 2 ,
                 Title = "Kochnische",
                 Abbreviation = "Kn",
+            }
+        );
+
+        modelBuilder.Entity<SanitaryType>().HasData(
+            new SanitaryType
+            {
+                Id = 1,
+                Title = "Dusche / WC",
+                Abbreviation = "D"
+            },
+            new SanitaryType
+            {
+                Id = 2,
+                Title = "Bad / WC",
+                Abbreviation = "B"
             }
         );
     }
