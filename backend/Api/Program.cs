@@ -48,6 +48,11 @@ builder.Services.AddScoped<KitchenTypeRepository>();
 builder.Services.AddScoped<KitchenTypeService>();
 builder.Services.AddScoped<AddressRepository>();
 builder.Services.AddScoped<AddressService>();
+builder.Services.AddScoped<SanitaryTypeRepository>();
+builder.Services.AddScoped<SanitaryTypeService>();
+builder.Services.AddScoped<SeasonPricingRepository>();
+builder.Services.AddScoped<SeasonPricingService>();
+builder.Services.AddScoped<SeasonPricingMapper>();
 builder.Services.AddTransient<DataInitializerService>();
 builder.Services.AddTransient<ExcelWorksheetParser>();
 

@@ -2,6 +2,7 @@
 using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(HolidayHomeDbContext))]
-    partial class HolidayHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250704104336_AddAbbreviationToSanitaryTypeAndAddSeedingData")]
+    partial class AddAbbreviationToSanitaryTypeAndAddSeedingData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
@@ -98,7 +101,7 @@ namespace Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Accommodations", (string)null);
+                    b.ToTable("Accommodations");
                 });
 
             modelBuilder.Entity("Data.Models.AccommodationSanitaryInfo", b =>
@@ -116,7 +119,7 @@ namespace Data.Migrations
 
                     b.HasIndex("SanitaryTypeId");
 
-                    b.ToTable("AccommodationSanitaryInfos", (string)null);
+                    b.ToTable("AccommodationSanitaryInfos");
                 });
 
             modelBuilder.Entity("Data.Models.AccommodationType", b =>
@@ -138,7 +141,7 @@ namespace Data.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("AccommodationTypes", (string)null);
+                    b.ToTable("AccommodationTypes");
 
                     b.HasData(
                         new
@@ -174,7 +177,7 @@ namespace Data.Migrations
                     b.HasIndex("Street", "City")
                         .IsUnique();
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("Data.Models.Image", b =>
@@ -201,7 +204,7 @@ namespace Data.Migrations
                     b.HasIndex("FilePath")
                         .IsUnique();
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Data.Models.KitchenType", b =>
@@ -223,7 +226,7 @@ namespace Data.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("KitchenTypes", (string)null);
+                    b.ToTable("KitchenTypes");
 
                     b.HasData(
                         new
@@ -258,7 +261,7 @@ namespace Data.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("SanitaryTypes", (string)null);
+                    b.ToTable("SanitaryTypes");
 
                     b.HasData(
                         new
@@ -299,7 +302,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Seasons", (string)null);
+                    b.ToTable("Seasons");
                 });
 
             modelBuilder.Entity("Data.Models.SeasonPricing", b =>
@@ -320,7 +323,7 @@ namespace Data.Migrations
 
                     b.HasIndex("SeasonId");
 
-                    b.ToTable("SeasonPricings", (string)null);
+                    b.ToTable("SeasonPricings");
                 });
 
             modelBuilder.Entity("Data.Models.Accommodation", b =>

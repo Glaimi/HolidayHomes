@@ -14,7 +14,6 @@ public class Season
     /// </summary>
     [MaxLength(255)] public string? Title { get; set; }
 
-
     /// <summary>
     /// Day of the month when the season starts (1-31).
     /// </summary>
@@ -34,7 +33,6 @@ public class Season
     /// Month when the season ends (1 = January, 12 = December).
     /// </summary>
     public int EndMonth { get; set; }
-    
 
     /// <summary>
     /// Navigation property representing the one-to-many relationship

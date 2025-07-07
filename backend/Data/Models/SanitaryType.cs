@@ -9,6 +9,8 @@ public class SanitaryType
     /// </summary>
     public int Id { get; set; }
 
+    public string? Abbreviation { get; set; }
+
     /// <summary>
     /// Title or description of the sanitary type (e.g., Bathroom, Toilet), max length 255 characters.
     /// </summary>

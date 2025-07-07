@@ -36,8 +36,8 @@ public class AccommodationRepository : IAccommodationRepository
             .ThenInclude(sp => sp.Season);
     }
 
-    public Task<int> GetAccommodationsCountAsync()
+    public async Task<int> GetAccommodationsCountAsync()
     {
-        return _dataContext.Accommodations.CountAsync();
+        return await _dataContext.Accommodations.CountAsync();
     }
 }

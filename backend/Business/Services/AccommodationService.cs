@@ -35,9 +35,15 @@ public class AccommodationService : IAccommodationService
         var accommodations = await _accommodationRepository.GetAllAccommodationsAsync();
 
         // Maps each accommodation entity to its corresponding DTO
-        return accommodations
-            .Select(a => _accommodationMapper.MapEntityToDto(a))
-            .ToList();
+        List<AccommodationDto> accommodationDtos = [];
+
+        foreach (var accommodation in accommodations)
+        {
+            var dto = await _accommodationMapper.MapEntityToDto(accommodation);
+            accommodationDtos.Add(dto);
+        }
+
+        return accommodationDtos;
     }
 
     /// <summary>
