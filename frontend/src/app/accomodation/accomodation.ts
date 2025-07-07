@@ -10,7 +10,8 @@ import {
   faParking,
   faHome,
   faHeart as faSolidHeart,
-  faLocationDot
+  faLocationDot,
+  faImage
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
 import { AccomodationModel } from '../interfaces/accomodation-model';
@@ -36,15 +37,34 @@ export class Accomodation implements OnInit {
 
   loadAccommodationImages(): void {
     if (this.accomodation?.id) {
+      console.log('Loading images for accommodation ID:', this.accomodation.id);
       this.accommodationService.getAccomodationIdImage(this.accomodation.id).subscribe({
         next: (images) => {
-          this.accommodationImages = images;
-          this.startImageCarousel();
+          console.log('Received images:', images);
+          if (images && images.length > 0) {
+            // Ensure all URLs are absolute
+            this.accommodationImages = images.map(img => {
+              // If the image URL is relative, prepend the base URL
+              if (img && !img.startsWith('http') && !img.startsWith('data:image')) {
+                return `http://localhost:5152/${img.replace(/^\//, '')}`;
+              }
+              return img;
+            });
+            console.log('Processed image URLs:', this.accommodationImages);
+            this.startImageCarousel();
+          } else {
+            console.warn('No images found for this accommodation');
+            this.accommodationImages = [];
+          }
         },
         error: (error) => {
           console.error('Error loading accommodation images:', error);
+          this.accommodationImages = [];
         }
       });
+    } else {
+      console.warn('No accommodation ID available to load images');
+      this.accommodationImages = [];
     }
   }
 
@@ -88,11 +108,20 @@ export class Accomodation implements OnInit {
   faHome = faHome;
   faSolidHeart = faSolidHeart;
   faRegularHeart = faRegularHeart;
+  faImage = faImage;
 
   isFavorite = false;
 
   toggleFavorite(event: Event) {
     event.stopPropagation();
     this.isFavorite = !this.isFavorite;
+  }
+
+  onImageError(event: Event) {
+    console.error('Error loading image:', event);
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.style.display = 'none';
+    // Optionally, you could set a placeholder image here
+    // imgElement.src = 'path/to/placeholder-image.jpg';
   }
 }

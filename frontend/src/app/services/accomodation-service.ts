@@ -17,4 +17,7 @@ export class AccomodationService {
   getAccomodationIdImage(id: number): Observable<string[]> {
     return this.http.get<string[]>(`http://localhost:5152/api/accommodations/${id}/images`);
   }
+
+  //getImageForCardInAccommodationList(accommodationId: number): Observable<ImageModel[]> {
+   // return this.http.get<ImageModel[]>(`http://localhost:5152/api/accommodations/${accommodationId}/images`);}
 }
