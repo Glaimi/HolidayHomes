@@ -12,7 +12,42 @@
     </div>
 
     <div class="card-image">
-      <img [src]="accomodation.image" [alt]="'Exterior of ' + accomodation.name" class="property-image">
+      <div class="image-container">
+        <img 
+          *ngIf="accommodationImages.length > 0"
+          [src]="accommodationImages[currentImageIndex]" 
+          [alt]="'Image of ' + accomodation.name" 
+          class="property-image"
+        >
+        <div *ngIf="accommodationImages.length === 0" class="no-image">
+          No images available
+        </div>
+        
+        <!-- Navigation Arrows -->
+        <button 
+          *ngIf="accommodationImages.length > 1"
+          class="nav-arrow left-arrow" 
+          (click)="$event.stopPropagation(); previousImage()"
+          aria-label="Previous image">
+          &lt;
+        </button>
+        <button 
+          *ngIf="accommodationImages.length > 1"
+          class="nav-arrow right-arrow" 
+          (click)="$event.stopPropagation(); nextImage()"
+          aria-label="Next image">
+          &gt;
+        </button>
+        
+        <!-- Image Indicators -->
+        <div *ngIf="accommodationImages.length > 1" class="image-indicators">
+          <span 
+            *ngFor="let img of accommodationImages; let i = index"
+            [class.active]="i === currentImageIndex"
+            (click)="$event.stopPropagation(); currentImageIndex = i">
+          </span>
+        </div>
+      </div>
     </div>
 
     <div class="card-content">
