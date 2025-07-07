@@ -1,0 +1,137 @@
+.data-privacy {
+  padding: 4rem 0;
+  /*background: #f8f8f8;*/
+  min-height: 100vh;
+  margin-top: 2rem;
+
+  .privacy-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    /*background: white;*/
+    padding: 3rem;
+    border-radius: 8px;
+    /*box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);*/
+  }
+
+  .privacy-title {
+    color: #2c3e50;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .privacy-intro {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .privacy-section {
+    margin-bottom: 3rem;
+
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .section-title {
+    color: #2c5282;
+    font-size: 1.5rem;
+    margin: 2rem 0 1.5rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 0.5rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: #216AF2;
+    }
+  }
+
+  .subsection-title {
+
+    font-size: 1.2rem;
+    margin: 1.8rem 0 1rem;
+    font-weight: 500;
+  }
+
+  p {
+    font-family: "Roboto", sans-serif;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .privacy-list {
+    margin: 1.5rem 0 1.5rem 1.5rem;
+    text-decoration: none;
+
+    li {
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+      position: relative;
+      padding-left: 1.5rem;
+      list-style: none;
+      font-family: "Poppins", sans-serif;
+
+      &::before {
+        content: '•';
+        color: #ec7502;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1.5rem;
+      }
+    }
+  }
+
+  .privacy-email {
+    color: #3182ce;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #2c5282;
+      text-decoration: underline;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+
+    .privacy-content {
+      padding: 2rem 1.5rem;
+    }
+
+    .privacy-title {
+      font-size: 1.8rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+    }
+
+    .privacy-list {
+      margin-left: 1rem;
+    }
+  }
+  @media (max-width: 480px) {
+    .privacy-title {
+      font-size: 1rem;
+
+    .privacy-intro{
+      font-size: .9rem;
+    }
+    }
+  }
+}

@@ -8,6 +8,10 @@ public class AccommodationRepository : IAccommodationRepository
 {
     private HolidayHomeDbContext _dataContext;
 
+    //    /// <summary>
+    //    /// Initializes a new instance of the <see cref="AccommodationRepository"/> class.
+    //    /// </summary>
+    //    /// <param name="dataContext">Injected database context used for data access.</param>
     public AccommodationRepository(HolidayHomeDbContext dataContext)
     {
         _dataContext = dataContext;
