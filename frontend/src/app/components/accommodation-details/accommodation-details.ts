@@ -7,11 +7,11 @@ import {AccommodationModel} from '../../interfaces/accommodation-model';
 @Component({
   selector: 'app-view.detals',
   imports: [],
-  templateUrl: './view.details.html',
+  templateUrl: './accommodation-details.html',
   standalone: true,
-  styleUrl: './view.details.scss'
+  styleUrl: './accommodation-details.scss'
 })
-export class ViewDetails {
+export class AccommodationDetails {
   private route: ActivatedRoute = inject(ActivatedRoute);
   accommodationService: AccommodationService = inject(AccommodationService);
   accommodationDetails$: Observable<AccommodationModel>;
