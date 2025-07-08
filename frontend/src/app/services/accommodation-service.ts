@@ -19,16 +19,9 @@ export class AccommodationService {
     return this.http.get<any[]>(`http://localhost:5152/api/accommodations/${id}/images`);
   }
 
-  getAccommodationById(id: number): Observable<AccommodationModel> {
-    return this.http.get<AccommodationModel>(`http://localhost:5152/api/Accommodation/${id}`).pipe(
-      map(accommodation => {
-        // Transform the response if needed
-        return accommodation;
-      })
+  getAccommodationById(id: number): Observable<AccommodationModel | undefined> {
+    return this.getAllAccommodations().pipe(
+      map((accommodations) => accommodations.find(a => a.id == id))
     );
   }
-
-  // getAccommodationById(id:number): Observable<AccommodationModel>{
-  //   return this.http.get<AccommodationModel>('http://localhost:5152/api/Accommodation' + id)
-  // }
 }

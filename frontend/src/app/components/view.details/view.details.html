@@ -1,1 +1,36 @@
+<br><br><br><br>
 
+<h2>{{ (accommodationDetails$ | async)?.name }}</h2>
+
+
+<p>Stadt: {{ (accommodationDetails$ | async)?.city }}</p>
+<p>Vermieter: {{ (accommodationDetails$ | async)?.landLordName }}</p>
+<p>Straße: {{ (accommodationDetails$ | async)?.street }}</p>
+
+<p>Anzahl an Betten: {{ (accommodationDetails$ | async)?.numberOfBeds }}</p>
+<p>Quadratmeter: {{ (accommodationDetails$ | async)?.squareMeter }}</p>
+<p>Anzahl an Schlafzimmern: {{ (accommodationDetails$ | async)?.numberOfBedrooms }}</p>
+<p>Anzahl an Wohnzimmern: {{ (accommodationDetails$ | async)?.numberOfLivingRooms }}</p>
+<p>Anzahl an Gemischten Räumen: {{ (accommodationDetails$ | async)?.numberOfMixedRooms }}</p>
+<p>Küchentyp: {{ (accommodationDetails$ | async)?.kitchenType }}</p>
+
+<p>Badezimmertyp: {{ (accommodationDetails$ | async)?.sanitaryType }}</p>
+
+<p>Preis: {{ (accommodationDetails$ | async)?.seasonPricing }}</p>
+<p>Kurzreisen: {{ (accommodationDetails$ | async)?.shortTrip }}</p>
+<p>Bettwäsche: {{ (accommodationDetails$ | async)?.bedSheetsAvailability }}</p>
+<p>Handtücher: {{ (accommodationDetails$ | async)?.towelsAvailable }}</p>
+<p>Hinweise: {{ (accommodationDetails$ | async)?.hints }}</p>
+<p>W-Lan: {{ (accommodationDetails$ | async)?.isWifiAvailable }}</p>
+<p>Hunde erlaubt: {{ (accommodationDetails$ | async)?.isDogAllowed }}</p>
+<p>Rauchen erlaubt: {{ (accommodationDetails$ | async)?.isNonSmoking }}</p>
+<p>Fernseher vorhanden: {{ (accommodationDetails$ | async)?.isTelevisionAvailable }}</p>
+<p>Waschmaschine vorhanden: {{ (accommodationDetails$ | async)?.isWashingMachineAvailable }}</p>
+<p>Parkplatz vorhanden: {{ (accommodationDetails$ | async)?.isParkingAvailable }}</p>
+<p>Sauna vorhanden: {{ (accommodationDetails$ | async)?.isSaunaAvailable }}</p>
+<br>
+<div>
+  <p>"Um die Unterkunft zu Buchen oder die Verfügbarkeit zu prüfen, schreiben Sie uns bitte eine E-Mail oder rufen Sie uns gerne an."</p>
+  <p>E-Mail: </p>
+  <p>Telefonnummer: </p>
+</div>
