@@ -27,4 +27,8 @@ export class AccommodationService {
       })
     );
   }
+
+  // getAccommodationById(id:number): Observable<AccommodationModel>{
+  //   return this.http.get<AccommodationModel>('http://localhost:5152/api/Accommodation' + id)
+  // }
 }

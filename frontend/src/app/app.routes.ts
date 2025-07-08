@@ -3,7 +3,7 @@ import {Home} from './components/home/home';
 import {Imprint} from './components/imprint/imprint';
 import {AccommodationList} from './components/accommodation-list/accommodation-list';
 import {DataPrivacy} from './components/data.privacy/data.privacy';
-import {ViewDetals} from './components/view.detals/view.detals';
+import {ViewDetails} from './components/view.details/view.details';
 
 
 export const routes: Routes = [
@@ -29,7 +29,7 @@ export const routes: Routes = [
   },
   {
     path:'view-details/:id',
-    component: ViewDetals,
+    component: ViewDetails,
     title: 'View Details'
   },
   {
