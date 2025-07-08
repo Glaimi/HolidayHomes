@@ -16,17 +16,17 @@ import {
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
-import { AccommodationModel } from '../interfaces/accomodation-model';
-import { AccommodationService } from '../services/accomodation-service';
+import { AccommodationModel } from '../../interfaces/accommodation-model';
+import { AccommodationService } from '../../services/accommodation-service';
 
 @Component({
-  selector: 'app-accomodation',
+  selector: 'app-accommodation',
   standalone: true,
   imports: [CommonModule, RouterLink, FontAwesomeModule],
-  templateUrl: './accomodation.html',
-  styleUrl: './accomodation.scss'
+  templateUrl: './accommodation.html',
+  styleUrl: './accommodation.scss'
 })
-export class Accomodation implements OnInit, OnDestroy {
+export class Accommodation implements OnInit, OnDestroy {
   accommodationImages: string[] = [];
   currentImageIndex = 0;
   private imageChangeInterval: any;
@@ -44,25 +44,25 @@ export class Accomodation implements OnInit, OnDestroy {
       clearInterval(this.imageChangeInterval);
     }
   }
-  @Input() set accomodation(value: AccommodationModel) {
-    this._accomodation = value;
+  @Input() set accommodation(value: AccommodationModel) {
+    this._accommodation = value;
     if (value) {
       this.loadAccommodationImages();
     }
   }
-  get accomodation(): AccommodationModel {
-    return this._accomodation;
+  get accommodation(): AccommodationModel {
+    return this._accommodation;
   }
-  private _accomodation!: AccommodationModel;
+  private _accommodation!: AccommodationModel;
 
   loadAccommodationImages(): void {
-    if (this.accomodation?.id) {
+    if (this.accommodation?.id) {
       this.isLoadingImages = true;
       this.imageLoadError = false;
 
-      console.log('Loading images for accommodation ID:', this.accomodation.id);
+      console.log('Loading images for accommodation ID:', this.accommodation.id);
 
-      this.accommodationService.getAccomodationIdImage(this.accomodation.id).subscribe({
+      this.accommodationService.getAccommodationIdImage(this.accommodation.id).subscribe({
         next: (images) => {
           console.log('Received images:', images);
           this.isLoadingImages = false;

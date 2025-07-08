@@ -1,0 +1,10 @@
+
+<div class="accommodation-list-container">
+  <div class="accommodation-grid">
+    @for (accommodation of accommodations; track accommodation) {
+      <app-accommodation [accommodation]="accommodation"></app-accommodation>
+    } @empty {
+      <p>Keine Unterkünfte gefunden.</p>
+    }
+  </div>
+</div>
