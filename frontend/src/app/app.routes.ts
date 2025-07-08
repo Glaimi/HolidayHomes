@@ -18,7 +18,7 @@ export const routes: Routes = [
     title: 'Imprint'
   },
   {
-    path: 'accomodation-list',
+    path: 'accommodation-list',
     component: AccommodationList,
     title: 'Accommodation List'
   },
