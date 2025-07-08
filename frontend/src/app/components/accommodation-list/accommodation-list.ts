@@ -1,23 +1,24 @@
-import {Component, inject, OnInit} from "@angular/core";
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {AccomodationModel} from '../../interfaces/accomodation-model';
-import {AccomodationService} from '../../services/accomodation-service';
-import {Accomodation} from '../../accomodation/accomodation';
-
+import { FormsModule } from '@angular/forms';
+import { Accommodation } from '../accommodation/accommodation';
+import { AccommodationModel } from '../../interfaces/accommodation-model';
+import { AccommodationService } from '../../services/accommodation-service';
 @Component({
-  selector: 'app-accomodation-list',
+  selector: 'app-accommodation-list',
   imports: [
     CommonModule,
-    Accomodation
+    Accommodation,
+    FormsModule
   ],
-  templateUrl: './accomodation-list.html',
+  templateUrl: './accommodation-list.html',
   standalone: true,
-  styleUrl: './accomodation-list.scss'
+  styleUrl: './accommodation-list.scss'
 })
-export class AccomodationList implements OnInit {
+export class AccommodationList implements OnInit {
 
-  private accomodationService = inject(AccomodationService);
-  accomodations: AccomodationModel[] = [];
+  private accommodationService = inject(AccommodationService);
+  accommodations: AccommodationModel[] = [];
 
   // ngOnInit() {
   //   this.accomodationService.getAllAccomodations().subscribe(accomoddationList =>{
@@ -26,17 +27,18 @@ export class AccomodationList implements OnInit {
   //   })
   // }
   ngOnInit() {
-    this.accomodationService.getAllAccomodations().subscribe({
+    this.accommodationService.getAllAccommodations().subscribe({
       next: (response) => {
         console.log('Komplette Serverantwort:', JSON.stringify(response, null, 2));
         console.log('Typ der Antwort:', typeof response);
         console.log('Ist es ein Array?', Array.isArray(response));
         console.log('Erstes Element:', response[0]);
-        this.accomodations = response;
+        this.accommodations = response;
       },
       error: (error) => {
         console.error('Fehler beim Laden der Unterkünfte:', error);
       }
     });
   }
+
 }
