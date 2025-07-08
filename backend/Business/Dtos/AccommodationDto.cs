@@ -34,4 +34,7 @@ public class AccommodationDto
     public Availability BedSheetsAvailability { get; set; }
     public Availability ShortTripAvailability { get; set; }
     public Availability TowelsAvailability { get; set; }
+
+    public List<SeasonPricingDto> SeasonPricings { get; set; }
+    public double CurrentPrice { get; set; }
 }
