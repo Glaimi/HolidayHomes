@@ -1,11 +1,9 @@
-import {Component, inject, OnInit} from "@angular/core";
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {AccommodationModel, SeasonPricing} from '../../interfaces/accommodation-model';
-import {AccommodationService} from '../../services/accommodation-service';
-import {Accommodation} from '../accommodation/accommodation';
-
-
+import { Accommodation } from '../accommodation/accommodation';
+import { AccommodationModel } from '../../interfaces/accommodation-model';
+import { AccommodationService } from '../../services/accommodation-service';
 @Component({
   selector: 'app-accommodation-list',
   imports: [
@@ -22,6 +20,12 @@ export class AccommodationList implements OnInit {
   private accommodationService = inject(AccommodationService);
   accommodations: AccommodationModel[] = [];
 
+  // ngOnInit() {
+  //   this.accomodationService.getAllAccomodations().subscribe(accomoddationList =>{
+  //     this.accomodations = accomoddationList;
+  //     console.log(this.accomodations);
+  //   })
+  // }
   ngOnInit() {
     this.accommodationService.getAllAccommodations().subscribe({
       next: (response) => {
@@ -36,4 +40,5 @@ export class AccommodationList implements OnInit {
       }
     });
   }
+
 }
