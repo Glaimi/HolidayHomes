@@ -1,4 +1,4 @@
-<section>
+<!--<section>
   <div class="accommodation-card">
     <div class="card-header">
       <h3 class="property-title">{{accomodation.name}}</h3>
@@ -13,22 +13,17 @@
 
     <div class="card-image">
       <div class="image-container">
-        <div *ngIf="accommodationImages.length > 0; else noImagesTemplate">
-          <img
-            [src]="accommodationImages[currentImageIndex]"
-            [alt]="'Image of ' + accomodation.name"
-            class="property-image"
-            (error)="onImageError($event)"
-          >
+        <img
+          *ngIf="accommodationImages.length > 0"
+          [src]="accommodationImages[currentImageIndex]"
+          [alt]="'Image of ' + accomodation.name"
+          class="property-image"
+        >
+        <div *ngIf="accommodationImages.length === 0" class="no-image">
+          No images available
         </div>
-        <ng-template #noImagesTemplate>
-          <div class="no-image">
-            <fa-icon [icon]="faImage" size="3x"></fa-icon>
-            <p>No images available for this property</p>
-          </div>
-        </ng-template>
 
-        <!-- Navigation Arrows -->
+
         <button
           *ngIf="accommodationImages.length > 1"
           class="nav-arrow left-arrow"
@@ -44,7 +39,7 @@
           &gt;
         </button>
 
-        <!-- Image Indicators -->
+
         <div *ngIf="accommodationImages.length > 1" class="image-indicators">
           <span
             *ngFor="let img of accommodationImages; let i = index"
@@ -72,10 +67,125 @@
           <fa-icon [icon]="faHome"></fa-icon>
           <span>{{accomodation.type}}</span>
         </div>
-
       </div>
     </div>
   </div>
 </section>
+-->
 
+<div class="accommodation-card" *ngIf="accomodation">
+  <!-- سەکشنی وێنە -->
+  <div class="image-container"
+       (mouseenter)="pauseCarousel()"
+       (mouseleave)="resumeCarousel()">
+
+    <!-- لۆدینگ -->
+    <div *ngIf="isLoadingImages" class="loading-spinner">
+      <fa-icon [icon]="faImage" class="spin-icon"></fa-icon>
+      <span>Bilder werden geladen...</span>
+    </div>
+
+    <!-- وێنەکان -->
+    <div *ngIf="!isLoadingImages && accommodationImages.length > 0" class="image-carousel">
+      <img
+        *ngFor="let image of accommodationImages; let i = index"
+        [src]="image"
+        [alt]="'Image ' + (i + 1) + ' of ' + accomodation.name"
+        [class.active]="i === currentImageIndex"
+        [attr.data-index]="i"
+        (error)="onImageError($event)"
+        class="carousel-image">
+
+      <!-- دوگمەکانی ناڤیگەیشن -->
+      <div class="carousel-controls" *ngIf="accommodationImages.length > 1">
+        <button class="carousel-btn prev-btn" (click)="previousImage()">
+          <fa-icon [icon]="faChevronLeft"></fa-icon>
+        </button>
+        <button class="carousel-btn next-btn" (click)="nextImage()">
+          <fa-icon [icon]="faChevronRight"></fa-icon>
+        </button>
+      </div>
+
+      <!-- دۆتەکانی ناڤیگەیشن -->
+      <div class="carousel-indicators" *ngIf="accommodationImages.length > 1">
+        <button
+          *ngFor="let image of accommodationImages; let i = index"
+          class="indicator-dot"
+          [class.active]="i === currentImageIndex"
+          (click)="goToImage(i)">
+        </button>
+      </div>
+
+      <!-- ژمارەی وێنەکان -->
+      <div class="image-counter">
+        {{ currentImageIndex + 1 }} / {{ accommodationImages.length }}
+      </div>
+    </div>
+
+    <!-- پلەیس‌هۆڵدەر کاتێک وێنە نییە -->
+    <div *ngIf="!isLoadingImages && (accommodationImages.length === 0 || imageLoadError)"
+         class="no-image-placeholder">
+      <fa-icon [icon]="faImage" class="placeholder-icon"></fa-icon>
+      <span>Keine Bilder verfügbar</span>
+    </div>
+
+    <!-- دوگمەی فەڤۆرایت -->
+    <button class="favorite-btn" (click)="toggleFavorite($event)">
+      <fa-icon [icon]="isFavorite ? faSolidHeart : faRegularHeart"
+               [class.favorited]="isFavorite"></fa-icon>
+    </button>
+  </div>
+
+  <!-- زانیاری نیشتەجێبوون -->
+  <div class="accommodation-info">
+    <h3 class="accommodation-title">{{ accomodation.name }}</h3>
+
+    <div class="location-info">
+      <fa-icon [icon]="faLocationDot"></fa-icon>
+      <span>{{ accomodation.street }}, {{ accomodation.city }}</span>
+    </div>
+
+    <div class="accommodation-details">
+      <div class="detail-item" *ngIf="accomodation.numberOfBedrooms">
+        <fa-icon [icon]="faBed"></fa-icon>
+        <span>{{ accomodation.numberOfBedrooms }} Schlafzimmer </span>
+      </div>
+
+      <div class="detail-item" *ngIf="accomodation.squareMeter">
+        <fa-icon [icon]="faExpand"></fa-icon>
+        <span>{{ accomodation.squareMeter }} m²</span>
+      </div>
+
+      <div class="detail-item" *ngIf="accomodation.isWifiAvailable">
+        <fa-icon [icon]="faWifi"></fa-icon>
+        <span>WiFi</span>
+      </div>
+
+      <div class="detail-item" *ngIf="accomodation.isParkingAvailable">
+        <fa-icon [icon]="faParking"></fa-icon>
+        <span>Parking</span>
+      </div>
+
+      <div class="detail-item" *ngIf="accomodation.numberOfBeds">
+        <fa-icon [icon]="faBed"></fa-icon>
+        <span>{{ accomodation.numberOfBeds }} Betten</span>
+      </div>
+
+      <div class="detail-item" *ngIf="accomodation.numberOfLivingRooms">
+        <fa-icon [icon]="faHome"></fa-icon>
+        <span>{{ accomodation.numberOfLivingRooms }} Wohnzimmer</span>
+      </div>
+    </div>
+
+    <div class="accommodation-type" *ngIf="accomodation.type">
+      <span class="type-badge">{{ accomodation.type }}</span>
+    </div>
+
+    <div class="accommodation-actions">
+      <button (click)="gotToViewDetails()" class="view-details-btn" [routerLink]="['/accommodation', accomodation.id]">
+        Details anzeigen
+      </button>
+    </div>
+  </div>
+</div>
 

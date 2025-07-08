@@ -1,13 +1,24 @@
-import {SanitaryTypeModel} from './sanitary-type-model';
-import {PicturesModel} from './pictures-model';
-import {SeasonPricingModel} from './season-pricing-model';
-import {AdressModel} from './adress-model';
+export interface SeasonPricing {
+  id: number;
+  startDate: string;
+  endDate: string;
+  price: number;
+  accommodationId: number;
+}
 
+export interface Image {
+  id: number;
+  url: string;
+  isMain: boolean;
+  accommodationId: number;
+}
 
-export interface AccomodationModel {
+export interface AccommodationModel {
   id: number;
   name: string;
-  image: string;
+  description?: string;
+  images?: Image[];
+  image?: string; // Legacy property, can be removed after migration
   numberOfBeds: number;
   shortTrip: boolean;
   numberOfMixedRooms: number;
@@ -28,13 +39,18 @@ export interface AccomodationModel {
   sanitaryType: string;
   type: string;
   landLordName: string;
-  seasonPricing: string;
+  seasonPricing: SeasonPricing[] | string; // Can be string for legacy support
   street: string;
   city: string;
+  postalCode?: string;
+  country?: string;
   kitchenType: string;
-
-
-
-
-
+  maxOccupancy?: number;
+  floor?: number;
+  checkInTime?: string;
+  checkOutTime?: string;
+  distanceToCityCenter?: number;
+  distanceToPublicTransport?: number;
+  rating?: number;
+  reviewCount?: number;
 }

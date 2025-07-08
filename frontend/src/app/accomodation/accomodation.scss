@@ -1,313 +1,285 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-:host {
-  display: block;
-  width: 100%;
-  max-width: 400px;
-  margin: 1rem auto;
-  font-family: 'Poppins', sans-serif;
-}
-section{
-
-}
 .accommodation-card {
-  background: #ffffff;
+  background: white;
   border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
 
   &:hover {
-    /*transform: translateY(-4px);*/
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.20);
-    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   }
+}
 
-  .card-header {
-    padding: 1.5rem 1.5rem 0.5rem;
-    position: relative;
+.image-container {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
 
-
-    .property-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin: 0 0 0.5rem 0;
-      color: #2d3748;
-    }
-
-    .property-address {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #216AF2;
-      font-size: 0.9rem;
-      margin: 0;
-      cursor: pointer;
-
-      fa-icon {
-        color: #216AF2;
-        cursor: pointer;
-      }
-    }
-
-    .favorite-icon {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: rgba(255, 255, 255, 0.95);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 1;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-      &:hover {
-        background: #f8f9fa;
-        transform: scale(1.1);
-      }
-
-      ::ng-deep svg {
-        color: #e53e3e;
-        font-size: 1.1rem;
-      }
-    }
-  }
-
-  .card-image {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
-    padding: 0 1rem 1rem;
+  .loading-spinner {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
 
-    .image-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-      overflow: hidden;
-      background-color: #f8f9fa;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .no-image {
-        text-align: center;
-        color: #6b7280;
-        padding: 1rem;
-
-        fa-icon {
-          color: #d1d5db;
-          margin-bottom: 0.5rem;
-        }
-
-        p {
-          margin: 0.5rem 0 0;
-          font-size: 0.9rem;
-        }
-      }
+    .spin-icon {
+      font-size: 2rem;
+      animation: spin 1s linear infinite;
+      margin-bottom: 0.5rem;
     }
+  }
 
-    .property-image {
+  .image-carousel {
+    position: relative;
+    height: 100%;
+
+    .carousel-image {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
+      opacity: 0;
       transition: opacity 0.5s ease;
-      display: block;
-    }
 
-    .no-image {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      background-color: #f5f5f5;
-      color: #666;
-      font-size: 0.9rem;
-    }
-
-    .nav-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.8);
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1rem;
-      color: #333;
-      transition: all 0.3s ease;
-      z-index: 2;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-
-      &:hover {
-        background: white;
-        transform: translateY(-50%) scale(1.1);
+      &.active {
+        opacity: 1;
       }
     }
 
-    .left-arrow {
-      left: 1.5rem;
-    }
-
-    .right-arrow {
-      right: 1.5rem;
-    }
-
-    .image-indicators {
+    .carousel-controls {
       position: absolute;
-      bottom: 1rem;
+      top: 50%;
       left: 0;
       right: 0;
       display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      z-index: 2;
+      justify-content: space-between;
+      padding: 0 1rem;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
 
-      span {
-        display: block;
+      .carousel-btn {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 1);
+        }
+
+        fa-icon {
+          font-size: 1.2rem;
+          color: #333;
+        }
+      }
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+
+      .indicator-dot {
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.5);
+        border: none;
+        background: rgba(255, 255, 255, 0.5);
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: background 0.3s ease;
 
         &.active {
-          background-color: white;
-          transform: scale(1.2);
-        }
-
-        &:hover:not(.active) {
-          background-color: rgba(255, 255, 255, 0.8);
+          background: white;
         }
       }
     }
-      display: block;
-      margin: 0 auto;
+
+    .image-counter {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
     }
   }
 
-  .card-content {
-    padding: .2rem 1.5rem .1rem;
+  .no-image-placeholder {
     display: flex;
     flex-direction: column;
-    flex-grow: .2;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #f8f9fa;
+    color: #666;
 
-    .property-features {
-      display: flex;
-      gap: 1.5rem;
-      padding: 0.1rem 0;
+    .placeholder-icon {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+  }
 
-      .feature {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #4a5568;
-        font-size: 0.9rem;
+  .favorite-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
 
-        fa-icon {
-          font-size: 1rem;
-          color: #F5932F;
-        }
-      }
+    &:hover {
+      background: white;
     }
 
-    .property-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid #edf2f7;
-      margin-top: auto;
+    fa-icon {
+      font-size: 1.2rem;
+      color: #666;
+      transition: color 0.3s ease;
 
-      .property-type {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #4a5568;
-        font-size: 0.9rem;
-
-        fa-icon {
-          color: #F5932F;
-        }
-      }
-      padding: 8px 1px;
-
-      .view-details-btn {
-        background: #F5932F;
-        color: #000000;
-        border: none;
-        border-radius: 6px;
-        padding: 8px 16px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: inline-block;
-        text-align: center;
-        text-decoration: none;
-
-        &:hover {
-          background: #216AF2;
-          color: #Ffffff;
-          transform: translateY(-1px);
-          box-shadow: 0 2px 8px rgba(33, 106, 242, 0.3);
-        }
-
-        &:active {
-          transform: translateY(0);
-        }
+      &.favorited {
+        color: #ff4757;
       }
     }
   }
 
+  &:hover .carousel-controls {
+    opacity: 1;
+  }
+}
 
+.accommodation-info {
+  padding: 1.5rem;
 
-// Responsive adjustments
+  .accommodation-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .location-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #666;
+
+    fa-icon {
+      font-size: 0.9rem;
+    }
+  }
+
+  .accommodation-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #666;
+      font-size: 0.9rem;
+
+      fa-icon {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .accommodation-type {
+    margin-bottom: 1rem;
+
+    .type-badge {
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+  }
+
+  .accommodation-actions {
+    .view-details-btn {
+      background: #216AF2;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+
+      &:hover {
+        background: #0056b3;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Responsive Design
 @media (max-width: 768px) {
   .accommodation-card {
-    max-width: 100%;
-
-    .card-image {
+    .image-container {
       height: 200px;
-    }
 
-    .card-content {
-      padding: 1.2rem;
+      .carousel-controls {
+        padding: 0 0.5rem;
 
-      .property-title {
-        font-size: 1rem;
-      }
-      .property-features {
-        gap: 8px;
-
-        .feature {
-          padding: 4px 10px;
-          font-size: 11px;
+        .carousel-btn {
+          width: 35px;
+          height: 35px;
         }
       }
-      .view-details-btn {
-        padding: 6px 16px;
-        font-size: 13px;
+    }
+
+    .accommodation-info {
+      padding: 1rem;
+
+      .accommodation-title {
+        font-size: 1.1rem;
+      }
+
+      .accommodation-details {
+        gap: 0.5rem;
+
+        .detail-item {
+          font-size: 0.8rem;
+        }
       }
     }
   }

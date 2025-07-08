@@ -3,6 +3,8 @@ import {Home} from './components/home/home';
 import {Imprint} from './components/imprint/imprint';
 import {AccomodationList} from './components/accomodation-list/accomodation-list';
 import {DataPrivacy} from './components/data.privacy/data.privacy';
+import {ViewDetals} from './components/view.detals/view.detals';
+
 
 export const routes: Routes = [
   {
@@ -24,6 +26,11 @@ export const routes: Routes = [
     path: 'data.privacy',
     component: DataPrivacy,
     title: 'Data Privacy'
+  },
+  {
+    path:'view-details/:id',
+    component: ViewDetals,
+    title: 'View Details'
   },
   {
     path: '**', redirectTo: '',

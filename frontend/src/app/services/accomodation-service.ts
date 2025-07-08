@@ -1,23 +1,30 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {AccomodationModel} from '../interfaces/accomodation-model';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AccommodationModel } from '../interfaces/accomodation-model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccomodationService {
+export class AccommodationService {
 
   private http: HttpClient = inject(HttpClient);
 
-  getAllAccomodations(): Observable<AccomodationModel[]> {
-    return this.http.get<AccomodationModel[]>('http://localhost:5152/api/Accommodation');
+  getAllAccomodations(): Observable<AccommodationModel[]> {
+    return this.http.get<AccommodationModel[]>('http://localhost:5152/api/Accommodation');
   }
 
-  getAccomodationIdImage(id: number): Observable<string[]> {
-    return this.http.get<string[]>(`http://localhost:5152/api/accommodations/${id}/images`);
+  getAccomodationIdImage(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:5152/api/accommodations/${id}/images`);
   }
 
-  //getImageForCardInAccommodationList(accommodationId: number): Observable<ImageModel[]> {
-   // return this.http.get<ImageModel[]>(`http://localhost:5152/api/accommodations/${accommodationId}/images`);}
+  getAccommodationById(id: number): Observable<AccommodationModel> {
+    return this.http.get<AccommodationModel>(`http://localhost:5152/api/Accommodation/${id}`).pipe(
+      map(accommodation => {
+        // Transform the response if needed
+        return accommodation;
+      })
+    );
+  }
 }

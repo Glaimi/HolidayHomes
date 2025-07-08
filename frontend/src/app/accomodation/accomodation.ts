@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -11,11 +11,13 @@ import {
   faHome,
   faHeart as faSolidHeart,
   faLocationDot,
-  faImage
+  faImage,
+  faChevronLeft,
+  faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
-import { AccomodationModel } from '../interfaces/accomodation-model';
-import { AccomodationService } from '../services/accomodation-service';
+import { AccommodationModel } from '../interfaces/accomodation-model';
+import { AccommodationService } from '../services/accomodation-service';
 
 @Component({
   selector: 'app-accomodation',
@@ -24,51 +26,97 @@ import { AccomodationService } from '../services/accomodation-service';
   templateUrl: './accomodation.html',
   styleUrl: './accomodation.scss'
 })
-export class Accomodation implements OnInit {
+export class Accomodation implements OnInit, OnDestroy {
   accommodationImages: string[] = [];
   currentImageIndex = 0;
   private imageChangeInterval: any;
+  isLoadingImages = false;
+  imageLoadError = false;
+  placeholderImage = 'placeholder.jpg';
 
-  constructor(private accommodationService: AccomodationService) {}
+  constructor(private accommodationService: AccommodationService) {}
 
   ngOnInit(): void {
     this.loadAccommodationImages();
   }
+  ngOnDestroy(): void {
+    if (this.imageChangeInterval) {
+      clearInterval(this.imageChangeInterval);
+    }
+  }
+  @Input() set accomodation(value: AccommodationModel) {
+    this._accomodation = value;
+    if (value) {
+      this.loadAccommodationImages();
+    }
+  }
+  get accomodation(): AccommodationModel {
+    return this._accomodation;
+  }
+  private _accomodation!: AccommodationModel;
 
   loadAccommodationImages(): void {
     if (this.accomodation?.id) {
+      this.isLoadingImages = true;
+      this.imageLoadError = false;
+
       console.log('Loading images for accommodation ID:', this.accomodation.id);
+
       this.accommodationService.getAccomodationIdImage(this.accomodation.id).subscribe({
         next: (images) => {
           console.log('Received images:', images);
+          this.isLoadingImages = false;
+
           if (images && images.length > 0) {
-            // Ensure all URLs are absolute
+            // پڕۆسێسکردنی URL ەکانی وێنەکان - بە سەرنجدانی ستراکچەری API
             this.accommodationImages = images.map(img => {
-              // If the image URL is relative, prepend the base URL
-              if (img && !img.startsWith('http') && !img.startsWith('data:image')) {
-                return `http://localhost:5152/${img.replace(/^\//, '')}`;
+              // ئەگەر img ئۆبجێکتە و url property هەیە
+              if (img && typeof img === 'object' && img.url) {
+                const imageUrl = img.url;
+                if (!imageUrl.startsWith('http') && !imageUrl.startsWith('data:image')) {
+                  return `http://localhost:5152/${imageUrl.replace(/^\//, '')}`;
+                }
+                return imageUrl;
               }
-              return img;
-            });
+              // ئەگەر img ستڕینگە
+              else if (typeof img === 'string') {
+                if (!img.startsWith('http') && !img.startsWith('data:image')) {
+                  return `http://localhost:5152/${img.replace(/^\//, '')}`;
+                }
+                return img;
+              }
+              return null;
+            }).filter(img => img && img.trim() !== ''); // لابردنی وێنە بەتاڵەکان
+
             console.log('Processed image URLs:', this.accommodationImages);
+            this.currentImageIndex = 0;
             this.startImageCarousel();
           } else {
-            console.warn('No images found for this accommodation');
-            this.accommodationImages = [];
+            // console.warn('No images found for this accommodation');
+            // this.accommodationImages = [];
+            // this.imageLoadError = true;
+            this.accommodationImages = [this.placeholderImage];
           }
         },
         error: (error) => {
           console.error('Error loading accommodation images:', error);
           this.accommodationImages = [];
+          this.isLoadingImages = false;
+          this.imageLoadError = true;
         }
       });
     } else {
       console.warn('No accommodation ID available to load images');
-      this.accommodationImages = [];
+      this.accommodationImages = [this.placeholderImage];
+      this.imageLoadError = true;
     }
   }
 
   startImageCarousel(): void {
+    if (this.imageChangeInterval) {
+      clearInterval(this.imageChangeInterval);
+    }
+
     if (this.accommodationImages.length > 1) {
       this.imageChangeInterval = setInterval(() => {
         this.nextImage();
@@ -77,26 +125,32 @@ export class Accomodation implements OnInit {
   }
 
   nextImage(): void {
-    this.currentImageIndex = (this.currentImageIndex + 1) % this.accommodationImages.length;
+    if (this.accommodationImages.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.accommodationImages.length;
+    }
   }
 
   previousImage(): void {
-    this.currentImageIndex = (this.currentImageIndex - 1 + this.accommodationImages.length) % this.accommodationImages.length;
-  }
-
-  ngOnDestroy(): void {
-    if (this.imageChangeInterval) {
-      clearInterval(this.imageChangeInterval);
+    if (this.accommodationImages.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.accommodationImages.length) % this.accommodationImages.length;
     }
   }
-  @Input() set accomodation(value: AccomodationModel) {
-    this._accomodation = value;
-    this.loadAccommodationImages();
+
+  onImageError(event: Event) {
+    console.error('Error loading image:', event);
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.style.display = this.placeholderImage;
+
+    // ئەگەر هەموو وێنەکان شکاون، نیشاندانی پلەیس‌هۆڵدەر
+    const visibleImages = this.accommodationImages.filter((_, index) => {
+      const img = document.querySelector(`img[data-index="${index}"]`) as HTMLImageElement;
+      return img && img.style.display !== this.placeholderImage;
+    });
+
+    if (visibleImages.length === 0) {
+      this.imageLoadError = true;
+    }
   }
-  get accomodation(): AccomodationModel {
-    return this._accomodation;
-  }
-  private _accomodation!: AccomodationModel;
 
   // Font Awesome Icons
   faMapMarkerAlt = faMapMarkerAlt;
@@ -109,6 +163,8 @@ export class Accomodation implements OnInit {
   faSolidHeart = faSolidHeart;
   faRegularHeart = faRegularHeart;
   faImage = faImage;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
 
   isFavorite = false;
 
@@ -117,11 +173,26 @@ export class Accomodation implements OnInit {
     this.isFavorite = !this.isFavorite;
   }
 
-  onImageError(event: Event) {
-    console.error('Error loading image:', event);
-    const imgElement = event.target as HTMLImageElement;
-    imgElement.style.display = 'none';
-    // Optionally, you could set a placeholder image here
-    // imgElement.src = 'path/to/placeholder-image.jpg';
+  // مێسۆدی یاریدەدەر بۆ گۆڕینی وێنەکان بە دەستی
+  goToImage(index: number): void {
+    if (index >= 0 && index < this.accommodationImages.length) {
+      this.currentImageIndex = index;
+    }
+  }
+
+  // بۆ وەستاندنی کاروسێل کاتێک بەکارهێنەر لەسەر وێنە دەچێت
+  pauseCarousel(): void {
+    if (this.imageChangeInterval) {
+      clearInterval(this.imageChangeInterval);
+    }
+  }
+
+  // بۆ دەستپێکردنەوەی کاروسێل
+  resumeCarousel(): void {
+    this.startImageCarousel();
+  }
+
+  gotToViewDetails() {
+    window.location.href = 'view-details';
   }
 }
