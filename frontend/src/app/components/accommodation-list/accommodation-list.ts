@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { Accommodation } from '../accommodation/accommodation';
 import { AccommodationModel } from '../../interfaces/accommodation-model';
 import { AccommodationService } from '../../services/accommodation-service';
+import {SortAccommodations} from '../sort-accommodations/sort-accommodations';
 @Component({
   selector: 'app-accommodation-list',
   imports: [
     CommonModule,
     Accommodation,
-    FormsModule
+    FormsModule,
+    SortAccommodations
   ],
   templateUrl: './accommodation-list.html',
   standalone: true,
