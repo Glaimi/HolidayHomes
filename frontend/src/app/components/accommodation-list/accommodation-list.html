@@ -1,8 +1,44 @@
-<div class="accomodation-list-container">
+<div class="accommodation-list-container">
+  <!-- FilterForm -->
+  <form [formGroup]="filterForm" (ngSubmit)="applyFilters()" class="filter-form">
+    <div class="filter-inner">
+      <!-- living space -->
+      <label for="size">Wohnfläche (m²):</label>
+      <input type="number" formControlName="size" class="input-small" min="0" />
+      <div *ngIf="filterForm.get('size')?.errors?.['min'] && filterForm.get('size')?.touched" style="color: red;">
+        Mindestwert ist 20
+      </div>
+      <!-- numberOfRooms -->
+      <label for="rooms">Zimmer:</label>
+      <input type="number" formControlName="rooms" class="input-small" min="0" />
+      <div *ngIf="filterForm.get('rooms')?.errors?.['min'] && filterForm.get('rooms')?.touched" style="color: red;">
+        Mindestwert ist 1
+      </div>
+      <!-- otherFilters -->
+      <label>
+        <input type="checkbox" formControlName="dogsAllowed" />
+        Hunde erlaubt
+      </label>
+      <label>
+        <input type="checkbox" formControlName="hasWifi" />
+        WLAN vorhanden
+      </label>
+      <label>
+        <input type="checkbox" formControlName="hasSauna" />
+        Sauna vorhanden
+      </label>
+      <!-- useFilters-Button -->
+      <button type="submit" class="filter-submit-button">
+        Filter anwenden
+      </button>
+      <button type="button" class="reset-button" (click)="resetFilters()">🔄</button> <!--🔄-->
+    </div>
+  </form>
+
   <app-sort-accommodations></app-sort-accommodations>
-  <div class="accomodation-grid">
-    @for (accommodation of accommodations; track accommodation) {
-      <app-accommodation [accommodation]="accommodation"></app-accommodation>
+  <div class="accommodation-grid">
+    @for (accomodation of filteredAccommodations; track accomodation) {
+      <app-accommodation [accommodation]="accomodation"></app-accommodation>
     } @empty {
       <p>Keine Unterkünfte gefunden.</p>
     }
