@@ -1,17 +1,12 @@
 
-<div class="accommodation-card" *ngIf="accommodation">
-  <!-- سەکشنی وێنە -->
-  <div class="image-container"
-       (mouseenter)="pauseCarousel()"
-       (mouseleave)="resumeCarousel()">
-
-    <!-- لۆدینگ -->
+<div class="accommodation-card" >
+  <div class="image-container">
+    <!-- Image loading  -->
     <div *ngIf="isLoadingImages" class="loading-spinner">
       <fa-icon [icon]="faImage" class="spin-icon"></fa-icon>
       <span>Bilder werden geladen...</span>
     </div>
-
-    <!-- وێنەکان -->
+    <!-- Images -->
     <div *ngIf="!isLoadingImages && accommodationImages.length > 0" class="image-carousel">
       <img
         *ngFor="let image of accommodationImages; let i = index"
@@ -19,20 +14,8 @@
         [alt]="'Image ' + (i + 1) + ' of ' + accommodation.name"
         [class.active]="i === currentImageIndex"
         [attr.data-index]="i"
-        (error)="onImageError($event)"
         class="carousel-image">
 
-      <!-- دوگمەکانی ناڤیگەیشن -->
-      <div class="carousel-controls" *ngIf="accommodationImages.length > 1">
-        <button class="carousel-btn prev-btn" (click)="previousImage()">
-          <fa-icon [icon]="faChevronLeft"></fa-icon>
-        </button>
-        <button class="carousel-btn next-btn" (click)="nextImage()">
-          <fa-icon [icon]="faChevronRight"></fa-icon>
-        </button>
-      </div>
-
-      <!-- دۆتەکانی ناڤیگەیشن -->
       <div class="carousel-indicators" *ngIf="accommodationImages.length > 1">
         <button
           *ngFor="let image of accommodationImages; let i = index"
@@ -41,82 +24,39 @@
           (click)="goToImage(i)">
         </button>
       </div>
-
-      <!-- ژمارەی وێنەکان -->
+      <!--  Number of Images -->
       <div class="image-counter">
         {{ currentImageIndex + 1 }} / {{ accommodationImages.length }}
       </div>
     </div>
-
-    <!-- پلەیس‌هۆڵدەر کاتێک وێنە نییە -->
-    <div *ngIf="!isLoadingImages && (accommodationImages.length === 0 || imageLoadError)"
-         class="no-image-placeholder">
-      <fa-icon [icon]="faImage" class="placeholder-icon"></fa-icon>
-      <span>Keine Bilder verfügbar</span>
-    </div>
-
-    <!-- دوگمەی فەڤۆرایت -->
-    <button class="favorite-btn" (click)="toggleFavorite($event)">
-      <fa-icon [icon]="isFavorite ? faSolidHeart : faRegularHeart"
-               [class.favorited]="isFavorite"></fa-icon>
-    </button>
   </div>
-
-  <!-- زانیاری نیشتەجێبوون -->
+  <!-- Residential Information -->
   <div class="accommodation-info">
     <h3 class="accommodation-title">{{ accommodation.name }}</h3>
-
     <div class="location-info">
       <fa-icon [icon]="faLocationDot"></fa-icon>
       <span>{{ accommodation.street }}, {{ accommodation.city }}</span>
     </div>
-
     <div class="accommodation-details">
-      <div class="detail-item" *ngIf="accommodation.numberOfBedrooms">
-        <fa-icon [icon]="faBed"></fa-icon>
-        <span>{{ accommodation.numberOfBedrooms }} Schlafzimmer </span>
-      </div>
-
-      <div class="detail-item" *ngIf="accommodation.squareMeter">
+      <div class="detail-item" >
         <fa-icon [icon]="faExpand"></fa-icon>
         <span>{{ accommodation.squareMeter }} m²</span>
       </div>
-
-      <div class="detail-item" *ngIf="accommodation.isWifiAvailable">
-        <fa-icon [icon]="faWifi"></fa-icon>
-        <span>WiFi</span>
-      </div>
-
-      <div class="detail-item" *ngIf="accommodation.isParkingAvailable">
-        <fa-icon [icon]="faParking"></fa-icon>
-        <span>Parking</span>
-      </div>
-
-      <div class="detail-item" *ngIf="accommodation.numberOfBeds">
+      <div class="detail-item" >
         <fa-icon [icon]="faBed"></fa-icon>
         <span>{{ accommodation.numberOfBeds }} Betten</span>
       </div>
-
-      <div class="detail-item" *ngIf="accommodation.numberOfLivingRooms">
-        <fa-icon [icon]="faHome"></fa-icon>
-        <span>{{ accommodation.numberOfLivingRooms }} Wohnzimmer</span>
-      </div>
     </div>
-
-    <div class="accommodation-type" *ngIf="accommodation.type">
+    <div class="accommodation-type" >
       <span class="type-badge">{{ accommodation.type }}</span>
     </div>
-
     <div class="accommodation-actions">
-
       <button class="view-details-btn" [routerLink]="['/accommodation', accommodation.id]">
         Details anzeigen
       </button>
-
       <div class="price-section" >
         <span class="price">Pro Nacht: € {{ accommodation.currentPrice }}</span>
       </div>
-
     </div>
   </div>
 </div>

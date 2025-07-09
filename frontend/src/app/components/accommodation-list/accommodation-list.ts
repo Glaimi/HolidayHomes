@@ -22,12 +22,6 @@ export class AccommodationList implements OnInit {
   private accommodationService = inject(AccommodationService);
   accommodations: AccommodationModel[] = [];
 
-  // ngOnInit() {
-  //   this.accommodationService.getAllAccommodations().subscribe(accommodationList =>{
-  //     this.accommodations = accommodationList;
-  //     console.log(this.accommodations);
-  //   })
-  // }
   ngOnInit() {
     this.accommodationService.getAllAccommodations().subscribe({
       next: (response) => {
