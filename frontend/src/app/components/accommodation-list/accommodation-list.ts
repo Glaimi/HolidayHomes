@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { Accommodation } from '../accommodation/accommodation';
 import { AccommodationModel } from '../../interfaces/accommodation-model';
 import { AccommodationService } from '../../services/accommodation-service';
+import {SortAccommodations} from '../sort-accommodations/sort-accommodations';
 @Component({
   selector: 'app-accommodation-list',
   imports: [
     CommonModule,
     Accommodation,
-    FormsModule
+    FormsModule,
+    SortAccommodations
   ],
   templateUrl: './accommodation-list.html',
   standalone: true,
@@ -21,9 +23,9 @@ export class AccommodationList implements OnInit {
   accommodations: AccommodationModel[] = [];
 
   // ngOnInit() {
-  //   this.accomodationService.getAllAccomodations().subscribe(accomoddationList =>{
-  //     this.accomodations = accomoddationList;
-  //     console.log(this.accomodations);
+  //   this.accommodationService.getAllAccommodations().subscribe(accommodationList =>{
+  //     this.accommodations = accommodationList;
+  //     console.log(this.accommodations);
   //   })
   // }
   ngOnInit() {
