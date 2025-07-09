@@ -1,5 +1,6 @@
 ﻿using Business.Dtos;
 using Business.Services;
+using Data.Enums;
 using Data.Models;
 
 namespace Business.Mappers;
@@ -17,12 +18,24 @@ public class AccommodationMapper
         _seasonPricingService = seasonPricingService;
     }
 
+    private string MapAvailabilityToGerman(Availability availability)
+    {
+        return availability switch
+        {
+            Availability.Available => "Verfügbar",
+            Availability.Unavailable => "Nicht verfügbar",
+            Availability.ExtraCharge => "Gegen Aufpreis",
+            _ => "Unbekannt"
+        };
+    }
+
     /// <summary>
     /// Maps an Accommodation entity to an AccommodationDto.
     /// </summary>
     /// <param name="entity">The Accommodation entity to be mapped.</param>
     /// <returns>The corresponding AccommodationDto.</returns>
     public async Task<AccommodationDto> MapEntityToDto(Accommodation entity)
+
     {
         return new AccommodationDto
         {
@@ -46,9 +59,9 @@ public class AccommodationMapper
             IsWashingMachineAvailable = entity.IsWashingMachineAvailable,
             IsParkingAvailable = entity.IsParkingAvailable,
             IsSaunaAvailable = entity.IsSaunaAvailable,
-            BedSheetsAvailability = entity.BedSheetsAvailability,
-            ShortTripAvailability = entity.ShortTripAvailability,
-            TowelsAvailability = entity.TowelsAvailability,
+            BedSheetsAvailability = MapAvailabilityToGerman(entity.BedSheetsAvailability),
+            ShortTripAvailability = MapAvailabilityToGerman(entity.ShortTripAvailability),
+            TowelsAvailability = (MapAvailabilityToGerman(entity.TowelsAvailability)),
             SeasonPricings = await _seasonPricingService.GetSeasonPricingsByAccommodationIdAsync(entity.Id),
             CurrentPrice = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(entity.Id, DateTime.Now)
         };
