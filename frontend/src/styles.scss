@@ -9,11 +9,30 @@ body {
   font-size: 16px;
 }
 
+/* Layout */
+
+.grid-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+/* Forms */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.form-group input {
+  margin-top: 0.5rem;
+}
+
 /* Large desktops and wide screens */
 @media (min-width: 1200px) {
   body {
     font-size: 17px;
-
   }
 }
 
@@ -21,7 +40,6 @@ body {
 @media (min-width: 992px) and (max-width: 1199px) {
   body {
     font-size: 16px;
-
   }
 }
 
@@ -29,7 +47,6 @@ body {
 @media (min-width: 768px) and (max-width: 991px) {
   body {
     font-size: 15px;
-
   }
 }
 
@@ -37,9 +54,10 @@ body {
 @media (max-width: 767px) {
   body {
     font-size: 14px;
+  }
 
+  .grid-row {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
