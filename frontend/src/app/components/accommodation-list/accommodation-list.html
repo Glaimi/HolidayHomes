@@ -1,13 +1,13 @@
 
 
-<div class="accomodation-list-container">
-  <div class="accomodation-grid">
+<div class="accommodation-list-container">
+  <div class="accommodation-grid">
     <!--<app-accomodation
       *ngFor="let accomodation of accomodations"
       [accomodation]="accomodation">
     </app-accomodation>-->
-    @for (accomodation of accommodations; track accomodation) {
-      <app-accommodation [accommodation]="accomodation"></app-accommodation>
+    @for (accommodation of accommodations; track accommodation) {
+      <app-accommodation [accommodation]="accommodation"></app-accommodation>
     } @empty {
       <p>Keine Unterkünfte gefunden.</p>
     }

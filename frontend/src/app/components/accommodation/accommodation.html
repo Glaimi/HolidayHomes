@@ -1,3 +1,4 @@
+
 <div class="accommodation-card" *ngIf="accommodation">
   <!-- سەکشنی وێنە -->
   <div class="image-container"
@@ -107,9 +108,15 @@
     </div>
 
     <div class="accommodation-actions">
-      <button class="view-details-btn" [routerLink]="['/view-details', accommodation.id]">
+
+      <button class="view-details-btn" [routerLink]="['/accommodation', accommodation.id]">
         Details anzeigen
       </button>
+
+      <div class="price-section" >
+        <span class="price">Pro Nacht: € {{ accommodation.currentPrice }}</span>
+      </div>
+
     </div>
   </div>
 </div>

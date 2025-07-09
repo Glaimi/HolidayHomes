@@ -13,7 +13,8 @@ import {
   faLocationDot,
   faImage,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
+  faEuroSign
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
 import { AccommodationModel } from '../../interfaces/accommodation-model';
@@ -97,14 +98,16 @@ export class Accommodation implements OnInit, OnDestroy {
             // this.imageLoadError = true;
             this.accommodationImages = [this.placeholderImage];
           }
-        },
+        }
+          ,
         error: (error) => {
           console.error('Error loading accommodation images:', error);
           this.accommodationImages = [];
           this.isLoadingImages = false;
           this.imageLoadError = true;
         }
-      });
+      }
+      );
     } else {
       console.warn('No accommodation ID available to load images');
       this.accommodationImages = [this.placeholderImage];
@@ -141,7 +144,7 @@ export class Accommodation implements OnInit, OnDestroy {
     const imgElement = event.target as HTMLImageElement;
     imgElement.style.display = this.placeholderImage;
 
-    // ئەگەر هەموو وێنەکان شکاون، نیشاندانی پلەیس‌هۆڵدەر
+  //   // ئەگەر هەموو وێنەکان شکاون، نیشاندانی پلەیس‌هۆڵدەر
     const visibleImages = this.accommodationImages.filter((_, index) => {
       const img = document.querySelector(`img[data-index="${index}"]`) as HTMLImageElement;
       return img && img.style.display !== this.placeholderImage;
@@ -180,14 +183,14 @@ export class Accommodation implements OnInit, OnDestroy {
     }
   }
 
-  // بۆ وەستاندنی کاروسێل کاتێک بەکارهێنەر لەسەر وێنە دەچێت
+  // // بۆ وەستاندنی کاروسێل کاتێک بەکارهێنەر لەسەر وێنە دەچێت
   pauseCarousel(): void {
     if (this.imageChangeInterval) {
       clearInterval(this.imageChangeInterval);
     }
   }
 
-  // بۆ دەستپێکردنەوەی کاروسێل
+  // // بۆ دەستپێکردنەوەی کاروسێل
   resumeCarousel(): void {
     this.startImageCarousel();
   }
@@ -196,3 +199,5 @@ export class Accommodation implements OnInit, OnDestroy {
     window.location.href = 'view-details';
   }
 }
+
+

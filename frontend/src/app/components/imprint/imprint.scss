@@ -1,20 +1,21 @@
 section{
-  min-height: calc(100vh - 140px);
-  margin: 12rem 15rem 5rem 15rem;
+  //max-width: 85%;
+  padding: var(--padding-body);
   font-size: 1.5rem;
   line-height: 2.1rem;
+
 }
 h2{
-  padding-bottom: 40px;
-  font-family: "Lexend Exa", serif;
+  //padding-bottom: 40px;
+  //font-family: "Lexend Exa", serif;
 }
 
 .contact{
   font-family: "Poppins", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 .contact a{
-  color: #216AF2;
+  color: var(--primary);
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   text-decoration: none;
@@ -22,41 +23,43 @@ h2{
 
 .title {
   font-size: 2rem;
-  color: #216AF2;
+  color: var(--primary);
 }
 .email ,a{
-  color: #216AF2;
+  color: var(--primary);
   padding-bottom: 2rem;
 }
 
 .bank{
-  color: #216AF2;
+  color: var(--primary);
 }
 p{
   font-family: "Poppins", sans-serif;
+  line-height: 1.7;
 }
 
 /* Response */
 
 /* Large desktops and wide screens */
-@media (min-width: 1201px) {
-  section{
-    margin: 12rem 12rem 5rem 12rem;
-    font-size: 1.2rem;
-  }
-  h2{
-    padding-bottom: 40px;
-    font-family: "Lexend Exa", serif;
-  }
-  .title {
-    font-size: 1.8rem;
-  }
-}
+//@media (min-width: 1201px) {
+//  section{
+//    //margin: 12rem 12rem 5rem 12rem;
+//    font-size: 1.2rem;
+//  }
+//  h2{
+//    padding-bottom: 40px;
+//    font-family: "Lexend Exa", serif;
+//  }
+//  .title {
+//    font-size: 1.8rem;
+//  }
+//}
 /* Laptops and small desktops */
 @media (min-width: 769px) and (max-width: 1200px) {
   section{
-    margin: 10rem 8rem 5rem 6rem;
+    //margin: 10rem 8rem 5rem 6rem;
     font-size: 1.1rem;
+    padding: 5rem 7rem;
   }
   h2{
     padding-bottom: 40px;
@@ -69,8 +72,9 @@ p{
 /* Tablets (iPads, etc.) */
 @media (min-width: 481px) and (max-width: 768px) {
   section{
-    margin: 10rem 8rem 5rem 6rem;
+    //margin: 10rem 8rem 5rem 6rem;
     font-size: 1.1rem;
+    padding: 4rem 5rem;
   }
   h2{
     padding-bottom: 40px;
@@ -84,11 +88,12 @@ p{
 /* Mobile devices */
 @media (max-width: 480px) {
   section{
-    margin: 8rem 1.4rem 2rem 1.4rem;
+    //margin: 8rem 1.4rem 2rem 1.4rem;
+    padding: 4rem 2rem;
     font-size: 1.1rem;
   }
   h2{
-    padding-bottom: 40px;
+    //padding-bottom: 40px;
     font-family: "Lexend Exa", serif;
   }
   .title {

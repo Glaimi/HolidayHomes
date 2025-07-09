@@ -172,6 +172,8 @@
   }
 }
 
+
+
 .accommodation-info {
   padding: 1.5rem;
 
@@ -227,6 +229,22 @@
   }
 
   .accommodation-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    .actions-container {
+      display: flex;
+
+      //justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    // Price display styles
+    .price-section{
+      color: #666;
+    }
+
     .view-details-btn {
       background: #216AF2;
       color: white;
@@ -280,6 +298,11 @@
         .detail-item {
           font-size: 0.8rem;
         }
+      }
+
+      // Hier weiter machen
+      .accommodation-actions {
+        display: inline-flex;
       }
     }
   }

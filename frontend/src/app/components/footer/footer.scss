@@ -1,7 +1,7 @@
 
 .footer{
-  background: #216AF2;
-  color: #ffffff;
+  background: var(--primary);
+  color: var(--white-color);
   margin-top: auto;
 }
 .container{
@@ -17,9 +17,9 @@
   margin-bottom: 1.5rem;
 }
 .footer-links a {
-  color: #ffffff;
+  color: var(--white-color);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
@@ -37,11 +37,11 @@
   font-size: 1rem;
 }
 .line{
-  border-top: 1px solid #F5932F;
+  border-top: 1px solid var(--color);
   width: 50rem;
 }
 .footer-bottom p{
-  font-size: 1rem;
+  font-size: .9rem;
 }
 
 /* Large desktops and wide screens */
