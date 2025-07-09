@@ -35,6 +35,7 @@
   margin-left: 1.6rem;
   max-width: 45%;
 
+
 }
 
 .content-text {
@@ -56,14 +57,16 @@
   color: #333;
 }
 .container{
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   line-height: 2.1rem;
-  padding: var(--padding-body);
+  padding: 5rem 20rem;
+
 }
 .imprint p{
   color: var(--primary);
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: 600;
+
 }
 li{
   list-style: none;
@@ -80,6 +83,7 @@ li{
   }
   .container{
     //padding: 5rem 12rem;
+
   }
   .hero-title {
     font-size: 2.6rem;
