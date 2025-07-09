@@ -1,0 +1,153 @@
+<form class="accommodation-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <legend>Grunddaten</legend>
+
+    <div class="form-group">
+      <label for="accommodation-type">Art der Unterkunft</label>
+      <select id="accommodation-type" formControlName="accommodationType">
+        @for (accommodationType of accommodationTypes$ | async; track accommodationType) {
+          <option value="{{ accommodationType.id }}">{{ accommodationType.title }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="landlord-name">Vermietername</label>
+      <input type="text" id="landlord-name" formControlName="landlordName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="accommodation-name">Name der Unterkunft</label>
+      <input type="text" id="accommodation-name" formControlName="accommodationName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="street">Straße</label>
+      <input type="text" id="street" formControlName="street" required>
+    </div>
+
+    <div class="form-group">
+      <label for="city">Ort</label>
+      <input type="text" id="city" formControlName="city" required>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Ausstattung</legend>
+
+    <div class="grid-row">
+      <div class="form-group">
+        <label for="square-meters">Größe in m²</label>
+        <input type="number" id="square-meters" formControlName="squareMeters" min="{{ minSquareMeters }}"
+               max="{{ maxSquareMeters }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="number-of-beds">Betten</label>
+        <input type="number" id="number-of-beds" formControlName="numberOfBeds" min="{{ minNumberOfBeds }}"
+               max="{{ maxNumberOfBeds }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="number-of-bedrooms">Schlafzimmer</label>
+        <input type="number" id="number-of-bedrooms" formControlName="numberOfBedrooms" min="{{ minNumberOfBedrooms }}"
+               max="{{ maxNumberOfBedrooms }}" required>
+      </div>
+    </div>
+
+    <div class="grid-row">
+      <div class="form-group">
+        <label for="number-of-living-rooms">Wohnräume</label>
+        <input type="number" id="number-of-living-rooms" formControlName="numberOfLivingRooms"
+               min="{{ minNumberOfLivingRooms }}" max="{{ maxNumberOfLivingRooms }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="number-of-mixed-rooms">Wohn- / Schlafräume</label>
+        <input type="number" id="number-of-mixed-rooms" formControlName="numberOfMixedRooms"
+               min="{{ minNumberOfMixedRooms }}" max="{{ maxNumberOfMixedRooms }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="kitchen-type">Art der Küche</label>
+        <select id="kitchen-type" formControlName="kitchenType" required>
+          @for (kitchenType of kitchenTypes$ | async; track kitchenType.id) {
+            <option value="{{ kitchenType.id }}">{{ kitchenType.title }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Weitere Angaben</legend>
+
+    <div class="grid-row">
+      <div class="form-group">
+        <label for="short-trip">Kurzreise</label>
+        <select id="short-trip" formControlName="shortTripAvailability">
+          <option value="0">Verfügbar</option>
+          <option value="2">Gegen Aufpreis</option>
+          <option value="1">Nicht verfügbar</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="bedsheets">Bettwäsche</label>
+        <select id="bedsheets" formControlName="bedsheetsAvailability">
+          <option value="0">Verfügbar</option>
+          <option value="2">Gegen Aufpreis</option>
+          <option value="1">Nicht verfügbar</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="towels">Handtücher</label>
+        <select id="towels" formControlName="towelsAvailability">
+          <option value="0">Verfügbar</option>
+          <option value="2">Gegen Aufpreis</option>
+          <option value="1">Nicht verfügbar</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex-row">
+      <div class="form-group-horizontal">
+        <input type="checkbox" id="wifi" formControlName="isWifiAvailable">
+        <label for="wifi">WLAN vorhanden</label>
+      </div>
+
+      <div class="form-group-horizontal">
+        <input type="checkbox" id="dogs-allowed" formControlName="isDogsAllowed">
+        <label for="dogs-allowed">Hunde erlaubt</label>
+      </div>
+
+      <div class="form-group-horizontal">
+        <input type="checkbox" id="non-smoking" formControlName="isNonSmoking">
+        <label for="non-smoking">Nichtraucher</label>
+      </div>
+
+      <div class="form-group-horizontal">
+        <input type="checkbox" id="tv" formControlName="isTelevisionAvailable">
+        <label for="tv">TV vorhanden</label>
+      </div>
+
+      <div class="form-group-horizontal">
+        <input type="checkbox" id="parking" formControlName="isParkingAvailable">
+        <label for="parking">Hauseigener Parkplatz</label>
+      </div>
+
+      <div class="form-group-horizontal">
+        <input type="checkbox" id="sauna" formControlName="isSaunaAvailable">
+        <label for="sauna">Sauna vorhanden</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="hints">Zusatzinformationen</label>
+      <textarea id="hints" formControlName="hints" cols="30" rows="10"></textarea>
+    </div>
+  </fieldset>
+
+  <button type="submit" [disabled]="!formGroup.valid">Absenden</button>
+</form>
