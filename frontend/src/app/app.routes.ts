@@ -1,32 +1,38 @@
 import { Routes } from '@angular/router';
 import {Home} from './components/home/home';
 import {Imprint} from './components/imprint/imprint';
-import {AccomodationList} from './components/accomodation-list/accomodation-list';
-import {DataPrivacy} from './components/data.privacy/data.privacy';
+import {AccommodationList} from './components/accommodation-list/accommodation-list';
+import {Privacy} from './components/privacy/privacy';
+import {AccommodationDetails} from './components/accommodation-details/accommodation-details';
+
 
 export const routes: Routes = [
   {
     path: '',
     component: Home,
-    title: 'Home Page'
+    title: 'Startseite'
   },
   {
     path: 'imprint',
     component: Imprint,
-    title: 'Imprint'
+    title: 'Impressum'
   },
   {
-    path: 'accomodation-list',
-    component: AccomodationList,
-    title: 'Accomodation List'
+    path: 'accommodation-list',
+    component: AccommodationList,
+    title: 'Liste der Unterkünfte'
   },
   {
-    path: 'data.privacy',
-    component: DataPrivacy,
-    title: 'Data Privacy'
+    path: 'privacy',
+    component: Privacy,
+    title: 'Datenschutz'
+  },
+  {
+    path:'view-details/:id',
+    component: AccommodationDetails,
+    title: 'Details anzeigen'
   },
   {
     path: '**', redirectTo: '',
   }
-
 ];

@@ -16,8 +16,8 @@ export class Header {
   goBack(){
     window.location.href = 'home';
   }
-  goToAccomodation(){
-    window.location.href = 'accomodation-list';
+  goToAccommodation(){
+    window.location.href = 'accommodation-list';
   }
 
   // Change 100 to whatever scroll position you want
