@@ -11,10 +11,12 @@ namespace Business.Mappers;
 /// </summary>
 public class AccommodationMapper
 {
+    private readonly AddressService _addressService;
     private readonly SeasonPricingService _seasonPricingService;
 
-    public AccommodationMapper(SeasonPricingService seasonPricingService)
+    public AccommodationMapper(AddressService addressService, SeasonPricingService seasonPricingService)
     {
+        _addressService = addressService;
         _seasonPricingService = seasonPricingService;
     }
 
@@ -35,7 +37,6 @@ public class AccommodationMapper
     /// <param name="entity">The Accommodation entity to be mapped.</param>
     /// <returns>The corresponding AccommodationDto.</returns>
     public async Task<AccommodationDto> MapEntityToDto(Accommodation entity)
-
     {
         return new AccommodationDto
         {
@@ -64,6 +65,37 @@ public class AccommodationMapper
             TowelsAvailability = (MapAvailabilityToGerman(entity.TowelsAvailability)),
             SeasonPricings = await _seasonPricingService.GetSeasonPricingsByAccommodationIdAsync(entity.Id),
             CurrentPrice = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(entity.Id, DateTime.Now)
+        };
+    }
+
+    public async Task<Accommodation> MapDtoToEntity(AddAccommodationDto dto)
+    {
+        return new Accommodation
+        {
+            Name = dto.Name,
+            LandLordName = dto.LandLordName,
+            Hints = dto.Hints,
+            SquareMeter = dto.SquareMeter,
+            NumberOfBedrooms = dto.NumberOfBedrooms,
+            NumberOfBeds = dto.NumberOfBeds,
+            NumberOfMixedRooms = dto.NumberOfMixedRooms,
+            NumberOfLivingRooms = dto.NumberOfLivingRooms,
+            IsDogAllowed = dto.IsDogAllowed,
+            IsWifiAvailable = dto.IsWifiAvailable,
+            IsNonSmoking = dto.IsNonSmoking,
+            IsTelevisionAvailable = dto.IsTelevisionAvailable,
+            IsWashingMachineAvailable = false,
+            IsParkingAvailable = dto.IsParkingAvailable,
+            IsSaunaAvailable = dto.IsSaunaAvailable,
+            BedSheetsAvailability = (Availability)dto.BedSheetsAvailability,
+            ShortTripAvailability = (Availability)dto.ShortTripAvailability,
+            TowelsAvailability = (Availability)dto.TowelsAvailability,
+            Address = await _addressService.GetAddressByStreetAndCityAsync(dto.Street!, dto.City!),
+            AccommodationTypeId = dto.AccommodationTypeId,
+            KitchenTypeId = dto.KitchenTypeId,
+            SeasonPricings = [],
+            AccommodationSanitaryInfos = [],
+            Images = []
         };
     }
 }

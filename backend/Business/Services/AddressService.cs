@@ -16,7 +16,7 @@ public class AddressService
     {
         Address? address = await _addressRepository.GetAddressByStreetAndCityAsync(street, city);
 
-        if (address == null)
+        if (address is null)
         {
             Address addressToAdd = new Address() { Street = street, City = city };
             await _addressRepository.SaveAddressAsync(addressToAdd);

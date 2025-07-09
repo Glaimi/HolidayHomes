@@ -20,14 +20,19 @@ namespace Api.Controllers
             _accommodationService = accommodationService;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<AccommodationDto>> PostAccommodation(AddAccommodationDto dto)
+        {
+            var result = await _accommodationService.SaveAccommodationAsync(dto);
+
+            return Ok(result);
+        }
+
         /// <summary>
         /// Retrieves a list of all accommodations.
         /// </summary>
         /// <returns>A list of accommodation DTOs.</returns>
         /// <response code="200">Returns the list of accommodations</response>
-        
-
-        // show all Accommodations
         [HttpGet]
         public async Task<ActionResult<List<AccommodationDto>>> GetAllAccommodations()
         {

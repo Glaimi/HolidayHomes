@@ -1,5 +1,6 @@
 ﻿using Business.Dtos;
 using Business.Mappers;
+using Data.Models;
 using Data.Repositories;
 
 namespace Business.Services;
@@ -24,6 +25,17 @@ public class AccommodationService : IAccommodationService
     {
         _accommodationRepository = accommodationRepository;
         _accommodationMapper = accommodationMapper;
+    }
+
+    public async Task<AccommodationDto> SaveAccommodationAsync(AddAccommodationDto dto)
+    {
+        Accommodation accommodation = await _accommodationMapper.MapDtoToEntity(dto);
+
+        await _accommodationRepository.SaveAccommodationAsync(accommodation);
+
+        AccommodationDto savedDto = await _accommodationMapper.MapEntityToDto(accommodation);
+
+        return savedDto;
     }
 
     /// <summary>
