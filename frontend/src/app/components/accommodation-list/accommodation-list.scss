@@ -1,10 +1,7 @@
 .accommodation-list-container {
   width: 100%;
-  //max-width: 1400px;
-  //margin: 6rem auto;
-  //padding: 0 1rem;
-  padding: var(--padding-body);
-  margin: var(--marging-body);
+  max-width: 1400px;
+  padding: 0 1rem;
   box-sizing: border-box;
 
   .filter-controls {
@@ -145,28 +142,19 @@
 }
 
 // Responsive adjustments
-@media (min-width: 769px) and (max-width: 1199px) {
-  .accommodation-list-container{
-    padding: 5rem 7rem;
-  }
+@media (max-width: 1200px) {
   .accommodation-list-container .accommodation-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (min-width: 481px) and (max-width: 768px) {
-  .accommodation-list-container{
-    padding: 4rem 5rem;
-  }
+@media (max-width: 992px) {
   .accommodation-list-container .accommodation-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 480px) {
-  .accommodation-list-container{
-    padding: 4rem 2rem;
-  }
+@media (max-width: 768px) {
   .accommodation-list-container .accommodation-grid {
     grid-template-columns: 1fr;
     max-width: 500px;

@@ -23,9 +23,9 @@ export class AccommodationList implements OnInit {
   accommodations: AccommodationModel[] = [];
 
   // ngOnInit() {
-  //   this.accomodationService.getAllAccomodations().subscribe(accomoddationList =>{
-  //     this.accomodations = accomoddationList;
-  //     console.log(this.accomodations);
+  //   this.accommodationService.getAllAccommodations().subscribe(accommodationList =>{
+  //     this.accommodations = accommodationList;
+  //     console.log(this.accommodations);
   //   })
   // }
   ngOnInit() {

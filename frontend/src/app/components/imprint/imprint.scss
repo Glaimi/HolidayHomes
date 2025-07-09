@@ -1,18 +1,20 @@
-section{
-  //max-width: 85%;
-  padding: var(--padding-body);
-  font-size: 1.5rem;
-  line-height: 2.1rem;
-
+section {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  /* Füge zentrierte Ausrichtung und max-width hinzu: */
+  width:100%;
+  max-width: 1000px;
+  background: rgba(255,255,255,0.7); /* Optional, für bessere Lesbarkeit */
+  border-radius: 8px; /* Optional */
 }
 h2{
-  //padding-bottom: 40px;
-  //font-family: "Lexend Exa", serif;
+  padding-bottom: 40px;
+  font-family: "Lexend Exa", serif;
 }
 
 .contact{
   font-family: "Poppins", sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.0rem;
 }
 .contact a{
   color: var(--primary);
@@ -22,7 +24,7 @@ h2{
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 1rem;
   color: var(--primary);
 }
 .email ,a{
@@ -41,19 +43,15 @@ p{
 /* Response */
 
 /* Large desktops and wide screens */
-//@media (min-width: 1201px) {
-//  section{
-//    //margin: 12rem 12rem 5rem 12rem;
-//    font-size: 1.2rem;
-//  }
-//  h2{
-//    padding-bottom: 40px;
-//    font-family: "Lexend Exa", serif;
-//  }
-//  .title {
-//    font-size: 1.8rem;
-//  }
-//}
+@media (min-width: 1201px) {
+  h2{
+    padding-bottom: 40px;
+    font-family: "Lexend Exa", serif;
+  }
+  .title {
+    font-size: 1.6rem;
+  }
+}
 /* Laptops and small desktops */
 @media (min-width: 769px) and (max-width: 1200px) {
   section{
@@ -65,7 +63,7 @@ p{
     padding-bottom: 40px;
   }
   .title {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
   }
 }
 

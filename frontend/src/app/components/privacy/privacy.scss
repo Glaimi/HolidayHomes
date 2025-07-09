@@ -1,8 +1,15 @@
 .data-privacy {
-  padding: var(--padding-body);
+  /*background: #f8f8f8;*/
+  min-height: 100vh;
+
 
   .privacy-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    /*background: white;*/
+    padding: 1rem;
     border-radius: 8px;
+    /*box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);*/
   }
 
   .privacy-title {
@@ -17,11 +24,13 @@
   }
 
   .privacy-intro {
-    font-size: 1.7rem;
+    font-size: 1.2rem;
+    line-height: 1.7;
     margin-bottom: 2.5rem;
     text-align: center;
     font-weight: 600;
   }
+
   .privacy-section {
     margin-bottom: 3rem;
     p{
@@ -32,13 +41,15 @@
       margin-bottom: 0;
     }
   }
+
   .section-title {
     color: #2c5282;
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin: 2rem 0 1.5rem;
     font-weight: 600;
     position: relative;
     padding-bottom: 0.5rem;
+
     &::after {
       content: '';
       position: absolute;
@@ -49,17 +60,20 @@
       background-color: var(--primary);
     }
   }
+
   .subsection-title {
-    font-size: 2rem;
+
+    font-size: 1.2rem;
     margin: 1.8rem 0 1rem;
     font-weight: 500;
   }
+
   p {
-    font-size: 1.4rem;
-    line-height: 1.2;
+    line-height: 1.8;
     margin-bottom: 1.2rem;
     font-family: "Poppins", sans-serif;
   }
+
   .privacy-list {
     margin: 1.5rem 0 1.5rem 1.5rem;
     text-decoration: none;
