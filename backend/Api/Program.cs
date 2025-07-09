@@ -44,6 +44,7 @@ builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
 builder.Services.AddScoped<AccommodationMapper>();
 builder.Services.AddScoped<AccommodationTypeRepository>();
 builder.Services.AddScoped<AccommodationTypeService>();
+builder.Services.AddScoped<AccommodationTypeMapper>();
 builder.Services.AddScoped<KitchenTypeRepository>();
 builder.Services.AddScoped<KitchenTypeService>();
 builder.Services.AddScoped<AddressRepository>();

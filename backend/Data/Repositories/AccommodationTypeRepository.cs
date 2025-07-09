@@ -21,6 +21,11 @@ public class AccommodationTypeRepository
         return accommodationType;
     }
 
+    public async Task<List<AccommodationType>> GetAllAccommodationTypes()
+    {
+        return await _dataContext.AccommodationTypes.ToListAsync();
+    }
+
     public async Task<AccommodationType?> GetAccommodationTypeByAbbreviationAsync(string abbreviation)
     {
         return await _dataContext.AccommodationTypes
