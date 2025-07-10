@@ -1,43 +1,65 @@
 <section class="accommodation-details" *ngIf="accommodationDetails$ | async as accommodation">
-  <div class="details-container">
-    <h2>{{ accommodation.name }}</h2>
 
-    <div class="location">
-      <p><strong>Stadt:</strong> {{ accommodation.city }}</p>
-      <p><strong>Straße:</strong> {{ accommodation.street }}</p>
-      <p><strong>Vermieter:</strong> {{ accommodation.landLordName }}</p>
+  <div class="image-gallery" *ngIf="accommodationImages$ | async as images">
+    <ng-container class="ng" *ngIf="images.length > 0; else placeholder">
+      <div class="image-grid">
+        <img *ngFor="let image of images" [src]="image.url" alt="Unterkunftsbild" />
+
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-template #placeholder>
+    <div class="image-grid">
+      <img [src]="placeholderImage" alt="Platzhalterbild" />
     </div>
+  </ng-template>
 
-    <div class="basic-info">
-      <p><strong>Anzahl Betten:</strong> {{ accommodation.numberOfBeds }}</p>
-      <p><strong>Fläche:</strong> {{ accommodation.squareMeter }} m²</p>
-      <p><strong>Schlafzimmer:</strong> {{ accommodation.numberOfBedrooms }}</p>
-      <p><strong>Wohnzimmer:</strong> {{ accommodation.numberOfLivingRooms }}</p>
-      <p><strong>Gemischte Räume:</strong> {{ accommodation.numberOfMixedRooms }}</p>
-      <p><strong>Küche:</strong> {{ accommodation.kitchen }}</p>
-      @for (SanitaryInfo of accommodation.sanitaryInfos;track SanitaryInfo) {
-      <p><strong>Sanitär:</strong> {{ SanitaryInfo.title}}:{{SanitaryInfo.amount}}</p>
-      }
-    </div>
+  <h2>{{accommodation.name}}</h2>
 
-    <div class="availability">
-      <p><strong>Kurzreisen:</strong> {{ accommodation.shortTripAvailability }}</p>
-      <p><strong>Bettwäsche:</strong> {{ accommodation.bedSheetsAvailability }}</p>
-      <p><strong>Handtücher:</strong> {{ accommodation.towelsAvailability }}</p>
+  <table class="accommodation-table">
+    <tr>
+      <td class="info-left"><strong>Stadt:</strong> {{ accommodation.city }}</td>
+      <td class="info-right"><strong>Straße:</strong> {{ accommodation.street }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Vermieter:</strong> {{ accommodation.landLordName }}</td>
+      <td class="info-right"><strong>Anzahl Betten:</strong> {{ accommodation.numberOfBeds }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Fläche:</strong> {{ accommodation.squareMeter }} m²</td>
+      <td class="info-right"><strong>Schlafzimmer:</strong> {{ accommodation.numberOfBedrooms }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Wohnzimmer:</strong> {{ accommodation.numberOfLivingRooms }}</td>
+      <td class="info-right"><strong>Gemischte Räume:</strong> {{ accommodation.numberOfMixedRooms }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Küche:</strong> {{ accommodation.kitchen }}</td>
+      <td class="info-right"><strong>Kurzreisen:</strong> {{ accommodation.shortTripAvailability }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Bettwäsche:</strong> {{ accommodation.bedSheetsAvailability }}</td>
+      <td class="info-right"><strong>Handtücher:</strong> {{ accommodation.towelsAvailability }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>W-Lan:</strong> {{ accommodation.isWifiAvailable ? 'Ja' : 'Nein' }}</td>
+      <td class="info-right"><strong>Hunde erlaubt:</strong> {{ accommodation.isDogAllowed ? 'Ja' : 'Nein' }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Rauchen erlaubt:</strong> {{ accommodation.isNonSmoking ? 'Nein' : 'Ja' }}</td>
+      <td class="info-right"><strong>Fernseher:</strong> {{ accommodation.isTelevisionAvailable ? 'Ja' : 'Nein' }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Waschmaschine:</strong> {{ accommodation.isWashingMachineAvailable ? 'Ja' : 'Nein' }}</td>
+      <td class="info-right"><strong>Parkplatz:</strong> {{ accommodation.isParkingAvailable ? 'Ja' : 'Nein' }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Sauna:</strong> {{ accommodation.isSaunaAvailable ? 'Ja' : 'Nein' }}</td>
 
-    </div>
-
-    <div class="features">
-      <p><strong>W-Lan:</strong> {{ accommodation.isWifiAvailable ? 'Ja' : 'Nein' }}</p>
-      <p><strong>Hunde erlaubt:</strong> {{ accommodation.isDogAllowed ? 'Ja' : 'Nein' }}</p>
-      <p><strong>Rauchen erlaubt:</strong> {{ accommodation.isNonSmoking ? 'Nein' : 'Ja' }}</p>
-      <p><strong>Fernseher:</strong> {{ accommodation.isTelevisionAvailable ? 'Ja' : 'Nein' }}</p>
-      <p><strong>Waschmaschine:</strong> {{ accommodation.isWashingMachineAvailable ? 'Ja' : 'Nein' }}</p>
-      <p><strong>Parkplatz:</strong> {{ accommodation.isParkingAvailable ? 'Ja' : 'Nein' }}</p>
-      <p><strong>Sauna:</strong> {{ accommodation.isSaunaAvailable ? 'Ja' : 'Nein' }}</p>
-      <p><strong>Hinweise:</strong> {{ accommodation.hints }}</p>
-    </div>
-
+    </tr>
+  </table>
+  <div><p><strong>Hinweise:</strong> {{ accommodation.hints }}</p></div>
     <div class="pricing">
       <h3>Preise:</h3>
       @for(seasonPricing of accommodation.seasonPricings; track seasonPricing) {
@@ -47,23 +69,11 @@
       }
     </div>
 
-    <div class="image-gallery" *ngIf="accommodationImages$ | async as images">
-      <ng-container *ngIf="images.length > 0">
-        <div class="image-grid">
-          <img *ngFor="let image of images" [src]="image.url" alt="Unterkunftsbild" />
-        </div>
-      </ng-container>
-    </div>
-
     <div class="contact">
       <p><em>Um die Unterkunft zu buchen oder die Verfügbarkeit zu prüfen, schreiben Sie uns bitte eine E-Mail oder rufen Sie uns gerne an.</em></p>
       <p><strong>E-Mail:</strong> info&#64;HolidayHome.de </p>
-      <p><strong>Telefon:</strong> 01234 / 567890</p>
+      <p><strong>Telefon:</strong> 0421 123 456 789</p>
     </div>
-  </div>
-</section>
 
-<p>"Um die Unterkunft zu Buchen oder die Verfügbarkeit zu prüfen, schreiben Sie uns bitte eine E-Mail oder rufen Sie uns gerne an."</p>
-<p>E-Mail: </p>
-<p>Telefonnummer: </p>
+</section>
 
