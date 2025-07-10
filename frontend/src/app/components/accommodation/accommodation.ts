@@ -7,9 +7,11 @@ import {
   faExpand,
   faLocationDot,
   faImage,
+  faDoorOpen
 } from '@fortawesome/free-solid-svg-icons';
 import { AccommodationModel } from '../../interfaces/accommodation-model';
 import { AccommodationService } from '../../services/accommodation-service';
+import {AccommodationList} from '../accommodation-list/accommodation-list';
 
 @Component({
   selector: 'app-accommodation',
@@ -28,6 +30,7 @@ export class Accommodation implements OnInit, OnDestroy {
 
   constructor(private accommodationService: AccommodationService) {}
 
+
   ngOnInit(): void {
     this.loadAccommodationImages();
   }
@@ -44,6 +47,13 @@ export class Accommodation implements OnInit, OnDestroy {
   }
   get accommodation(): AccommodationModel {
     return this._accommodation;
+  }
+
+  get totalRooms(): number {
+    if (!this._accommodation) return 0;
+    return (this._accommodation.numberOfMixedRooms || 0) +
+           (this._accommodation.numberOfBedrooms || 0) +
+           (this._accommodation.numberOfLivingRooms || 0);
   }
   private _accommodation!: AccommodationModel;
 
@@ -71,7 +81,7 @@ export class Accommodation implements OnInit, OnDestroy {
                 }
                 return imageUrl;
               });
-            
+
             console.log('Processed image URLs:', this.accommodationImages);
           } else {
             console.log('No images found, using placeholder');
@@ -92,6 +102,7 @@ export class Accommodation implements OnInit, OnDestroy {
   faBed = faBed;
   faExpand = faExpand;
   faImage = faImage;
+  faDoorOpen = faDoorOpen;
 
   // Helpful method for converting images manually
   goToImage(index: number): void {
@@ -99,6 +110,7 @@ export class Accommodation implements OnInit, OnDestroy {
       this.currentImageIndex = index;
     }
   }
+
 }
 
 

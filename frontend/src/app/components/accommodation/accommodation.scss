@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+section{
+  max-width: 1400px;
 
+}
 .accommodation-card {
   background: var(--white-color);
   border-radius: 12px;
@@ -11,9 +14,9 @@
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
   }
 }
-
 .image-container {
   position: relative;
   height: 250px;
@@ -73,7 +76,7 @@
         transition: background 0.3s ease;
 
         &.active {
-          background: white;
+          background: var(--white-color);
         }
       }
     }
@@ -146,9 +149,19 @@
   }
 
   .accommodation-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
 
   }
 }
+    .price-section{
+      color: #666;
+      align-content: center;
+    }
+
+
+
 
 // Responsive Design
 @media (max-width: 768px) {
