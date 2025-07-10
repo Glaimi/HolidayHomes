@@ -71,7 +71,7 @@ export class Accommodation implements OnInit, OnDestroy {
                 }
                 return imageUrl;
               });
-            
+
             console.log('Processed image URLs:', this.accommodationImages);
           } else {
             console.log('No images found, using placeholder');
