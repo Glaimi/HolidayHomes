@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AccommodationService} from '../../services/accommodation-service';
 import {AccommodationModel} from '../../interfaces/accommodation-model';
-import {AsyncPipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, DecimalPipe, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {ImageModel} from '../../interfaces/image-model';
 
 
@@ -13,7 +13,8 @@ import {ImageModel} from '../../interfaces/image-model';
     AsyncPipe,
     NgIf,
     NgForOf,
-    DecimalPipe
+    DecimalPipe,
+    NgOptimizedImage
   ],
   templateUrl: './accommodation-details.html',
   standalone: true,
@@ -24,6 +25,7 @@ export class AccommodationDetails {
   accommodationService: AccommodationService = inject(AccommodationService);
   accommodationDetails$: Observable<AccommodationModel | undefined>;
   accommodationImages$:Observable<ImageModel[]>;
+  placeholderImage = 'placeholder.jpg';
 
   constructor() {
     const id: number = this.route.snapshot.params['id'];
