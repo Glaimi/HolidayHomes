@@ -18,7 +18,7 @@ public class AccommodationTypeController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<AccommodationTypeDto>>> GetAllAccommodationTypes()
     {
-        var accommodationTypes = await _accommodationTypeService.GetAllAccommodationTypes();
+        var accommodationTypes = await _accommodationTypeService.GetAllAccommodationTypesAsync();
 
         return Ok(accommodationTypes);
     }

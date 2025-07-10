@@ -32,4 +32,5 @@ public class AddAccommodationDto
     public int TowelsAvailability { get; set; }
 
     public List<AccommodationSanitaryInfo> AccommodationSanitaryInfos { get; set; }
+    public List<AddSeasonPricingDto> SeasonPricings { get; set; }
 }

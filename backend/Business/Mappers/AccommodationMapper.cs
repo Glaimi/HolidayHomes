@@ -13,11 +13,14 @@ public class AccommodationMapper
 {
     private readonly AddressService _addressService;
     private readonly SeasonPricingService _seasonPricingService;
+    private readonly SeasonPricingMapper _seasonPricingMapper;
 
-    public AccommodationMapper(AddressService addressService, SeasonPricingService seasonPricingService)
+    public AccommodationMapper(AddressService addressService, SeasonPricingService seasonPricingService,
+        SeasonPricingMapper seasonPricingMapper)
     {
         _addressService = addressService;
         _seasonPricingService = seasonPricingService;
+        _seasonPricingMapper = seasonPricingMapper;
     }
 
     private string MapAvailabilityToGerman(Availability availability)
@@ -62,7 +65,7 @@ public class AccommodationMapper
             IsSaunaAvailable = entity.IsSaunaAvailable,
             BedSheetsAvailability = MapAvailabilityToGerman(entity.BedSheetsAvailability),
             ShortTripAvailability = MapAvailabilityToGerman(entity.ShortTripAvailability),
-            TowelsAvailability = (MapAvailabilityToGerman(entity.TowelsAvailability)),
+            TowelsAvailability = MapAvailabilityToGerman(entity.TowelsAvailability),
             SeasonPricings = await _seasonPricingService.GetSeasonPricingsByAccommodationIdAsync(entity.Id),
             CurrentPrice = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(entity.Id, DateTime.Now)
         };
@@ -93,7 +96,7 @@ public class AccommodationMapper
             Address = await _addressService.GetAddressByStreetAndCityAsync(dto.Street!, dto.City!),
             AccommodationTypeId = dto.AccommodationTypeId,
             KitchenTypeId = dto.KitchenTypeId,
-            SeasonPricings = [],
+            SeasonPricings = _seasonPricingMapper.MapDtosToEntities(dto.SeasonPricings),
             AccommodationSanitaryInfos = dto.AccommodationSanitaryInfos,
             Images = []
         };

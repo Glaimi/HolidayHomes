@@ -17,7 +17,20 @@ public class AccommodationTypeService
         _accommodationTypeMapper = accommodationTypeMapper;
     }
 
-    public async Task<List<AccommodationTypeDto>> GetAllAccommodationTypes()
+    public async Task<AccommodationTypeDto?> GetAccommodationTypeByIdAsync(int accommodationTypeId)
+    {
+        AccommodationType? accommodationType =
+            await _accommodationTypeRepository.GetAccommodationTypeByIdAsync(accommodationTypeId);
+
+        if (accommodationType is null)
+        {
+            return null;
+        }
+
+        return _accommodationTypeMapper.MapEntityToDto(accommodationType);
+    }
+
+    public async Task<List<AccommodationTypeDto>> GetAllAccommodationTypesAsync()
     {
         List<AccommodationType> accommodationTypes = await _accommodationTypeRepository.GetAllAccommodationTypes();
         List<AccommodationTypeDto> dtos = [];
