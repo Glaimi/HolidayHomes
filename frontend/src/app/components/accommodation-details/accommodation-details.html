@@ -1,81 +1,79 @@
-<section class="data-privacy">
-  <div class="container">
-    <div class="privacy-content">
-      <h1 class="privacy-title">DATENSCHUTZERKLÄRUNG</h1>
+<section class="accommodation-details" *ngIf="accommodationDetails$ | async as accommodation">
 
-      <p class="privacy-intro">
-        Nachstehend finden Sie HOLIDAYHOMEs Politik zu personenbezogener Daten, die Informationen
-        darüber enthält, wie HOLIDAYHOME personenbezogene Daten erfasst, verwendet, teilt und schützt.
-      </p>
+  <div class="image-gallery" *ngIf="accommodationImages$ | async as images">
+    <ng-container class="ng" *ngIf="images.length > 0; else placeholder">
+      <div class="image-grid">
+        <img *ngFor="let image of images" [src]="image.url" alt="Unterkunftsbild" />
 
-      <div class="privacy-section">
-        <h2 class="section-title">1. Verantwortung für Ihre personenbezogenen Daten</h2>
-        <p>www.HolidayHome.de sowie sonstige HOLIDAYHOME Websites und Kataloge sind Eigentum von und
-          werden gepflegt von HOLIDAYHOME.</p>
-        <p>Jede Anfrage bezüglich des Datenschutzes kann schriftlich an folgende E-Mail-Adresse
-          gerichtet werden: <a href="mailto:info@holidayhome.de" class="privacy-email">info&#64;holidayhome.de</a></p>
-        <p>HOLIDAYHOME ist verantwortlich für die korrekte Verarbeitung der personenbezogenen Daten,
-          die Sie HOLIDAYHOME schicken. HOLIDAYHOME speichert und verarbeitet Ihre personenbezogenen
-          Daten gemäß den Gesetzen im Bereich Datenschutz und Privatsphäre.</p>
       </div>
-
-      <div class="privacy-section">
-        <h2 class="section-title">2. Informationen, die erfasst und verarbeitet werden</h2>
-
-        <h3 class="subsection-title">Informationen über den Mieter:</h3>
-        <p>Wenn Sie bei HOLIDAYHOME ein Ferienobjekt zur Anmietung buchen, verarbeiten wir die
-          personenbezogenen Daten, die Sie uns im Zusammenhang mit Ihrer Buchung und Ihrem Aufenthalt
-          mitteilen. In der Regel sind dies Ihr Name, die Adresse, die Telefonnummer, die E-Mail-Adresse
-          und die Zahlungsinformationen Ihrer Partei sowie anderer Mitglieder.</p>
-
-        <h3 class="subsection-title">Informationen über den Hauseigentümer:</h3>
-        <p>Wenn Sie sich dafür entscheiden, Ihr Ferienhaus über einen Vermittlungsvertrag mit HOLIDAYHOME
-          zu vermieten, verarbeitet HOLIDAYHOME die personenbezogenen Daten, die Sie im Zusammenhang mit
-          dem Vertragsschluss angegeben haben. Typischerweise sind dies Ihr Name, Ihre Adresse, Ihre
-          Telefonnummer, eine E-Mail-Adresse, Bankkontoinformationen und Informationen über Ihr Ferienhaus.</p>
-
-        <h3 class="subsection-title">Allgemein:</h3>
-        <p>Wenn Sie uns bitten, Sie mit Informationen zur Vermietung Ihres Hauses über HOLIDAYHOME zu
-          kontaktieren, verarbeiten wir die personenbezogenen Daten, die Sie bei dieser Anfrage angeben.
-          In der Regel sind dies Ihr Name, Ihre Telefonnummer, Ihre E-Mail-Adresse sowie die Postleitzahl
-          und das Land, in dem sich Ihr Ferienhaus befindet.</p>
-      </div>
-
-      <div class="privacy-section">
-        <h2 class="section-title">3. Zweck der Verarbeitung personenbezogener Daten</h2>
-        <p>Die personenbezogenen Daten, die Sie HOLIDAYHOME mitteilen, können je nach Ihrer Beziehung zu
-          HOLIDAYHOME für verschiedene Zwecke verwendet werden, zum Beispiel:</p>
-        <ul class="privacy-list">
-          <li>um Ihre Buchung durchzuführen, wenn Sie eine Buchung bei HOLIDAYHOME vornehmen</li>
-          <li>um Ihnen Ihre Buchungsinformationen zur Verfügung zu stellen</li>
-          <li>um HOLIDAYHOMEs Verpflichtungen im Zusammenhang mit dem Vermittlungsvertrag zu erfüllen</li>
-          <li>zu statistischen Zwecken, um das Vermieten zu optimieren</li>
-          <li>um wiederholte Besuche auf HOLIDAYHOMEs Homepage persönlicher zu gestalten</li>
-          <li>um Interesse an unseren Produkten, Dienstleistungen und Konzepten zu wecken</li>
-        </ul>
-      </div>
-
-      <div class="privacy-section">
-        <h2 class="section-title">4. Ihre Rechte</h2>
-        <p>Sie haben das Recht:</p>
-        <ul class="privacy-list">
-          <li>darüber informiert zu werden, welche Daten HOLIDAYHOME erfasst hat</li>
-          <li>Daten ändern zu lassen, falls sie unrichtig sind</li>
-          <li>eine Kopie der personenbezogenen Daten zu erhalten</li>
-          <li>Ihre personenbezogenen Daten löschen zu lassen</li>
-          <li>eine Beschränkung der Verarbeitung Ihrer Daten zu verlangen</li>
-          <li>der Verarbeitung Ihrer Daten zu widersprechen</li>
-        </ul>
-        <p>Jegliche Anfrage zu Ihren Rechten kann per E-Mail an folgende E-Mail-Adresse erfolgen: <a href="mailto:info@holidayhome.de" class="privacy-email">info&#64;holidayhome.de</a></p>
-      </div>
-
-      <div class="privacy-section">
-        <h2 class="section-title">5. Aktualisierung der Datenschutzerklärung</h2>
-        <p>HOLIDAYHOME überarbeitet seine Datenschutzerklärung regelmäßig. Die letzte Aktualisierung erfolgte
-          im September 2019.</p>
-        <p>Jegliche Anfrage zum Datenschutz kann per E-Mail an folgende E-Mail-Adresse gerichtet werden:
-          <a href="mailto:info@holidayhome.de" class="privacy-email">info&#64;holidayhome.de</a></p>
-      </div>
-    </div>
+    </ng-container>
   </div>
+
+  <ng-template #placeholder>
+    <div class="image-grid">
+      <img [src]="placeholderImage" alt="Platzhalterbild" />
+    </div>
+  </ng-template>
+
+  <h2>{{accommodation.name}}</h2>
+
+  <table class="accommodation-table">
+    <tr>
+      <td class="info-left"><strong>Stadt:</strong> {{ accommodation.city }}</td>
+      <td class="info-right"><strong>Straße:</strong> {{ accommodation.street }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Vermieter:</strong> {{ accommodation.landLordName }}</td>
+      <td class="info-right"><strong>Anzahl Betten:</strong> {{ accommodation.numberOfBeds }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Fläche:</strong> {{ accommodation.squareMeter }} m²</td>
+      <td class="info-right"><strong>Schlafzimmer:</strong> {{ accommodation.numberOfBedrooms }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Wohnzimmer:</strong> {{ accommodation.numberOfLivingRooms }}</td>
+      <td class="info-right"><strong>Gemischte Räume:</strong> {{ accommodation.numberOfMixedRooms }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Küche:</strong> {{ accommodation.kitchen }}</td>
+      <td class="info-right"><strong>Kurzreisen:</strong> {{ accommodation.shortTripAvailability }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Bettwäsche:</strong> {{ accommodation.bedSheetsAvailability }}</td>
+      <td class="info-right"><strong>Handtücher:</strong> {{ accommodation.towelsAvailability }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>W-Lan:</strong> {{ accommodation.isWifiAvailable ? 'Ja' : 'Nein' }}</td>
+      <td class="info-right"><strong>Hunde erlaubt:</strong> {{ accommodation.isDogAllowed ? 'Ja' : 'Nein' }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Rauchen erlaubt:</strong> {{ accommodation.isNonSmoking ? 'Nein' : 'Ja' }}</td>
+      <td class="info-right"><strong>Fernseher:</strong> {{ accommodation.isTelevisionAvailable ? 'Ja' : 'Nein' }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Waschmaschine:</strong> {{ accommodation.isWashingMachineAvailable ? 'Ja' : 'Nein' }}</td>
+      <td class="info-right"><strong>Parkplatz:</strong> {{ accommodation.isParkingAvailable ? 'Ja' : 'Nein' }}</td>
+    </tr>
+    <tr>
+      <td class="info-left"><strong>Sauna:</strong> {{ accommodation.isSaunaAvailable ? 'Ja' : 'Nein' }}</td>
+
+    </tr>
+  </table>
+  <div><p><strong>Hinweise:</strong> {{ accommodation.hints }}</p></div>
+    <div class="pricing">
+      <h3>Preise:</h3>
+      @for(seasonPricing of accommodation.seasonPricings; track seasonPricing) {
+        <p>Saison: {{seasonPricing.seasonTitle}} vom {{seasonPricing.startDay}}.{{seasonPricing.startMonth}} bis
+          {{seasonPricing.endDay}}.{{seasonPricing.endMonth}} - <strong>{{seasonPricing.price | number: '2.2':'de-DE'}} € / Nacht</strong>
+        </p>
+      }
+    </div>
+
+    <div class="contact">
+      <p><em>Um die Unterkunft zu buchen oder die Verfügbarkeit zu prüfen, schreiben Sie uns bitte eine E-Mail oder rufen Sie uns gerne an.</em></p>
+      <p><strong>E-Mail:</strong> info&#64;HolidayHome.de </p>
+      <p><strong>Telefon:</strong> 0421 123 456 789</p>
+    </div>
+
 </section>
+

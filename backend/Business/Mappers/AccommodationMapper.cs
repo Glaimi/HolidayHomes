@@ -1,5 +1,6 @@
 ﻿using Business.Dtos;
 using Business.Services;
+using Data.Enums;
 using Data.Models;
 
 namespace Business.Mappers;
@@ -15,6 +16,17 @@ public class AccommodationMapper
     public AccommodationMapper(SeasonPricingService seasonPricingService)
     {
         _seasonPricingService = seasonPricingService;
+    }
+
+    private string MapAvailabilityToGerman(Availability availability)
+    {
+        return availability switch
+        {
+            Availability.Available => "Verfügbar",
+            Availability.Unavailable => "Nicht verfügbar",
+            Availability.ExtraCharge => "Gegen Aufpreis",
+            _ => "Unbekannt"
+        };
     }
 
     /// <summary>
@@ -46,11 +58,12 @@ public class AccommodationMapper
             IsWashingMachineAvailable = entity.IsWashingMachineAvailable,
             IsParkingAvailable = entity.IsParkingAvailable,
             IsSaunaAvailable = entity.IsSaunaAvailable,
-            BedSheetsAvailability = entity.BedSheetsAvailability,
-            ShortTripAvailability = entity.ShortTripAvailability,
-            TowelsAvailability = entity.TowelsAvailability,
+            BedSheetsAvailability = MapAvailabilityToGerman(entity.BedSheetsAvailability),
+            ShortTripAvailability = MapAvailabilityToGerman(entity.ShortTripAvailability),
+            TowelsAvailability = MapAvailabilityToGerman(entity.TowelsAvailability),
             SeasonPricings = await _seasonPricingService.GetSeasonPricingsByAccommodationIdAsync(entity.Id),
-            CurrentPrice = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(entity.Id, DateTime.Now)
+            CurrentPrice = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(entity.Id, DateTime.Now),
+            SanitaryInfos = SanitaryMapper.MapEntityToDto(entity.AccommodationSanitaryInfos)
         };
     }
 }

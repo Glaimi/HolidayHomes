@@ -1,3 +1,5 @@
+import {SeasonPricingModel} from './season-pricing-model';
+
 export interface SeasonPricing {
   id: number;
   startDate: string;
@@ -13,6 +15,11 @@ export interface Image {
   accommodationId: number;
 }
 
+export interface AccommodationSanitaryInfo {
+  title: string;
+  amount: number;
+}
+
 export interface AccommodationModel {
   id: number;
   name: string;
@@ -20,11 +27,11 @@ export interface AccommodationModel {
   images?: Image[];
   image?: string; // Legacy property, can be removed after migration
   numberOfBeds: number;
-  shortTrip: boolean;
+  shortTripAvailability: boolean;
   numberOfMixedRooms: number;
   numberOfLivingRooms: number;
   hints: string;
-  towelsAvailable: boolean;
+  towelsAvailability: boolean;
   isWashingMachineAvailable: boolean;
   isTelevisionAvailable: boolean;
   bedSheetsAvailability: boolean;
@@ -34,17 +41,16 @@ export interface AccommodationModel {
   isDogAllowed: boolean;
   numberOfBedrooms: number;
   isWifiAvailable: boolean;
-  numberOfSanitaryFacilities: number;
   squareMeter: number;
-  sanitaryType: string;
+  sanitaryInfos?: AccommodationSanitaryInfo[];
+  kitchen: string;
   type: string;
   landLordName: string;
-  seasonPricing: SeasonPricing[] | string; // Can be string for legacy support
+  seasonPricings: SeasonPricingModel[]; // Can be string for legacy support
   street: string;
   city: string;
   postalCode?: string;
   country?: string;
-  kitchenType: string;
   maxOccupancy?: number;
   floor?: number;
   checkInTime?: string;

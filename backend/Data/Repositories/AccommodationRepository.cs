@@ -33,7 +33,9 @@ public class AccommodationRepository : IAccommodationRepository
             .Include(a => a.KitchenType)
             .Include(a => a.Images)
             .Include(a => a.SeasonPricings)
-            .ThenInclude(sp => sp.Season);
+            .ThenInclude(sp => sp.Season)
+            .Include(a => a.AccommodationSanitaryInfos)
+            .ThenInclude(si => si.SanitaryType);
     }
 
     public async Task<int> GetAccommodationsCountAsync()

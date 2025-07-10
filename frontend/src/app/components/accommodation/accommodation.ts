@@ -16,10 +16,10 @@ import { AccommodationService } from '../../services/accommodation-service';
   standalone: true,
   imports: [CommonModule, RouterLink, FontAwesomeModule],
   templateUrl: './accommodation.html',
-  styleUrl: './accommodation.scss'
+  styleUrls: ['./accommodation.scss']
 })
 export class Accommodation implements OnInit, OnDestroy {
-  accommodationImages: string[] = [];
+  accommodationImages: (string|null)[] = [];
   currentImageIndex = 0;
   private imageChangeInterval: any;
   isLoadingImages = false;
@@ -58,20 +58,31 @@ export class Accommodation implements OnInit, OnDestroy {
           this.isLoadingImages = false;
 
           if (images && images.length > 0) {
-            // Processing URLs of images - considering the API structure
-            this.accommodationImages = images.map(img => {
-              // If img is an object and there is a url property
-              if (img && typeof img === 'object' && img.url) {
+            // Process image URLs
+            this.accommodationImages = images
+              .filter(img => img && img.url)  // Filter out any invalid images
+              .map(img => {
+                // If the URL is relative, prepend the base URL
                 const imageUrl = img.url;
-                if (!imageUrl.startsWith('http') && !imageUrl.startsWith('data:image')) {
-                  return `http://localhost:5152/${imageUrl.replace(/^\//, '')}`;
+                if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('data:image')) {
+                  // Make sure the URL is properly formatted
+                  const baseUrl = 'http://localhost:5152';
+                  return `${baseUrl}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
                 }
                 return imageUrl;
-              }
-            })
+              });
+
+            console.log('Processed image URLs:', this.accommodationImages);
           } else {
+            console.log('No images found, using placeholder');
             this.accommodationImages = [this.placeholderImage];
           }
+        },
+        error: (error) => {
+          console.error('Error loading images:', error);
+          this.isLoadingImages = false;
+          this.imageLoadError = true;
+          this.accommodationImages = [this.placeholderImage];
         }
       });
     }

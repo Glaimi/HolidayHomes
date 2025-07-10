@@ -31,10 +31,12 @@ public class AccommodationDto
     public bool IsParkingAvailable { get; set; }
     public bool IsSaunaAvailable { get; set; }
 
-    public Availability BedSheetsAvailability { get; set; }
-    public Availability ShortTripAvailability { get; set; }
-    public Availability TowelsAvailability { get; set; }
+    public string BedSheetsAvailability { get; set; }
+    public string ShortTripAvailability { get; set; }
+    public string TowelsAvailability { get; set; }
 
     public List<SeasonPricingDto> SeasonPricings { get; set; }
     public double CurrentPrice { get; set; }
+
+    public List<SanitaryDto> SanitaryInfos { get; set; }
 }

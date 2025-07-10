@@ -2,6 +2,8 @@ section {
   font-size: 1.2rem;
   line-height: 1.8rem;
   /* Füge zentrierte Ausrichtung und max-width hinzu: */
+  width:100%;
+  max-width: 1200px;
   background: rgba(255,255,255,0.7); /* Optional, für bessere Lesbarkeit */
   border-radius: 8px; /* Optional */
   padding: 5rem 20rem;
@@ -45,7 +47,6 @@ p{
 /* Laptops and small desktops */
 @media (min-width: 769px) and (max-width: 1200px) {
   section{
-    //margin: 10rem 8rem 5rem 6rem;
     font-size: 1.4rem;
     padding: 5rem 7rem;
 
@@ -66,6 +67,10 @@ p{
     font-size: 1.1rem;
     padding: 3rem 4rem;
   }
+  h2{
+    padding-bottom: 40px;
+    font-family: "Lexend Exa", serif;
+  }
   .title {
     font-size: 1.2rem;
   }
@@ -75,10 +80,11 @@ p{
 @media (max-width: 480px) {
   section{
     padding: 1rem 1rem;
-    font-size: .9rem;
-
+    font-size: 0.9rem;
   }
-
+  h2{
+    font-family: "Lexend Exa", serif;
+  }
   .title {
     font-size: .9rem;
   }

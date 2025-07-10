@@ -9,6 +9,8 @@ section{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -151,6 +153,8 @@ section{
     display: flex;
     justify-content: space-between;
 
+  }
+}
     .price-section{
       color: #666;
       align-content: center;

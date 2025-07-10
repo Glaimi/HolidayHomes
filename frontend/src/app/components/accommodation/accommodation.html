@@ -1,65 +1,66 @@
 
-<section>
-  <div class="accommodation-card" >
-    <div class="image-container">
-      <!-- Image loading  -->
-      <div *ngIf="isLoadingImages" class="loading-spinner">
-        <fa-icon [icon]="faImage" class="spin-icon"></fa-icon>
-        <span>Bilder werden geladen...</span>
-      </div>
-      <!-- Images -->
-      <div *ngIf="!isLoadingImages && accommodationImages.length > 0" class="image-carousel">
-        <img
-          *ngFor="let image of accommodationImages; let i = index"
-          [src]="image"
-          [alt]="'Image ' + (i + 1) + ' of ' + accommodation.name"
-          [class.active]="i === currentImageIndex"
-          [attr.data-index]="i"
-          class="carousel-image">
+<div class="accommodation-card">
+  <!-- Image loading  -->
+  <div class="image-container">
 
-        <div class="carousel-indicators" *ngIf="accommodationImages.length > 1">
-          <button
-            *ngFor="let image of accommodationImages; let i = index"
-            class="indicator-dot"
-            [class.active]="i === currentImageIndex"
-            (click)="goToImage(i)">
-          </button>
-        </div>
-        <!--  Number of Images -->
-        <div class="image-counter">
-          {{ currentImageIndex + 1 }} / {{ accommodationImages.length }}
-        </div>
-      </div>
+    <!--Icon -->
+    <div *ngIf="isLoadingImages" class="loading-spinner">
+      <fa-icon [icon]="faImage" class="spin-icon"></fa-icon>
+      <span>Bilder werden geladen...</span>
     </div>
-    <!-- Residential Information -->
-    <div class="accommodation-info">
-      <h3 class="accommodation-title">{{ accommodation.name }}</h3>
-      <div class="location-info">
-        <fa-icon [icon]="faLocationDot"></fa-icon>
-        <span>{{ accommodation.street }}, {{ accommodation.city }}</span>
-      </div>
-      <div class="accommodation-details">
-        <div class="detail-item" >
-          <fa-icon [icon]="faExpand"></fa-icon>
-          <span>{{ accommodation.squareMeter }} m²</span>
-        </div>
-        <div class="detail-item" >
-          <fa-icon [icon]="faBed"></fa-icon>
-          <span>{{ accommodation.numberOfBeds }} Betten</span>
-        </div>
-      </div>
-      <div class="accommodation-type" >
-        <span class="type-badge">{{ accommodation.type }}</span>
-      </div>
-      <div class="accommodation-actions">
-        <button class="view-details-btn" [routerLink]="['/accommodation', accommodation.id]">
-          Details anzeigen
+
+    <!-- Images -->
+    <div *ngIf="!isLoadingImages && accommodationImages.length > 0" class="image-carousel">
+      <img
+        *ngFor="let image of accommodationImages; let i = index"
+        [src]="image"
+        [alt]="'Image ' + (i + 1) + ' of ' + accommodation.name"
+        [class.active]="i === currentImageIndex"
+        [attr.data-index]="i"
+        class="carousel-image">
+
+      <div class="carousel-indicators" *ngIf="accommodationImages.length > 1">
+        <button
+          *ngFor="let image of accommodationImages; let i = index"
+          class="indicator-dot"
+          [class.active]="i === currentImageIndex"
+          (click)="goToImage(i)">
         </button>
-        <div class="price-section" >
-          <span class="price">Pro Nacht: € {{ accommodation.currentPrice }}</span>
-        </div>
+      </div>
+      <!--  Number of Images -->
+      <div class="image-counter">
+        {{ currentImageIndex + 1 }} / {{ accommodationImages.length }}
       </div>
     </div>
   </div>
-</section>
+  <!-- Residential Information -->
+  <div class="accommodation-info">
+    <h3 class="accommodation-title">{{ accommodation.name }}</h3>
+    <div class="location-info">
+      <fa-icon [icon]="faLocationDot"></fa-icon>
+      <span>{{ accommodation.street }}, {{ accommodation.city }}</span>
+    </div>
+    <div class="accommodation-details">
+      <div class="detail-item" >
+        <fa-icon [icon]="faExpand"></fa-icon>
+        <span>{{ accommodation.squareMeter }} m²</span>
+      </div>
+      <div class="detail-item" >
+        <fa-icon [icon]="faBed"></fa-icon>
+        <span>{{ accommodation.numberOfBeds }} Betten</span>
+      </div>
+    </div>
+    <div class="accommodation-type" >
+      <span class="type-badge">{{ accommodation.type }}</span>
+    </div>
+    <div class="accommodation-actions">
+      <button class="primary-button" [routerLink]="['/view-details', accommodation.id]">
+        Details anzeigen
+      </button>
+      <div class="price-section" >
+        <span class="price">Pro Nacht: € {{ accommodation.currentPrice }}</span>
+      </div>
+    </div>
+  </div>
+</div>
 
