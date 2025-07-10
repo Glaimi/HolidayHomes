@@ -2,7 +2,7 @@
   <fieldset>
     <legend>Grunddaten</legend>
 
-    <div class="form-group">
+    <div class="form-group-vertical">
       <label for="accommodation-type">Art der Unterkunft</label>
       <select id="accommodation-type" formControlName="accommodationType">
         @for (accommodationType of accommodationTypes$ | async; track accommodationType) {
@@ -11,22 +11,22 @@
       </select>
     </div>
 
-    <div class="form-group">
+    <div class="form-group-vertical">
       <label for="landlord-name">Vermietername</label>
       <input type="text" id="landlord-name" formControlName="landlordName" required>
     </div>
 
-    <div class="form-group">
+    <div class="form-group-vertical">
       <label for="accommodation-name">Name der Unterkunft</label>
       <input type="text" id="accommodation-name" formControlName="accommodationName" required>
     </div>
 
-    <div class="form-group">
+    <div class="form-group-vertical">
       <label for="street">Straße</label>
       <input type="text" id="street" formControlName="street" required>
     </div>
 
-    <div class="form-group">
+    <div class="form-group-vertical">
       <label for="city">Ort</label>
       <input type="text" id="city" formControlName="city" required>
     </div>
@@ -36,19 +36,19 @@
     <legend>Ausstattung</legend>
 
     <div class="grid-row">
-      <div class="form-group">
+      <div class="form-group-vertical">
         <label for="square-meters">Größe in m²</label>
         <input type="number" id="square-meters" formControlName="squareMeters" min="{{ minSquareMeters }}"
                max="{{ maxSquareMeters }}" required>
       </div>
 
-      <div class="form-group">
+      <div class="form-group-vertical">
         <label for="number-of-beds">Betten</label>
         <input type="number" id="number-of-beds" formControlName="numberOfBeds" min="{{ minNumberOfBeds }}"
                max="{{ maxNumberOfBeds }}" required>
       </div>
 
-      <div class="form-group">
+      <div class="form-group-vertical">
         <label for="number-of-bedrooms">Schlafzimmer</label>
         <input type="number" id="number-of-bedrooms" formControlName="numberOfBedrooms" min="{{ minNumberOfBedrooms }}"
                max="{{ maxNumberOfBedrooms }}" required>
@@ -56,19 +56,19 @@
     </div>
 
     <div class="grid-row">
-      <div class="form-group">
+      <div class="form-group-vertical">
         <label for="number-of-living-rooms">Wohnräume</label>
         <input type="number" id="number-of-living-rooms" formControlName="numberOfLivingRooms"
                min="{{ minNumberOfLivingRooms }}" max="{{ maxNumberOfLivingRooms }}" required>
       </div>
 
-      <div class="form-group">
+      <div class="form-group-vertical">
         <label for="number-of-mixed-rooms">Wohn- / Schlafräume</label>
         <input type="number" id="number-of-mixed-rooms" formControlName="numberOfMixedRooms"
                min="{{ minNumberOfMixedRooms }}" max="{{ maxNumberOfMixedRooms }}" required>
       </div>
 
-      <div class="form-group">
+      <div class="form-group-vertical">
         <label for="kitchen-type">Art der Küche</label>
         <select id="kitchen-type" formControlName="kitchenType" required>
           @for (kitchenType of kitchenTypes$ | async; track kitchenType.id) {
@@ -77,13 +77,73 @@
         </select>
       </div>
     </div>
+
+    <div class="grid-row">
+      <div class="form-group-vertical">
+        <label for="number-shower-wc">Anzahl Dusche / WC</label>
+        <input type="number" id="number-shower-wc" formControlName="numberOfShowers" min="0" max="4">
+      </div>
+
+      <div class="form-group-vertical">
+        <label for="number-bathtub-wc">Anzahl Badewanne / WC</label>
+        <input type="number" id="number-bathtub-wc" formControlName="numberOfBathtubs" min="0" max="4">
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Preise</legend>
+
+    <div class="grid-row">
+      <div>
+        <p>Saison A</p>
+
+        <div class="form-group-horizontal">
+          <input type="checkbox" id="season-a-bookable" formControlName="seasonABookable">
+          <label for="season-a-bookable">Buchbar</label>
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="season-a-price">Preis</label>
+          <input type="number" id="season-a-price" formControlName="seasonAPrice">
+        </div>
+      </div>
+
+      <div>
+        <p>Saison B</p>
+
+        <div class="form-group-horizontal">
+          <input type="checkbox" id="season-b-bookable">
+          <label for="season-b-bookable" formControlName="seasonBBookable">Buchbar</label>
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="season-b-price">Preis</label>
+          <input type="number" id="season-b-price" formControlName="seasonBPrice">
+        </div>
+      </div>
+
+      <div>
+        <p>Saison C</p>
+
+        <div class="form-group-horizontal">
+          <input type="checkbox" id="season-c-bookable" formControlName="seasonCBookable">
+          <label for="season-b-bookable">Buchbar</label>
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="season-b-price">Preis</label>
+          <input type="number" id="season-c-price" formControlName="seasonCPrice">
+        </div>
+      </div>
+    </div>
   </fieldset>
 
   <fieldset>
     <legend>Weitere Angaben</legend>
 
     <div class="grid-row">
-      <div class="form-group">
+      <div class="form-group-vertical">
         <label for="short-trip">Kurzreise</label>
         <select id="short-trip" formControlName="shortTripAvailability">
           <option value="0">Verfügbar</option>
@@ -92,7 +152,7 @@
         </select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group-vertical">
         <label for="bedsheets">Bettwäsche</label>
         <select id="bedsheets" formControlName="bedsheetsAvailability">
           <option value="0">Verfügbar</option>
@@ -101,7 +161,7 @@
         </select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group-vertical">
         <label for="towels">Handtücher</label>
         <select id="towels" formControlName="towelsAvailability">
           <option value="0">Verfügbar</option>
@@ -133,6 +193,11 @@
       </div>
 
       <div class="form-group-horizontal">
+        <input type="checkbox" id="washing-machine" formControlName="isWashingMachineAvailable">
+        <label for="washing-machine">Waschmaschine</label>
+      </div>
+
+      <div class="form-group-horizontal">
         <input type="checkbox" id="parking" formControlName="isParkingAvailable">
         <label for="parking">Hauseigener Parkplatz</label>
       </div>
@@ -143,7 +208,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group-vertical">
       <label for="hints">Zusatzinformationen</label>
       <textarea id="hints" formControlName="hints" cols="30" rows="10"></textarea>
     </div>

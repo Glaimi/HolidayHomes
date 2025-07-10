@@ -19,13 +19,13 @@ body {
 
 /* Forms */
 
-.form-group {
+.form-group-vertical {
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
 }
 
-.form-group input {
+.form-group-vertical input {
   margin-top: 0.5rem;
 }
 
