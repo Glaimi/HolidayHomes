@@ -8,8 +8,9 @@ import {KitchenTypeModel} from '../interfaces/kitchen-type-model';
 })
 export class KitchenTypeService {
   private http: HttpClient = inject(HttpClient);
+  private baseUrl: string = 'http://localhost:5152/api/KitchenType';
 
   getAllKitchenTypes(): Observable<KitchenTypeModel[]> {
-    return this.http.get<KitchenTypeModel[]>("http://localhost:5152/api/KitchenType");
+    return this.http.get<KitchenTypeModel[]>(this.baseUrl);
   }
 }

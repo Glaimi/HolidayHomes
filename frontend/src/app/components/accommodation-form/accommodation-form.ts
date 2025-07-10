@@ -8,6 +8,9 @@ import {AccommodationTypeService} from '../../services/accommodation-type-servic
 import {AccommodationTypeModel} from '../../interfaces/accommodation-type-model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AccommodationModel} from '../../interfaces/accommodation-model';
+import {SeasonService} from "../../services/season-service";
+import {SeasonModel} from "../../interfaces/season-model";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-accommodation-form',
@@ -29,6 +32,10 @@ export class AccommodationForm implements OnInit {
   // Needed for retrieving and displaying available kitchen types in the form
   private kitchenTypeService: KitchenTypeService = inject(KitchenTypeService);
   public kitchenTypes$!: Observable<KitchenTypeModel[]>;
+
+  // Needed for retrieving and working with existing seasons
+  private seasonService: SeasonService = inject(SeasonService);
+  public seasons$!: Observable<SeasonModel[]>;
 
   public formGroup: FormGroup = new FormGroup({
     accommodationType: new FormControl(1),
@@ -63,24 +70,18 @@ export class AccommodationForm implements OnInit {
     hints: new FormControl('')
   });
 
-  public minSquareMeters: number = 50;
-  public maxSquareMeters: number = 500;
-  public minNumberOfBeds: number = 1;
-  public maxNumberOfBeds: number = 8;
+  public minSquareMeters: number = 20;
+  public minNumberOfBeds: number = 0;
   public minNumberOfBedrooms: number = 0;
-  public maxNumberOfBedrooms: number = 8;
   public minNumberOfLivingRooms: number = 0;
-  public maxNumberOfLivingRooms: number = 8;
   public minNumberOfMixedRooms: number = 0;
-  public maxNumberOfMixedRooms: number = 8;
   public minNumberOfBathtubs: number = 0;
-  public maxNumberOfBathtubs: number = 4;
   public minNumberOfShowers: number = 0;
-  public maxNumberOfShowers: number = 4;
 
   ngOnInit(): void {
     this.accommodationTypes$ = this.accommodationTypeService.getAllAccommodationTypes();
     this.kitchenTypes$ = this.kitchenTypeService.getAllKitchenTypes();
+    this.seasons$ = this.seasonService.getAllSeasons();
   }
 
   onSubmit(): void {
@@ -93,35 +94,39 @@ export class AccommodationForm implements OnInit {
         })
       };
 
-      const accommodationDto = {
-        accommodationTypeId: this.formGroup.get('accommodationType')?.value,
-        kitchenTypeId: this.formGroup.get('kitchenType')?.value,
-        name: this.formGroup.get('accommodationName')?.value,
-        street: this.formGroup.get('street')?.value,
-        city: this.formGroup.get('city')?.value,
-        hints: this.formGroup.get('hints')?.value,
-        landLordName: this.formGroup.get('landlordName')?.value,
-        squareMeter: this.formGroup.get('squareMeters')?.value,
-        numberOfBedrooms: this.formGroup.get('numberOfBedrooms')?.value,
-        numberOfBeds: this.formGroup.get('numberOfBeds')?.value,
-        numberOfMixedRooms: this.formGroup.get('numberOfMixedRooms')?.value,
-        numberOfLivingRooms: this.formGroup.get('numberOfLivingRooms')?.value,
-        isDogAllowed: this.formGroup.get('isDogsAllowed')?.value,
-        isWifiAvailable: this.formGroup.get('isWifiAvailable')?.value,
-        isNonSmoking: this.formGroup.get('isNonSmoking')?.value,
-        isTelevisionAvailable: this.formGroup.get('isTelevisionAvailable')?.value,
-        isWashingMachineAvailable: this.formGroup.get('isWashingMachineAvailable')?.value,
-        isParkingAvailable: this.formGroup.get('isParkingAvailable')?.value,
-        isSaunaAvailable: this.formGroup.get('isSaunaAvailable')?.value,
-        bedSheetsAvailability: this.formGroup.get('bedsheetsAvailability')?.value,
-        shortTripAvailability: this.formGroup.get('shortTripAvailability')?.value,
-        towelsAvailability: this.formGroup.get('towelsAvailability')?.value,
-        accommodationSanitaryInfos: this.getSanitaryInfos()
-      };
+      // After the season pricings have been created, build the DTO and send it to the API
+      this.getSeasonPricings().subscribe(seasonPricings => {
+        const accommodationDto = {
+          accommodationTypeId: this.formGroup.get('accommodationType')?.value,
+          kitchenTypeId: this.formGroup.get('kitchenType')?.value,
+          name: this.formGroup.get('accommodationName')?.value,
+          street: this.formGroup.get('street')?.value,
+          city: this.formGroup.get('city')?.value,
+          hints: this.formGroup.get('hints')?.value,
+          landLordName: this.formGroup.get('landlordName')?.value,
+          squareMeter: this.formGroup.get('squareMeters')?.value,
+          numberOfBedrooms: this.formGroup.get('numberOfBedrooms')?.value,
+          numberOfBeds: this.formGroup.get('numberOfBeds')?.value,
+          numberOfMixedRooms: this.formGroup.get('numberOfMixedRooms')?.value,
+          numberOfLivingRooms: this.formGroup.get('numberOfLivingRooms')?.value,
+          isDogAllowed: this.formGroup.get('isDogsAllowed')?.value,
+          isWifiAvailable: this.formGroup.get('isWifiAvailable')?.value,
+          isNonSmoking: this.formGroup.get('isNonSmoking')?.value,
+          isTelevisionAvailable: this.formGroup.get('isTelevisionAvailable')?.value,
+          isWashingMachineAvailable: this.formGroup.get('isWashingMachineAvailable')?.value,
+          isParkingAvailable: this.formGroup.get('isParkingAvailable')?.value,
+          isSaunaAvailable: this.formGroup.get('isSaunaAvailable')?.value,
+          bedSheetsAvailability: this.formGroup.get('bedsheetsAvailability')?.value,
+          shortTripAvailability: this.formGroup.get('shortTripAvailability')?.value,
+          towelsAvailability: this.formGroup.get('towelsAvailability')?.value,
+          accommodationSanitaryInfos: this.getSanitaryInfos(),
+          seasonPricings
+        };
 
-      this.http.post<AccommodationModel>(this.baseUrl, accommodationDto, options).subscribe(accommodation => {
-        console.log(accommodation);
-      });
+        this.http.post<AccommodationModel>(this.baseUrl, accommodationDto, options).subscribe(accommodation => {
+          console.log(accommodation);
+        });
+      })
     } else {
       console.warn('Unvollständige Formulardaten');
     }
@@ -132,5 +137,29 @@ export class AccommodationForm implements OnInit {
       { sanitaryTypeId: 1, amount: this.formGroup.get('numberOfShowers')?.value ?? 0 },
       { sanitaryTypeId: 2, amount: this.formGroup.get('numberOfBathtubs')?.value ?? 0 }
     ];
+  }
+
+  getSeasonPricings(): Observable<{ seasonId: number, isBookable: boolean, price: number }[]> {
+    return this.seasons$.pipe(map(seasons => seasons.map( season => {
+      if (season.title === 'A') {
+        return {
+          seasonId: season.id,
+          isBookable: this.formGroup.get('seasonABookable')?.value,
+          price: this.formGroup.get('seasonAPrice')?.value
+        }
+      } else if (season.title === 'B') {
+        return {
+          seasonId: season.id,
+          isBookable: this.formGroup.get('seasonBBookable')?.value,
+          price: this.formGroup.get('seasonBPrice')?.value
+        }
+      } else {
+        return {
+          seasonId: season.id,
+          isBookable: this.formGroup.get('seasonCBookable')?.value,
+          price: this.formGroup.get('seasonCPrice')?.value
+        }
+      }
+    })));
   }
 }

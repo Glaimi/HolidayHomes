@@ -38,20 +38,17 @@
     <div class="grid-row">
       <div class="form-group-vertical">
         <label for="square-meters">Größe in m²</label>
-        <input type="number" id="square-meters" formControlName="squareMeters" min="{{ minSquareMeters }}"
-               max="{{ maxSquareMeters }}" required>
+        <input type="number" id="square-meters" formControlName="squareMeters" min="{{ minSquareMeters }}" required>
       </div>
 
       <div class="form-group-vertical">
         <label for="number-of-beds">Betten</label>
-        <input type="number" id="number-of-beds" formControlName="numberOfBeds" min="{{ minNumberOfBeds }}"
-               max="{{ maxNumberOfBeds }}" required>
+        <input type="number" id="number-of-beds" formControlName="numberOfBeds" min="{{ minNumberOfBeds }}" required>
       </div>
 
       <div class="form-group-vertical">
         <label for="number-of-bedrooms">Schlafzimmer</label>
-        <input type="number" id="number-of-bedrooms" formControlName="numberOfBedrooms" min="{{ minNumberOfBedrooms }}"
-               max="{{ maxNumberOfBedrooms }}" required>
+        <input type="number" id="number-of-bedrooms" formControlName="numberOfBedrooms" min="{{ minNumberOfBedrooms }}" required>
       </div>
     </div>
 
@@ -59,13 +56,13 @@
       <div class="form-group-vertical">
         <label for="number-of-living-rooms">Wohnräume</label>
         <input type="number" id="number-of-living-rooms" formControlName="numberOfLivingRooms"
-               min="{{ minNumberOfLivingRooms }}" max="{{ maxNumberOfLivingRooms }}" required>
+               min="{{ minNumberOfLivingRooms }}" required>
       </div>
 
       <div class="form-group-vertical">
         <label for="number-of-mixed-rooms">Wohn- / Schlafräume</label>
         <input type="number" id="number-of-mixed-rooms" formControlName="numberOfMixedRooms"
-               min="{{ minNumberOfMixedRooms }}" max="{{ maxNumberOfMixedRooms }}" required>
+               min="{{ minNumberOfMixedRooms }}" required>
       </div>
 
       <div class="form-group-vertical">
@@ -81,12 +78,12 @@
     <div class="grid-row">
       <div class="form-group-vertical">
         <label for="number-shower-wc">Anzahl Dusche / WC</label>
-        <input type="number" id="number-shower-wc" formControlName="numberOfShowers" min="0" max="4">
+        <input type="number" id="number-shower-wc" formControlName="numberOfShowers" min="{{ minNumberOfShowers }}">
       </div>
 
       <div class="form-group-vertical">
         <label for="number-bathtub-wc">Anzahl Badewanne / WC</label>
-        <input type="number" id="number-bathtub-wc" formControlName="numberOfBathtubs" min="0" max="4">
+        <input type="number" id="number-bathtub-wc" formControlName="numberOfBathtubs" min="{{ minNumberOfBathtubs }}">
       </div>
     </div>
   </fieldset>
@@ -113,8 +110,8 @@
         <p>Saison B</p>
 
         <div class="form-group-horizontal">
-          <input type="checkbox" id="season-b-bookable">
-          <label for="season-b-bookable" formControlName="seasonBBookable">Buchbar</label>
+          <input type="checkbox" id="season-b-bookable" formControlName="seasonBBookable">
+          <label for="season-b-bookable">Buchbar</label>
         </div>
 
         <div class="form-group-vertical">
