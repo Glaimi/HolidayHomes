@@ -55,4 +55,5 @@ export interface AccommodationModel {
   distanceToPublicTransport?: number;
   rating?: number;
   reviewCount?: number;
+  currentPrice?: number;
 }

@@ -35,10 +35,36 @@
     </div>
   </form>
 
-  <app-sort-accommodations></app-sort-accommodations>
+  <div class="dropdown-container">
+    <button class="dropdown-button" (click)="toggleDropdown()">
+      {{ selectedSortText }}
+    </button>
+
+    <div class="dropdown-menu" [class.show]="isOpen">
+      <div class="dropdown-item" (click)="sortByCurrentPrice(true); isOpen = false">
+        Preis <span class="sortType">aufsteigend</span>
+      </div>
+      <div class="dropdown-item" (click)="sortByCurrentPrice(false); isOpen = false">
+        Preis <span class="sortType">absteigend</span>
+      </div>
+      <div class="dropdown-item" (click)="sortBySquaremeter(true); isOpen = false">
+        Wohnfläche <span class="sortType">aufsteigend</span>
+      </div>
+      <div class="dropdown-item" (click)="sortBySquaremeter(false); isOpen = false">
+        Wohnfläche <span class="sortType">absteigend</span>
+      </div>
+      <div class="dropdown-item" (click)="sortByNumbersOfRooms(true); isOpen = false">
+        Anzahl der Räume <span class="sortType">aufsteigend</span>
+      </div>
+      <div class="dropdown-item" (click)="sortByNumbersOfRooms(false); isOpen = false">
+        Anzahl der Räume <span class="sortType">absteigend</span>
+      </div>
+    </div>
+  </div>
+
   <div class="accommodation-grid">
-    @for (accomodation of filteredAccommodations; track accomodation) {
-      <app-accommodation [accommodation]="accomodation"></app-accommodation>
+    @for (accommodation of filteredAccommodations; track accommodation) {
+      <app-accommodation [accommodation]="accommodation"></app-accommodation>
     } @empty {
       <p>Keine Unterkünfte gefunden.</p>
     }
