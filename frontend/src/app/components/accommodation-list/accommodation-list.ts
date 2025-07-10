@@ -4,7 +4,7 @@ import {AccommodationModel} from '../../interfaces/accommodation-model';
 import {AccommodationService} from '../../services/accommodation-service';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Accommodation} from '../accommodation/accommodation';
-import {SortAccommodations} from '../sort-accommodations/sort-accommodations';
+
 
 @Component({
   selector: 'app-accommodation-list',
@@ -12,7 +12,7 @@ import {SortAccommodations} from '../sort-accommodations/sort-accommodations';
     CommonModule,
     Accommodation,
     ReactiveFormsModule,
-    SortAccommodations
+
   ],
   templateUrl: './accommodation-list.html',
   standalone: true,
@@ -24,8 +24,25 @@ export class AccommodationList implements OnInit {
   private accommodationService = inject(AccommodationService);
   accommodations: AccommodationModel[] = [];
   filteredAccommodations: AccommodationModel[] = [];
+  selectedSortText: string = 'Sortieren nach:';
 
   constructor(private fb: FormBuilder) {}
+
+  /*function for dropdown*/
+  isOpen = false;
+  selectedOption: string | null = null;
+
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
+  }
+
+
+
+  selectOption(option: string) {
+    this.selectedSortText = option;
+    this.isOpen = false;
+  }
+
 
   ngOnInit() {
 
@@ -47,6 +64,7 @@ export class AccommodationList implements OnInit {
       this.filterForm.get('rooms')?.markAsTouched();
     });
 
+    this.selectedSortText = 'Sortieren nach';
     this.accommodationService.getAllAccommodations().subscribe({
       next: (response) => {
         this.accommodations = response;
@@ -90,5 +108,35 @@ export class AccommodationList implements OnInit {
       }
       return true;
     });
+  }
+  sortByCurrentPrice(ascending: boolean) {
+    this.selectedSortText = `Preis ${ascending ? 'aufsteigend' : 'absteigend'}`;
+    this.filteredAccommodations.sort((a, b) => {
+      const priceA = a.currentPrice ?? 0;
+      const priceB = b.currentPrice ?? 0;
+      return ascending ? priceA - priceB : priceB - priceA;
+    });
+  }
+
+  sortBySquaremeter(ascending: boolean) {
+    this.selectedSortText = `Wohnfläche ${ascending ? 'aufsteigend' : 'absteigend'}`;
+    this.filteredAccommodations.sort((a, b) =>
+      ascending ? a.squareMeter - b.squareMeter : b.squareMeter - a.squareMeter
+    );
+  }
+
+  private calculateTotalRooms(accommodation: AccommodationModel): number {
+    return  (accommodation.numberOfLivingRooms ?? 0) +
+            (accommodation.numberOfMixedRooms ?? 0) +
+            (accommodation.numberOfBedrooms);
+  }
+  sortByNumbersOfRooms(ascending: boolean) {
+    this.selectedSortText = `Anzahl der Räume ${ascending ? 'aufsteigend' : 'absteigend'}`;
+    this.filteredAccommodations.sort((a,b) =>
+    ascending
+    ? this.calculateTotalRooms(a) - this.calculateTotalRooms(b)
+    : this.calculateTotalRooms(b) - this.calculateTotalRooms(a)
+    );
+
   }
 }

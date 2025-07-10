@@ -15,6 +15,11 @@ export interface Image {
   accommodationId: number;
 }
 
+export interface AccommodationSanitaryInfo {
+  title: string;
+  amount: number;
+}
+
 export interface AccommodationModel {
   id: number;
   name: string;
@@ -36,9 +41,9 @@ export interface AccommodationModel {
   isDogAllowed: boolean;
   numberOfBedrooms: number;
   isWifiAvailable: boolean;
-  numberOfSanitaryFacilities: number;
   squareMeter: number;
-  sanitaryType: string;
+  sanitaryInfos?: AccommodationSanitaryInfo[];
+  kitchen: string;
   type: string;
   landLordName: string;
   seasonPricings: SeasonPricingModel[]; // Can be string for legacy support
@@ -46,7 +51,6 @@ export interface AccommodationModel {
   city: string;
   postalCode?: string;
   country?: string;
-  kitchen: string;
   maxOccupancy?: number;
   floor?: number;
   checkInTime?: string;
@@ -55,4 +59,5 @@ export interface AccommodationModel {
   distanceToPublicTransport?: number;
   rating?: number;
   reviewCount?: number;
+  currentPrice?: number;
 }
