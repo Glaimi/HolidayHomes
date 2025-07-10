@@ -62,7 +62,7 @@
         Details anzeigen
       </button>
       <div class="price-section" >
-        <span class="price">Pro Nacht: € {{ accommodation.currentPrice }}</span>
+        <span class="price">Pro Nacht: {{ accommodation.currentPrice | number: '2.2' : 'de-DE' }} €</span>
       </div>
     </div>
   </div>
