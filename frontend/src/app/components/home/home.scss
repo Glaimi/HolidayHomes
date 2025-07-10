@@ -117,10 +117,10 @@ li{
     max-width: 55%;
   }
   .container{
-    padding: 4rem 5rem;
+    padding: 3rem 4rem;
   }
   .imprint, p{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -129,11 +129,14 @@ li{
   .hero-title {
     font-size: 1.6rem;
     margin-bottom: 19rem;
-    margin-left: 1rem;
+    //margin-left: 1rem;
     max-width: 70%;
   }
   .container{
-    padding: 4rem 2rem;
+    padding: 2rem 1rem;
+  }
+  .text-imprint p{
+    font-size: 1rem;
   }
   .imprint, p{
     font-size: 1rem;

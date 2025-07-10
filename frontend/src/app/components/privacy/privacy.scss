@@ -2,11 +2,11 @@
   /*background: #f8f8f8;*/
   min-height: 100vh;
   font-size: 1.2rem;
-
+  padding: 5rem 19rem;
 
 
   .privacy-content {
-    max-width: 1200px;
+    //max-width: 1200px;
     margin: 0 auto;
     /*background: white;*/
     padding: 1rem;
@@ -65,7 +65,6 @@
   }
 
   .subsection-title {
-
     font-size: 1.2rem;
     margin: 1.8rem 0 1rem;
     font-weight: 500;
@@ -112,39 +111,88 @@
       text-decoration: underline;
     }
   }
-  @media (min-width: 769px) and (max-width: 1199px) {
-    padding: 5rem 7rem;
-  }
-  @media (min-width: 481px) and (max-width: 768px) {
-    padding: 4rem 3.5rem;
-
+  @media (min-width: 769px) and (max-width: 1200px) {
+    padding: 1rem 5rem;
     .privacy-content {
-      padding: 2rem 1.5rem;
+      padding: 2rem 2rem;
+    }
+    .privacy-content .privacy-title{
+      font-size: 1.5rem;
     }
 
+    .privacy-content .privacy-intro{
+      font-size: 1.5rem;
+    }
+    .privacy-content .privacy-section p ,
+    .privacy-content .privacy-section .privacy-list li{
+      font-size: 1.4rem;
+
+    }
+    .privacy-content .privacy-section .subsection-title{
+      font-size: 1.4rem;
+    }
+    .privacy-content .privacy-section .section-title{
+      font-size: 1.4rem;
+    }
     .privacy-title {
       font-size: 1.4rem;
     }
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    padding: 1rem 1rem;
 
-    .section-title {
-      font-size: 1.1rem;
+    .privacy-content {
+      padding: 2rem 3rem;
+    }
+    .privacy-content .privacy-title{
+      font-size: 1.2rem;
     }
 
-    .privacy-list {
-      margin-left: 1rem;
+    .privacy-content .privacy-intro{
+      font-size: 1.2rem;
+    }
+    .privacy-content .privacy-section p ,
+    .privacy-content .privacy-section .privacy-list li{
+      font-size: 1rem;
+
+    }
+    .privacy-content .privacy-section .subsection-title{
+      font-size: 1rem;
+    }
+    .privacy-content .privacy-section .section-title{
+      font-size: 1rem;
+    }
+    .privacy-title {
+      font-size: 1rem;
     }
   }
   @media (max-width: 480px) {
-    padding: 4rem 2rem;
-    //.data-privacy{
-    //  padding: 4rem 2rem;
-    //}
-    .privacy-title {
-      font-size: 1rem;
+    padding: 1rem .2rem;
+    .data-privacy{
+      //padding: 2rem 1rem;
+      //font-size: 3rem;
+    }
+    .privacy-content .privacy-title{
+      font-size: 1.1rem;
+    }
 
-    .privacy-intro{
+    .privacy-content .privacy-intro{
+      font-size: 1rem;
+    }
+    .privacy-content .privacy-section p ,
+    .privacy-content .privacy-section .privacy-list li{
+      font-size: .9rem;
+
+    }
+    .privacy-content .privacy-section .subsection-title{
       font-size: .9rem;
     }
+    .privacy-content .privacy-section .section-title{
+      font-size: .9rem;
+    }
+    .privacy-title {
+      font-size: .9rem;
+
     }
   }
 }
