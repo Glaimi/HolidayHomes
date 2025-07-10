@@ -4,7 +4,7 @@ import {AccommodationModel} from '../../interfaces/accommodation-model';
 import {AccommodationService} from '../../services/accommodation-service';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Accommodation} from '../accommodation/accommodation';
-import {FormsModule} from '@angular/forms';
+
 
 @Component({
   selector: 'app-accommodation-list',
@@ -12,6 +12,7 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     Accommodation,
     ReactiveFormsModule,
+
   ],
   templateUrl: './accommodation-list.html',
   standalone: true,
