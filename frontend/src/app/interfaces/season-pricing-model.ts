@@ -1,6 +1,8 @@
 export interface SeasonPricingModel {
-  seasonId: number;
-  accommodationId: number;
-  bookable: boolean;
+  seasonTitle: string;
+  startDay: number;
+  startMonth:number;
+  endDay:number;
+  endMonth: number;
   price: number;
 }

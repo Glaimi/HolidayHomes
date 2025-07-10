@@ -20,7 +20,7 @@ export class Footer {
 
   goToDataPrivacy(event: Event){
     event.preventDefault();
-    this.router.navigate(['/data.privacy']);
+    this.router.navigate(['privacy']);
   }
 
 
