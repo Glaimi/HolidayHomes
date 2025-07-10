@@ -3,24 +3,27 @@ import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AccommodationService} from '../../services/accommodation-service';
 import {AccommodationModel} from '../../interfaces/accommodation-model';
-import {AsyncPipe, NgIf} from '@angular/common';
-import {ImagesModel} from '../../interfaces/images-model';
+import {AsyncPipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
+import {ImageModel} from '../../interfaces/image-model';
+
 
 @Component({
-  selector: 'app-view.detals',
+  selector: 'app-view.details',
   imports: [
     AsyncPipe,
-    NgIf
+    NgIf,
+    NgForOf,
+    DecimalPipe
   ],
   templateUrl: './accommodation-details.html',
   standalone: true,
   styleUrl: './accommodation-details.scss'
 })
 export class AccommodationDetails {
-  private route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
   accommodationService: AccommodationService = inject(AccommodationService);
   accommodationDetails$: Observable<AccommodationModel | undefined>;
-  accommodationImages$:Observable<ImagesModel[]>;
+  accommodationImages$:Observable<ImageModel[]>;
 
   constructor() {
     const id: number = this.route.snapshot.params['id'];

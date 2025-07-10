@@ -27,7 +27,7 @@ import { AccommodationService } from '../../services/accommodation-service';
   styleUrls: ['./accommodation.scss']
 })
 export class Accommodation implements OnInit, OnDestroy {
-  accommodationImages: string[] = [];
+  accommodationImages: (string|null)[] = [];
   currentImageIndex = 0;
   private imageChangeInterval: any;
   isLoadingImages = false;
@@ -73,16 +73,16 @@ export class Accommodation implements OnInit, OnDestroy {
               // ئەگەر img ئۆبجێکتە و url property هەیە
               if (img && typeof img === 'object' && img.url) {
                 const imageUrl = img.url;
-                if (!imageUrl.startsWith('http') && !imageUrl.startsWith('data:image')) {
-                  return `http://localhost:5152/${imageUrl.replace(/^\//, '')}`;
-                }
+                // if (!imageUrl.startsWith('http') && !imageUrl.startsWith('data:image')) {
+                //   return `http://localhost:5152/${imageUrl.replace(/^\//, '')}`;
+                // }
                 return imageUrl;
               }
               // ئەگەر img ستڕینگە
               else if (typeof img === 'string') {
-                if (!img.startsWith('http') && !img.startsWith('data:image')) {
-                  return `http://localhost:5152/${img.replace(/^\//, '')}`;
-                }
+                // if (!img.startsWith('http') && !img.startsWith('data:image')) {
+                //   return `http://localhost:5152/${img.replace(/^\//, '')}`;
+                // }
                 return img;
               }
               return null;

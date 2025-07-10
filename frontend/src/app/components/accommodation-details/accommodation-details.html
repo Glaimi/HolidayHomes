@@ -1,38 +1,67 @@
-<br><br><br><br>
+<section class="accommodation-details" *ngIf="accommodationDetails$ | async as accommodation">
+  <div class="details-container">
+    <h2>{{ accommodation.name }}</h2>
 
-<section *ngIf="accommodationDetails$ | async as accommodation">
+    <div class="location">
+      <p><strong>Stadt:</strong> {{ accommodation.city }}</p>
+      <p><strong>Straße:</strong> {{ accommodation.street }}</p>
+      <p><strong>Vermieter:</strong> {{ accommodation.landLordName }}</p>
+    </div>
 
-<h2>{{ accommodation.name }}</h2>
-
-<p>Stadt: {{ accommodation.city }}</p>
-<p>Vermieter: {{ accommodation.landLordName }}</p>
-<p>Straße: {{ accommodation.street }}</p>
-
-<p>Anzahl an Betten: {{ accommodation.numberOfBeds }}</p>
-<p>Quadratmeter: {{ accommodation.squareMeter }}</p>
-<p>Anzahl an Schlafzimmern: {{ accommodation.numberOfBedrooms }}</p>
-<p>Anzahl an Wohnzimmern: {{ accommodation.numberOfLivingRooms }}</p>
-<p>Anzahl an Gemischten Räumen: {{ accommodation.numberOfMixedRooms }}</p>
-<p>Küchentyp: {{ accommodation.kitchenType }}</p>
-
-<p>Badezimmertyp: {{ accommodation.sanitaryType }}</p>
-
-<p>Preis: {{ accommodation.seasonPricing }}</p>
-<p>Kurzreisen: {{ accommodation.shortTrip }}</p>
-<p>Bettwäsche: {{ accommodation.bedSheetsAvailability }}</p>
-<p>Handtücher: {{ accommodation.towelsAvailable }}</p>
-<p>Hinweise: {{ accommodation.hints }}</p>
-<p>W-Lan: {{ accommodation.isWifiAvailable }}</p>
-<p>Hunde erlaubt: {{ accommodation.isDogAllowed }}</p>
-<p>Rauchen erlaubt: {{ accommodation.isNonSmoking }}</p>
-<p>Fernseher vorhanden: {{ accommodation.isTelevisionAvailable }}</p>
-<p>Waschmaschine vorhanden: {{ accommodation.isWashingMachineAvailable }}</p>
-<p>Parkplatz vorhanden: {{ accommodation.isParkingAvailable }}</p>
-<p>Sauna vorhanden: {{ accommodation.isSaunaAvailable }}</p>
+    <div class="basic-info">
+      <p><strong>Anzahl Betten:</strong> {{ accommodation.numberOfBeds }}</p>
+      <p><strong>Fläche:</strong> {{ accommodation.squareMeter }} m²</p>
+      <p><strong>Schlafzimmer:</strong> {{ accommodation.numberOfBedrooms }}</p>
+      <p><strong>Wohnzimmer:</strong> {{ accommodation.numberOfLivingRooms }}</p>
+      <p><strong>Gemischte Räume:</strong> {{ accommodation.numberOfMixedRooms }}</p>
+      <p><strong>Küche:</strong> {{ accommodation.kitchen }}</p>
+    </div>
 
 
+    <div class="availability">
+      <p><strong>Kurzreisen:</strong> {{ accommodation.shortTripAvailability }}</p>
+      <p><strong>Bettwäsche:</strong> {{ accommodation.bedSheetsAvailability }}</p>
+      <p><strong>Handtücher:</strong> {{ accommodation.towelsAvailability }}</p>
+
+    </div>
+
+    <div class="features">
+      <p><strong>W-Lan:</strong> {{ accommodation.isWifiAvailable ? 'Ja' : 'Nein' }}</p>
+      <p><strong>Hunde erlaubt:</strong> {{ accommodation.isDogAllowed ? 'Ja' : 'Nein' }}</p>
+      <p><strong>Rauchen erlaubt:</strong> {{ accommodation.isNonSmoking ? 'Nein' : 'Ja' }}</p>
+      <p><strong>Fernseher:</strong> {{ accommodation.isTelevisionAvailable ? 'Ja' : 'Nein' }}</p>
+      <p><strong>Waschmaschine:</strong> {{ accommodation.isWashingMachineAvailable ? 'Ja' : 'Nein' }}</p>
+      <p><strong>Parkplatz:</strong> {{ accommodation.isParkingAvailable ? 'Ja' : 'Nein' }}</p>
+      <p><strong>Sauna:</strong> {{ accommodation.isSaunaAvailable ? 'Ja' : 'Nein' }}</p>
+      <p><strong>Hinweise:</strong> {{ accommodation.hints }}</p>
+    </div>
+
+    <div class="pricing">
+      <h3>Preise:</h3>
+      @for(seasonPricing of accommodation.seasonPricings; track seasonPricing) {
+        <p>Saison: {{seasonPricing.seasonTitle}} vom {{seasonPricing.startDay}}.{{seasonPricing.startMonth}} bis
+          {{seasonPricing.endDay}}.{{seasonPricing.endMonth}} - <strong>{{seasonPricing.price | number: '2.2':'de-DE'}} € / Nacht</strong>
+        </p>
+      }
+    </div>
+
+    <div class="image-gallery" *ngIf="accommodationImages$ | async as images">
+      <ng-container *ngIf="images.length > 0">
+        <div class="image-grid">
+          <img *ngFor="let image of images" [src]="image.url" alt="Unterkunftsbild" />
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="contact">
+      <p><em>Um die Unterkunft zu buchen oder die Verfügbarkeit zu prüfen, schreiben Sie uns bitte eine E-Mail oder rufen Sie uns gerne an.</em></p>
+      <p><strong>E-Mail:</strong> info&#64;HolidayHome.de </p>
+      <p><strong>Telefon:</strong> 01234 / 567890</p>
+    </div>
+  </div>
+</section>
 
 <p>"Um die Unterkunft zu Buchen oder die Verfügbarkeit zu prüfen, schreiben Sie uns bitte eine E-Mail oder rufen Sie uns gerne an."</p>
 <p>E-Mail: </p>
 <p>Telefonnummer: </p>
-</section>
+
