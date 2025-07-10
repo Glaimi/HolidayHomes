@@ -67,7 +67,8 @@ public class AccommodationMapper
             ShortTripAvailability = MapAvailabilityToGerman(entity.ShortTripAvailability),
             TowelsAvailability = MapAvailabilityToGerman(entity.TowelsAvailability),
             SeasonPricings = await _seasonPricingService.GetSeasonPricingsByAccommodationIdAsync(entity.Id),
-            CurrentPrice = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(entity.Id, DateTime.Now)
+            CurrentPrice = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(entity.Id, DateTime.Now),
+            SanitaryInfos = SanitaryMapper.MapEntityToDto(entity.AccommodationSanitaryInfos)
         };
     }
 

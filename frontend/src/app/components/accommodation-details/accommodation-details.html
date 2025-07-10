@@ -15,8 +15,10 @@
       <p><strong>Wohnzimmer:</strong> {{ accommodation.numberOfLivingRooms }}</p>
       <p><strong>Gemischte Räume:</strong> {{ accommodation.numberOfMixedRooms }}</p>
       <p><strong>Küche:</strong> {{ accommodation.kitchen }}</p>
+      @for (SanitaryInfo of accommodation.sanitaryInfos;track SanitaryInfo) {
+      <p><strong>Sanitär:</strong> {{ SanitaryInfo.title}}:{{SanitaryInfo.amount}}</p>
+      }
     </div>
-
 
     <div class="availability">
       <p><strong>Kurzreisen:</strong> {{ accommodation.shortTripAvailability }}</p>
@@ -60,3 +62,8 @@
     </div>
   </div>
 </section>
+
+<p>"Um die Unterkunft zu Buchen oder die Verfügbarkeit zu prüfen, schreiben Sie uns bitte eine E-Mail oder rufen Sie uns gerne an."</p>
+<p>E-Mail: </p>
+<p>Telefonnummer: </p>
+

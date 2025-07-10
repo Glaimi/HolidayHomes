@@ -4,13 +4,13 @@
     <div class="filter-inner">
       <!-- living space -->
       <label for="size">Wohnfläche (m²):</label>
-      <input type="number" formControlName="size" class="input-small" min="0" />
+      <input id="size" type="number" formControlName="size" class="input-small" min="0" />
       <div *ngIf="filterForm.get('size')?.errors?.['min'] && filterForm.get('size')?.touched" style="color: red;">
         Mindestwert ist 20
       </div>
       <!-- numberOfRooms -->
       <label for="rooms">Zimmer:</label>
-      <input type="number" formControlName="rooms" class="input-small" min="0" />
+      <input id ="rooms" type="number" formControlName="rooms" class="input-small" min="0" />
       <div *ngIf="filterForm.get('rooms')?.errors?.['min'] && filterForm.get('rooms')?.touched" style="color: red;">
         Mindestwert ist 1
       </div>
@@ -42,22 +42,22 @@
 
     <div class="dropdown-menu" [class.show]="isOpen">
       <div class="dropdown-item" (click)="sortByCurrentPrice(true); isOpen = false">
-        Preis <span class="sortType">aufsteigend</span>
+        Preis <span>aufsteigend</span>
       </div>
       <div class="dropdown-item" (click)="sortByCurrentPrice(false); isOpen = false">
-        Preis <span class="sortType">absteigend</span>
+        Preis <span>absteigend</span>
       </div>
       <div class="dropdown-item" (click)="sortBySquaremeter(true); isOpen = false">
-        Wohnfläche <span class="sortType">aufsteigend</span>
+        Wohnfläche <span>aufsteigend</span>
       </div>
       <div class="dropdown-item" (click)="sortBySquaremeter(false); isOpen = false">
-        Wohnfläche <span class="sortType">absteigend</span>
+        Wohnfläche <span>absteigend</span>
       </div>
       <div class="dropdown-item" (click)="sortByNumbersOfRooms(true); isOpen = false">
-        Anzahl der Räume <span class="sortType">aufsteigend</span>
+        Anzahl der Räume <span>aufsteigend</span>
       </div>
       <div class="dropdown-item" (click)="sortByNumbersOfRooms(false); isOpen = false">
-        Anzahl der Räume <span class="sortType">absteigend</span>
+        Anzahl der Räume <span>absteigend</span>
       </div>
     </div>
   </div>

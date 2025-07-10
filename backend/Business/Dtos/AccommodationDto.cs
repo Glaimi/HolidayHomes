@@ -37,4 +37,6 @@ public class AccommodationDto
 
     public List<SeasonPricingDto> SeasonPricings { get; set; }
     public double CurrentPrice { get; set; }
+
+    public List<SanitaryDto> SanitaryInfos { get; set; }
 }
