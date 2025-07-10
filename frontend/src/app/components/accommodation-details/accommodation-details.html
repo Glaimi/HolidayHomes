@@ -15,8 +15,10 @@
       <p><strong>Wohnzimmer:</strong> {{ accommodation.numberOfLivingRooms }}</p>
       <p><strong>Gemischte Räume:</strong> {{ accommodation.numberOfMixedRooms }}</p>
       <p><strong>Küche:</strong> {{ accommodation.kitchen }}</p>
+      @for (SanitaryInfo of accommodation.sanitaryInfos;track SanitaryInfo) {
+      <p><strong>Sanitär:</strong> {{ SanitaryInfo.title}}:{{SanitaryInfo.amount}}</p>
+      }
     </div>
-
 
     <div class="availability">
       <p><strong>Kurzreisen:</strong> {{ accommodation.shortTripAvailability }}</p>
