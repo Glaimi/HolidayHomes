@@ -84,7 +84,7 @@ public class AccommodationMapper
             IsWifiAvailable = dto.IsWifiAvailable,
             IsNonSmoking = dto.IsNonSmoking,
             IsTelevisionAvailable = dto.IsTelevisionAvailable,
-            IsWashingMachineAvailable = false,
+            IsWashingMachineAvailable = dto.IsWashingMachineAvailable,
             IsParkingAvailable = dto.IsParkingAvailable,
             IsSaunaAvailable = dto.IsSaunaAvailable,
             BedSheetsAvailability = (Availability)dto.BedSheetsAvailability,
@@ -94,7 +94,7 @@ public class AccommodationMapper
             AccommodationTypeId = dto.AccommodationTypeId,
             KitchenTypeId = dto.KitchenTypeId,
             SeasonPricings = [],
-            AccommodationSanitaryInfos = [],
+            AccommodationSanitaryInfos = dto.AccommodationSanitaryInfos,
             Images = []
         };
     }

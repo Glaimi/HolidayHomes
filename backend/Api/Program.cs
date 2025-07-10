@@ -65,7 +65,9 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(optionsBuilder =>
     {
-        optionsBuilder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
+        optionsBuilder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback)
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
@@ -86,6 +88,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
 // UseStaticFiles is for ImageService to serve images.
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -1,4 +1,6 @@
-﻿namespace Business.Dtos;
+﻿using Data.Models;
+
+namespace Business.Dtos;
 
 public class AddAccommodationDto
 {
@@ -28,4 +30,6 @@ public class AddAccommodationDto
     public int BedSheetsAvailability { get; set; }
     public int ShortTripAvailability { get; set; }
     public int TowelsAvailability { get; set; }
+
+    public List<AccommodationSanitaryInfo> AccommodationSanitaryInfos { get; set; }
 }

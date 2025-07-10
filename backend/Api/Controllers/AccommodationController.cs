@@ -33,10 +33,12 @@ namespace Api.Controllers
         /// </summary>
         /// <returns>A list of accommodation DTOs.</returns>
         /// <response code="200">Returns the list of accommodations</response>
+        // show all Accommodations
         [HttpGet]
         public async Task<ActionResult<List<AccommodationDto>>> GetAllAccommodations()
         {
             var accommodations = await _accommodationService.GetAllAccommodationsAsync();
+
             return Ok(accommodations);
         }
     }
