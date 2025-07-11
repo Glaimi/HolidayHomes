@@ -1,74 +1,111 @@
 <div class="accommodation-list-container">
-  <!-- FilterForm -->
+
+  <!-- Filter form: used to filter accommodations by user-defined criteria -->
   <form [formGroup]="filterForm" (ngSubmit)="applyFilters()" class="filter-form">
     <div class="filter-inner">
-      <!-- living space -->
+
+      <!-- Input field: Minimum living space (square meters) -->
       <label for="size">Wohnfläche (m²):</label>
-      <input id="size" type="number" formControlName="size" class="input-small" min="0" />
-      <div *ngIf="filterForm.get('size')?.errors?.['min'] && filterForm.get('size')?.touched" style="color: red;">
-        Mindestwert ist 20
+      <input id="size" type="number" formControlName="size" class="input-small" min="0"/>
+
+      <!-- Validation message for invalid size input -->
+      <div class="error-message"
+           [style.visibility]="filterForm.get('size')?.errors?.['min'] && filterForm.get('size')?.touched ? 'visible' : 'hidden'">
+        Min.20qm
+
       </div>
-      <!-- numberOfRooms -->
+
+      <!-- Input field: Minimum number of rooms -->
       <label for="rooms">Zimmer:</label>
-      <input id ="rooms" type="number" formControlName="rooms" class="input-small" min="0" />
-      <div *ngIf="filterForm.get('rooms')?.errors?.['min'] && filterForm.get('rooms')?.touched" style="color: red;">
-        Mindestwert ist 1
+      <input id="rooms" type="number" formControlName="rooms" class="input-small" min="0"/>
+
+      <!-- Validation message for invalid room input -->
+      <div class="error-message"
+           [style.visibility]="filterForm.get('rooms')?.errors?.['min'] && filterForm.get('rooms')?.touched ? 'visible' : 'hidden'">
+        Min.1Zimmer
+
       </div>
-      <!-- otherFilters -->
+
+      <!-- Checkbox: Filter for accommodations that allow dogs -->
       <label>
-        <input type="checkbox" formControlName="dogsAllowed" />
+        <input type="checkbox" formControlName="dogsAllowed"/>
         Hunde erlaubt
       </label>
+
+      <!-- Checkbox: Filter for accommodations with WiFi -->
       <label>
-        <input type="checkbox" formControlName="hasWifi" />
+        <input type="checkbox" formControlName="hasWifi"/>
         WLAN vorhanden
       </label>
+
+      <!-- Checkbox: Filter for accommodations with sauna -->
       <label>
-        <input type="checkbox" formControlName="hasSauna" />
+        <input type="checkbox" formControlName="hasSauna"/>
         Sauna vorhanden
       </label>
-      <!-- useFilters-Button -->
+
+      <!-- Button to apply filters -->
       <button type="submit" class="filter-submit-button">
         Filter anwenden
       </button>
-      <button type="button" class="reset-button" (click)="resetFilters()">🔄</button> <!--🔄-->
+
+      <!-- Button to reset filters and reload the page -->
+      <button type="button" class="reset-button" (click)="resetFilters()">🔄</button>
     </div>
   </form>
 
+  <!-- Dropdown for sorting the filtered accommodations -->
   <div class="dropdown-container">
     <button class="dropdown-button" (click)="toggleDropdown()">
       {{ selectedSortText }}
     </button>
 
+    <!-- Sorting options list, shown only when dropdown is open -->
     <div class="dropdown-menu" [class.show]="isOpen">
+
+      <!-- Sort by current price (ascending) -->
       <div class="dropdown-item" (click)="sortByCurrentPrice(true); isOpen = false">
         Preis <span>aufsteigend</span>
       </div>
+
+      <!-- Sort by current price (descending) -->
       <div class="dropdown-item" (click)="sortByCurrentPrice(false); isOpen = false">
         Preis <span>absteigend</span>
       </div>
+
+      <!-- Sort by square meters (ascending) -->
       <div class="dropdown-item" (click)="sortBySquaremeter(true); isOpen = false">
         Wohnfläche <span>aufsteigend</span>
       </div>
+
+      <!-- Sort by square meters (descending) -->
       <div class="dropdown-item" (click)="sortBySquaremeter(false); isOpen = false">
         Wohnfläche <span>absteigend</span>
       </div>
+
+      <!-- Sort by number of rooms (ascending) -->
       <div class="dropdown-item" (click)="sortByNumbersOfRooms(true); isOpen = false">
         Anzahl der Räume <span>aufsteigend</span>
       </div>
+
+      <!-- Sort by number of rooms (descending) -->
       <div class="dropdown-item" (click)="sortByNumbersOfRooms(false); isOpen = false">
         Anzahl der Räume <span>absteigend</span>
       </div>
     </div>
   </div>
 
+  <!-- Accommodation grid: displays each accommodation as a child component -->
   <div class="accommodation-grid">
     @for (accommodation of filteredAccommodations; track accommodation) {
+      <!-- Accommodation component instance for each filtered accommodation -->
       <app-accommodation [accommodation]="accommodation"></app-accommodation>
     } @empty {
+      <!-- Fallback message when no accommodations match the filters -->
       <p>Keine Unterkünfte gefunden.</p>
     }
   </div>
+
 </div>
 
 

@@ -56,7 +56,8 @@
     </tr>
     <tr>
       <td class="info-left"><strong>Sauna:</strong> {{ accommodation.isSaunaAvailable ? 'Ja' : 'Nein' }}</td>
-
+      <td class="info-right"><strong>Badezimmer:</strong>@for (sanitaryInfo of accommodation.sanitaryInfos; track sanitaryInfo){
+        {{sanitaryInfo.title}} }</td>
     </tr>
   </table>
   <div><p><strong>Hinweise:</strong> {{ accommodation.hints }}</p></div>

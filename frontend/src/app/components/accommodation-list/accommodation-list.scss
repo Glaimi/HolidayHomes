@@ -1,9 +1,11 @@
+// Outer container for the accommodation list section
 .accommodation-list-container {
   width: 100%;
   max-width: 1400px;
   padding: 0 1rem;
   box-sizing: border-box;
 
+  // Grid layout for displaying accommodations
   .accommodation-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -13,6 +15,7 @@
     margin: 0 auto;
   }
 }
+// Styling for the top filter form container
 .filter-form {
   display: flex;
   flex-wrap: wrap;
@@ -28,6 +31,7 @@
   max-width: 1400px;
   margin-top: 24px;
 
+  // Wrapper for all filter input controls
   .filter-inner {
     display: flex;
     flex-wrap: wrap;
@@ -36,18 +40,22 @@
     padding: 1rem 1.5rem;
     box-sizing: border-box;
     font-size: 1rem;
+
+    // Label styling for form inputs and checkboxes
     label {
       margin: 0;
       display: flex;
       align-items: center;
       gap: 0.25rem;
     }
-
+    // Subsection for grouping filter fields horizontally
     .form-subsection {
       display: flex;
       align-items: center;
     }
   }
+
+  // Input, select and button styling inside the filter
   input,
   select,
   button {
@@ -55,6 +63,8 @@
     padding: 0.5rem;
     font-size: 0.75rem;
   }
+
+  // Submit & Reset buttons
   button {
     background-color: #007bff;
     color: white;
@@ -69,6 +79,7 @@
     &:hover {
       background-color: #0056b3;
     }
+    // Reset button (🔄) inside the filter form
     .reset-button {
       background-color: white;
       color: white;
@@ -91,7 +102,7 @@
   }
 }
 
-
+// Container for input group elements inside the filter
 .filter-group {
   display: flex;
   flex-wrap: wrap;
@@ -100,6 +111,8 @@
   flex: 1 1 200px;
 }
 
+
+// Smaller input field for compact numeric fields (e.g. m², rooms)
 .input-small {
   width: 40px;
   height: 1rem;
@@ -110,31 +123,36 @@
 
 
 // Responsive adjustments
+
+// For large tablets / small desktops
 @media (max-width: 1200px) {
   .accommodation-list-container .accommodation-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
+// For tablets
 @media (max-width: 992px) {
   .accommodation-list-container .accommodation-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+// For mobile devices
 @media (max-width: 768px) {
   .accommodation-list-container .accommodation-grid {
     grid-template-columns: 1fr;
     max-width: 500px;
   }
 }
-/*styling for sort dropdown-menu*/
+
+// Wrapper for the sort dropdown
 .dropdown-container {
   position: relative;
   display: inline-block;
   min-width: 260px;
 }
-
+// Dropdown toggle button
 .dropdown-button {
   font-family: "Roboto", sans-serif;
   background-color: #f3f3f3;
@@ -151,6 +169,7 @@
   border: 1px solid #ccc;
 }
 
+// Dropdown content container
 .dropdown-menu {
   margin-top: -24px;
   top: 100%;
@@ -164,14 +183,18 @@
   width: 100%;
 }
 
+// Modifier class to toggle visibility
 .dropdown-menu.show {
   display: block;
 }
 
+
+// First item in dropdown (removes top border if needed)
 .dropdown-item:first-child {
   border-top: none;
 }
 
+// Individual dropdown item styling
 .dropdown-item {
   font-family: "Roboto", sans-serif;
   color: black;
@@ -183,6 +206,7 @@
   box-sizing: border-box;
 }
 
+// Hover effect for dropdown items
 .dropdown-item:hover {
   background-color: #ddd;
 }
@@ -196,4 +220,9 @@
     width: 100%;
     text-align: center;
   }
+}
+// error message style
+.error-message{
+  color: red;
+  margin-top: 9px;
 }
