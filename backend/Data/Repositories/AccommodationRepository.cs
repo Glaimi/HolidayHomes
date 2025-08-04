@@ -55,6 +55,6 @@ public class AccommodationRepository : IAccommodationRepository
             .Include(a => a.AccommodationSanitaryInfos)
             .ThenInclude(si => si.SanitaryType)
             .FirstOrDefaultAsync(a => a.Name.ToLower() == name.ToLower());
-            
+
     }
 }
