@@ -55,4 +55,14 @@ public class AccommodationService : IAccommodationService
         var accommodation = accommodations.FirstOrDefault(a => a.Id == accommodationId);
         return accommodation?.Name;
     }
+
+    public async Task<AccommodationDto?> GetAccommodationByNameAsync(string name)
+    {
+        var accommodation = await _accommodationRepository.GetAccommodationByNameAsync(name);
+
+        if (accommodation == null)
+            return null;
+
+        return await _accommodationMapper.MapEntityToDto(accommodation);
+    }
 }

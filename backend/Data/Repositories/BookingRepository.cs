@@ -33,8 +33,10 @@ public class BookingRepository
 
     // Hilfsmethode für Überschneidungsprüfung im Service
     public async Task<List<Booking>> GetByAccommodationIdAsync(int accommodationId)
+    
         => await _dbContext.Bookings
             .Include(b => b.Accommodation)
             .Where(b => b.AccommodationId == accommodationId)
             .ToListAsync();
+    
 }
