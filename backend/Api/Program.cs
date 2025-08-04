@@ -55,6 +55,9 @@ builder.Services.AddScoped<SeasonPricingService>();
 builder.Services.AddScoped<SeasonPricingMapper>();
 builder.Services.AddTransient<DataInitializerService>();
 builder.Services.AddTransient<ExcelWorksheetParser>();
+// Booking-Services registration
+builder.Services.AddScoped<BookingRepository>();
+builder.Services.AddScoped<BookingService>();
 
 // Configure CORS to allow connections from localhost.
 builder.Services.AddCors(options =>
