@@ -13,6 +13,11 @@ public class SanitaryTypeRepository
         _dataContext = dataContext;
     }
 
+    public async Task<SanitaryType?> GetSanitaryTypeByIdAsync(int sanitaryTypeId)
+    {
+        return await _dataContext.SanitaryTypes.FindAsync(sanitaryTypeId);
+    }
+
     public async Task<SanitaryType?> GetSanitaryTypeByAbbreviationAsync(string abbreviation)
     {
         return await _dataContext.SanitaryTypes.FirstOrDefaultAsync(st =>

@@ -51,6 +51,7 @@ builder.Services.AddScoped<AddressRepository>();
 builder.Services.AddScoped<AddressService>();
 builder.Services.AddScoped<SanitaryTypeRepository>();
 builder.Services.AddScoped<SanitaryTypeService>();
+builder.Services.AddScoped<SanitaryTypeMapper>();
 builder.Services.AddScoped<SeasonRepository>();
 builder.Services.AddScoped<SeasonService>();
 builder.Services.AddScoped<SeasonMapper>();

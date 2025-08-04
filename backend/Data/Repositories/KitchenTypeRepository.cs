@@ -21,6 +21,11 @@ public class KitchenTypeRepository
         return kitchenType;
     }
 
+    public async Task<KitchenType?> GetKitchenTypeByIdAsync(int kitchenTypeId)
+    {
+        return await _dataContext.KitchenTypes.FindAsync(kitchenTypeId);
+    }
+
     public async Task<List<KitchenType>> GetAllKitchenTypes()
     {
         return await _dataContext.KitchenTypes.ToListAsync();

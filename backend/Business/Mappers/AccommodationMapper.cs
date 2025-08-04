@@ -12,13 +12,21 @@ namespace Business.Mappers;
 public class AccommodationMapper
 {
     private readonly AddressService _addressService;
+    private readonly AccommodationTypeService _accommodationTypeService;
+    private readonly KitchenTypeService _kitchenTypeService;
+    private readonly SanitaryTypeMapper _sanitaryTypeMapper;
     private readonly SeasonPricingService _seasonPricingService;
     private readonly SeasonPricingMapper _seasonPricingMapper;
 
-    public AccommodationMapper(AddressService addressService, SeasonPricingService seasonPricingService,
+    public AccommodationMapper(AddressService addressService, AccommodationTypeService accommodationTypeService,
+        KitchenTypeService kitchenTypeService, SanitaryTypeMapper sanitaryTypeMapper,
+        SeasonPricingService seasonPricingService,
         SeasonPricingMapper seasonPricingMapper)
     {
         _addressService = addressService;
+        _accommodationTypeService = accommodationTypeService;
+        _kitchenTypeService = kitchenTypeService;
+        _sanitaryTypeMapper = sanitaryTypeMapper;
         _seasonPricingService = seasonPricingService;
         _seasonPricingMapper = seasonPricingMapper;
     }
@@ -41,17 +49,21 @@ public class AccommodationMapper
     /// <returns>The corresponding AccommodationDto.</returns>
     public async Task<AccommodationDto> MapEntityToDto(Accommodation entity)
     {
+        AccommodationTypeDto? accommodationTypeDto =
+            await _accommodationTypeService.GetAccommodationTypeByIdAsync(entity.AccommodationTypeId);
+        KitchenType? kitchenType = await _kitchenTypeService.GetKitchenTypeByIdAsync(entity.KitchenTypeId);
+
         return new AccommodationDto
         {
             Id = entity.Id,
-            Type = entity.AccommodationType!.Title,
+            Type = accommodationTypeDto!.Title,
             Name = entity.Name,
             Street = entity.Address!.Street,
             City = entity.Address!.City,
             Hints = entity.Hints,
             LandLordName = entity.LandLordName,
             SquareMeter = entity.SquareMeter,
-            Kitchen = entity.KitchenType!.Title,
+            Kitchen = kitchenType!.Title,
             NumberOfBedrooms = entity.NumberOfBedrooms,
             NumberOfBeds = entity.NumberOfBeds,
             NumberOfMixedRooms = entity.NumberOfMixedRooms,
@@ -68,7 +80,7 @@ public class AccommodationMapper
             TowelsAvailability = MapAvailabilityToGerman(entity.TowelsAvailability),
             SeasonPricings = await _seasonPricingService.GetSeasonPricingsByAccommodationIdAsync(entity.Id),
             CurrentPrice = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(entity.Id, DateTime.Now),
-            SanitaryInfos = SanitaryMapper.MapEntityToDto(entity.AccommodationSanitaryInfos)
+            SanitaryInfos = await _sanitaryTypeMapper.MapEntitiesToDtos(entity.AccommodationSanitaryInfos)
         };
     }
 
