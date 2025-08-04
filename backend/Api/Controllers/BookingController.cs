@@ -9,6 +9,7 @@ namespace Api.Controllers;
 public class BookingController : ControllerBase
 {
     private readonly BookingService _bookingService;
+    private readonly IAccommodationService _accommodationService;
 
     public BookingController(BookingService bookingService)
     {
@@ -39,4 +40,6 @@ public class BookingController : ControllerBase
         await _bookingService.DeleteAsync(id);
         return Ok();
     }
+
+    
 }

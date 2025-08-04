@@ -32,4 +32,9 @@ public interface IAccommodationRepository
     /// A task that represents the asynchronous operation. The task result contains the total count of accommodations.
     /// </returns>
     Task<int> GetAccommodationsCountAsync();
+
+
+    Task<Accommodation?> GetAccommodationByNameAsync(string name);
+
+
 }
