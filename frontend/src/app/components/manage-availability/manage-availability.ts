@@ -3,6 +3,7 @@ import {AccommodationService} from '../../services/accommodation-service';
 import {AccommodationModel} from '../../interfaces/accommodation-model';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {BookingModel} from '../../interfaces/booking-model';
 
 @Component({
   selector: 'app-manage-availability',
@@ -17,13 +18,34 @@ import {FormsModule} from '@angular/forms';
 export class ManageAvailability {
   private accommodationService = inject(AccommodationService)
 
-  trackById(index: number, item: AccommodationModel): number {
-    return item.id;
-  }
-
   accommodations: AccommodationModel[] = []
-  bookings: any[] = [];
+  bookings: BookingModel[] = [];
   searchValue: string = '';
+
+  private handleSearchResponse(response: AccommodationModel[] | AccommodationModel | null | undefined): void {
+    console.log('API response:', response);
+    if (Array.isArray(response)) {
+      this.accommodations = response;
+    } else if (response) {
+      this.accommodations = [response];
+    } else {
+      this.accommodations = [];
+    }
+    if (this.accommodations.length > 0) {
+      const accId = this.accommodations[0].id;
+      this.accommodationService.getBookingsByAccommodationId(accId).subscribe({
+        next: (bookings) => {
+          this.bookings = bookings;
+        },
+        error: (err) => {
+          console.error('Fehler beim Laden der Buchungen:', err);
+          this.bookings = [];
+        }
+      });
+    } else {
+      this.bookings = [];
+    }
+  }
 
   search() {
     if (!this.searchValue.trim()) {
@@ -35,50 +57,18 @@ export class ManageAvailability {
 
     if (isNumeric) {
       this.accommodationService.searchAccommodation(Number(this.searchValue), undefined).subscribe({
-        next: (response) => {
-          this.accommodations = Array.isArray(response) ? response : (response ? [response] : []);
-          if (this.accommodations.length > 0) {
-            const accId = this.accommodations[0].id;
-            this.accommodationService.getBookingsByAccommodationId(accId).subscribe({
-              next: (bookings) => {
-                this.bookings = bookings;
-              },
-              error: (err) => {
-                console.error('Fehler beim Laden der Buchungen:', err);
-                this.bookings = [];
-              }
-            });
-          } else {
-            this.bookings = [];
-          }
-        },
+        next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
         error: (err) => {
-          console.error('Fehler beim Laden per ID:', err);
+          console.error('Fehler bei der Unterkunftssuche:', err);
           this.accommodations = [];
           this.bookings = [];
         }
       });
     } else {
       this.accommodationService.searchAccommodation(undefined, this.searchValue).subscribe({
-        next: (response) => {
-          this.accommodations = response ? [response] : [];
-          if (this.accommodations.length > 0) {
-            const accId = this.accommodations[0].id;
-            this.accommodationService.getBookingsByAccommodationId(accId).subscribe({
-              next: (bookings) => {
-                this.bookings = bookings;
-              },
-              error: (err) => {
-                console.error('Fehler beim Laden der Buchungen:', err);
-                this.bookings = [];
-              }
-            });
-          } else {
-            this.bookings = [];
-          }
-        },
+        next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
         error: (err) => {
-          console.error('Fehler beim Laden per Name:', err);
+          console.error('Fehler bei der Unterkunftssuche:', err);
           this.accommodations = [];
           this.bookings = [];
         }

@@ -23,7 +23,9 @@
       @if (bookings.length > 0) {
         @for (booking of bookings; track booking.id) {
           <li>
-            Buchung ID: {{ booking.id }}
+            Buchung ID: {{ booking.id }}<br>
+            Start: {{ booking.startDate }}<br>
+            Ende: {{ booking.endDate }}
           </li>
         }
       } @else {

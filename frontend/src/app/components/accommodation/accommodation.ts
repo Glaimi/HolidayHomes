@@ -23,7 +23,7 @@ import {AccommodationList} from '../accommodation-list/accommodation-list';
 export class Accommodation implements OnInit, OnDestroy {
   accommodationImages: (string|null)[] = [];
   currentImageIndex = 0;
-  private imageChangeInterval: any;
+  private imageChangeInterval: ReturnType<typeof setInterval> | undefined;
   isLoadingImages = false;
   imageLoadError = false;
   placeholderImage = 'placeholder.jpg';
@@ -112,5 +112,3 @@ export class Accommodation implements OnInit, OnDestroy {
   }
 
 }
-
-
