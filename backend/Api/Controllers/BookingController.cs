@@ -9,7 +9,6 @@ namespace Api.Controllers;
 public class BookingController : ControllerBase
 {
     private readonly BookingService _bookingService;
-    private readonly IAccommodationService _accommodationService;
 
     public BookingController(BookingService bookingService)
     {
@@ -41,5 +40,10 @@ public class BookingController : ControllerBase
         return Ok();
     }
 
-    
+    [HttpGet]
+    public async Task<ActionResult<List<BookingDto>>> GetBookings([FromQuery] int accommodationId)
+    {
+        var bookings = await _bookingService.GetBookingsByAccommodationIdAsync(accommodationId);
+        return Ok(bookings);
+    }
 }

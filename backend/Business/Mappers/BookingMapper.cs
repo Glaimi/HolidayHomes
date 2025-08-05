@@ -18,7 +18,6 @@ public static class BookingMapper
     public static Booking ToEntity(BookingDto dto)
         => new Booking
         {
-            Id = dto.Id > 0 ? dto.Id : 0,
             StartDate = dto.StartDate,
             EndDate = dto.EndDate,
             AccommodationId = dto.AccommodationId

@@ -29,10 +29,18 @@ public class BookingService
         if (overlapping)
             throw new InvalidOperationException("Für diese Unterkunft existiert bereits eine Buchung im angegebenen Zeitraum.");
 
+        dto.Id = 0;
         var entity = BookingMapper.ToEntity(dto);
         await _bookingRepository.AddAsync(entity);
     }
 
     public async Task DeleteAsync(int id)
         => await _bookingRepository.DeleteAsync(id);
+
+    // NEU: Alle Bookings zu einer AccommodationId als DTOs
+    public async Task<List<BookingDto>> GetBookingsByAccommodationIdAsync(int accommodationId)
+    {
+        var bookings = await _bookingRepository.GetByAccommodationIdAsync(accommodationId);
+        return bookings.Select(BookingMapper.ToDto).ToList();
+    }
 }
