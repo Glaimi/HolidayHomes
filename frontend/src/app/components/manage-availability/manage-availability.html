@@ -19,6 +19,17 @@
 @for (acc of accommodations; track acc.id) {
   <li>
     {{ acc.name }} (ID: {{ acc.id }})
+    <ul>
+      @if (bookings.length > 0) {
+        @for (booking of bookings; track booking.id) {
+          <li>
+            Buchung ID: {{ booking.id }}
+            <!-- Weitere Felder wie Gastname, Zeitraum etc. hier ergänzen -->
+          </li>
+        }
+      } @else {
+        <li>Keine Buchungen gefunden.</li>
+      }
+    </ul>
   </li>
 }
-
