@@ -70,7 +70,7 @@ export class Accommodation implements OnInit, OnDestroy {
           if (images && images.length > 0) {
             // Process image URLs
             this.accommodationImages = images
-              .filter(img => img && img.url)  // Filter out any invalid images
+              .filter((img: { url?: string } | null) => img && img.url)  // Filter out any invalid images
               .map(img => {
                 // If the URL is relative, prepend the base URL
                 const imageUrl = img.url;
