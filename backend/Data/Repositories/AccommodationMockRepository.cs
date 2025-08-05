@@ -92,4 +92,9 @@ public class AccommodationMockRepository : IAccommodationRepository
         var accommodation = _mockAccommodations.FirstOrDefault(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         return await Task.FromResult(accommodation);
     }
+    public async Task<Accommodation?> GetAccommodationByIdAsync(int id)
+    {
+        var accommodation = _mockAccommodations.FirstOrDefault(a => a.Id == id);
+        return await Task.FromResult(accommodation);
+    }
 }

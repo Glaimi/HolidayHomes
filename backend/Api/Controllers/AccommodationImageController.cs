@@ -40,7 +40,7 @@ namespace Api.Controllers
             var request = HttpContext.Request;
             var baseUrl = $"{request.Scheme}://{request.Host}";
             var images = await _imageService.GetImagesByAccommodationIdAsync(accommodationId);
-            var accommodationName = await _accommodationService.GetAccommodationNameByIdAsync(accommodationId);
+            var accommodationName = await _accommodationService.GetAccommodationByIdAsync(accommodationId);
             var result = images.Select(img => new
             {
                 id = img.Id,
@@ -93,7 +93,7 @@ namespace Api.Controllers
             await _imageService.AddImageAsync(accommodationId, relativePath, altText ?? Path.GetFileNameWithoutExtension(file.FileName));
             var images = await _imageService.GetImagesByAccommodationIdAsync(accommodationId);
             var image = images.OrderByDescending(i => i.Id).FirstOrDefault(i => i.FilePath == relativePath);
-            var accommodationName = await _accommodationService.GetAccommodationNameByIdAsync(accommodationId);
+            var accommodationName = await _accommodationService.GetAccommodationByIdAsync(accommodationId);
             return Ok(new
             {
                 id = image?.Id,
