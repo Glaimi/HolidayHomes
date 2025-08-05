@@ -3,12 +3,15 @@ import {AccommodationService} from '../../services/accommodation-service';
 import {AccommodationModel} from '../../interfaces/accommodation-model';
 import {CommonModule} from '@angular/common';
 import {Accommodation} from '../accommodation/accommodation';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-manage-availability',
-  imports: [ CommonModule,
+  imports: [
+    CommonModule,
     Accommodation,
-    ],
+    FormsModule,
+  ],
   templateUrl: './manage-availability.html',
   standalone: true,
   styleUrl: './manage-availability.scss'
@@ -29,7 +32,7 @@ export class ManageAvailability {
 
     if (isNumeric) {
       // Suche per ID
-      this.accommodationService.getAccommodationById(Number(this.searchValue)).subscribe({
+      this.accommodationService.searchAccommodation(Number(this.searchValue), undefined).subscribe({
         next: (response) => {
           this.accommodations = response ? [response] : [];
         },
@@ -40,7 +43,7 @@ export class ManageAvailability {
       });
     } else {
       // Suche per Name
-      this.accommodationService.getAccommodationByName(this.searchValue).subscribe({
+      this.accommodationService.searchAccommodation(undefined, this.searchValue).subscribe({
         next: (response) => {
           this.accommodations = response ? [response] : [];
         },

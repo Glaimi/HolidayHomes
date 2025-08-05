@@ -1,6 +1,23 @@
 <section class="searchfield">
-<form action="/suche" method="get" >
-  <input type="search" name="accommodationSearch" id="searchInput" placeholder="Id oder Name eingeben">
-  <button type="submit" id="searchButton">Suchen</button>
-</form>
+  <form (ngSubmit)="search()">
+    <input type="search"
+           name="accommodationSearch"
+           id="searchInput"
+           placeholder="Id oder Name eingeben"
+           [(ngModel)]="searchValue"
+           required>
+    <button type="submit" id="searchButton">Suchen</button>
+  </form>
 </section>
+
+@if (accommodations.length === 0) {
+  <div>
+    Keine Unterkünfte gefunden.
+  </div>
+}
+
+@for (acc of accommodations; track acc.id) {
+  <li>
+    {{ acc.name }} (ID: {{ acc.id }})
+  </li>
+}

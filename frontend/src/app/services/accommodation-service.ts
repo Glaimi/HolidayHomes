@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {AccommodationModel} from '../interfaces/accommodation-model';
 import { map } from 'rxjs/operators';
@@ -26,9 +26,14 @@ export class AccommodationService {
     );
   }
 
-  getAccommodationByName(name: string): Observable<AccommodationModel | undefined> {
-    return this.getAllAccommodations().pipe(
-      map((accommodations) => accommodations.find(a => a.name == name))
-    );
+  searchAccommodation(id?: number, name?: string): Observable<any> {
+    let params = new HttpParams();
+    if (id !== undefined && id !== null) {
+      params = params.set('id', id.toString());
+    }
+    if (name) {
+      params = params.set('name', name);
+    }
+    return this.http.get<any>('http://localhost:5152/api/Accommodation/search', { params });
   }
 }
