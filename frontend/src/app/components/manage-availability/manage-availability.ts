@@ -19,6 +19,10 @@ import {FormsModule} from '@angular/forms';
 export class ManageAvailability {
   private accommodationService = inject(AccommodationService)
 
+  trackById(index: number, item: AccommodationModel): number {
+    return item.id;
+  }
+
   accommodations: AccommodationModel[] = []
   searchValue: string = '';
 
@@ -32,15 +36,26 @@ export class ManageAvailability {
 
     if (isNumeric) {
       // Suche per ID
+      // this.accommodationService.searchAccommodation(Number(this.searchValue), undefined).subscribe({
+      //   next: (response) => {
+      //     this.accommodations = response ? [response] : [];
+      //   },
+      //   error: (err) => {
+      //     console.error('Fehler beim Laden per ID:', err);
+      //     this.accommodations = [];
+      //   }
+      // });
+
       this.accommodationService.searchAccommodation(Number(this.searchValue), undefined).subscribe({
         next: (response) => {
-          this.accommodations = response ? [response] : [];
+          this.accommodations = Array.isArray(response) ? response : (response ? [response] : []);
         },
         error: (err) => {
           console.error('Fehler beim Laden per ID:', err);
           this.accommodations = [];
         }
       });
+
     } else {
       // Suche per Name
       this.accommodationService.searchAccommodation(undefined, this.searchValue).subscribe({

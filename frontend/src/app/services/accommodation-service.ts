@@ -34,6 +34,6 @@ export class AccommodationService {
     if (name) {
       params = params.set('name', name);
     }
-    return this.http.get<any>('http://localhost:5152/api/Accommodation/search', { params });
+    return this.http.get<any>('http://localhost:5152/api/Accommodation/search', {params});
   }
 }

@@ -51,11 +51,10 @@ namespace Api.Controllers
 
             if (id.HasValue)
             {
-                var accommodationName = await _accommodationService.GetAccommodationNameByIdAsync(id.Value);
-                if (accommodationName == null)
+                var accommodationDto = await _accommodationService.GetAccommodationByIdAsync(id.Value);
+                if (accommodationDto == null)
                     return NotFound($"Keine Unterkunft mit Id {id} gefunden.");
-
-                return Ok(accommodationName);
+                return Ok(accommodationDto);
             }
 
             if (!string.IsNullOrWhiteSpace(name))
