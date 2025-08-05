@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { AccommodationModel } from '../../interfaces/accommodation-model';
 import { AccommodationService } from '../../services/accommodation-service';
-import {AccommodationList} from '../accommodation-list/accommodation-list';
+
 
 @Component({
   selector: 'app-accommodation',
