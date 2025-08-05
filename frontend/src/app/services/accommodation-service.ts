@@ -36,7 +36,7 @@ export class AccommodationService {
     }
     return this.http.get<any>('http://localhost:5152/api/Accommodation/search', {params});
   }
-  
+
   getBookingsByAccommodationId(accommodationId: number): Observable<any[]> {
     return this.http.get<any[]>(`http://localhost:5152/api/Booking?accommodationId=${accommodationId}`);
   }
