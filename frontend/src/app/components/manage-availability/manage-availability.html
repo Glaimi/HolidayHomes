@@ -1,4 +1,5 @@
-<section class="searchfield">
+<div class="bookingOverview">
+  <div class="searchfield">
   <form (ngSubmit)="search()">
     <input type="search"
            name="accommodationSearch"
@@ -8,8 +9,9 @@
            required>
     <button type="submit" id="searchButton">Suchen</button>
   </form>
-</section>
-
+  </div>
+  <div class="manageAvailability">
+    <div class="bookinglist">
 @if (accommodations.length === 0) {
   <div>
     Keine Unterkünfte gefunden.
@@ -34,3 +36,17 @@
     </ul>
   </li>
 }
+    </div>
+    <div class="calendar">
+      <img src="https://raw.githubusercontent.com/htmlelements/smart-calendar/master/smart-calendar.png" alt="Calendar">
+    </div>
+    <div class="buttonGroup">
+      <button type="submit" id="bookingButton">Belegen</button>
+      <button type="submit" id="deleteButton">Löschen</button>
+    </div>
+  </div>
+  <div class="acceptErrorSection">
+    <button type="submit" class="accept" id="acceptButton">Bestätigen</button>
+  </div>
+
+</div>
