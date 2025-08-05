@@ -4,6 +4,7 @@ import {Imprint} from './components/imprint/imprint';
 import {AccommodationList} from './components/accommodation-list/accommodation-list';
 import {Privacy} from './components/privacy/privacy';
 import {AccommodationDetails} from './components/accommodation-details/accommodation-details';
+import {ManageAvailability} from './components/manage-availability/manage-availability';
 
 
 export const routes: Routes = [
@@ -31,6 +32,11 @@ export const routes: Routes = [
     path:'view-details/:id',
     component: AccommodationDetails,
     title: 'Details anzeigen'
+  },
+  {
+    path:'manageAvailability',
+    component: ManageAvailability,
+    title: 'Verfügbarkeit verwalten'
   },
   {
     path: '**', redirectTo: '',
