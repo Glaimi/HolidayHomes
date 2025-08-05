@@ -1,0 +1,18 @@
+.searchfield{
+  margin-top: 50px;
+}
+#searchInput{
+  background-size: 100px;
+  padding: .4rem 2rem;
+  font-size: 1rem;
+  border-radius: .5rem;
+}
+#searchButton{
+  background: var(--color);
+  border: none;
+  padding: .5rem 2rem;
+  font-size: 1rem;
+  color: var(--white-color);
+  border-radius: .5rem;
+  cursor: pointer;
+}
