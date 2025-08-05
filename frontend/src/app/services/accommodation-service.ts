@@ -25,4 +25,10 @@ export class AccommodationService {
       map((accommodations) => accommodations.find(a => a.id == id))
     );
   }
+
+  getAccommodationByName(name: string): Observable<AccommodationModel | undefined> {
+    return this.getAllAccommodations().pipe(
+      map((accommodations) => accommodations.find(a => a.name == name))
+    );
+  }
 }
