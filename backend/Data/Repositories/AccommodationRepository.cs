@@ -1,4 +1,5 @@
-﻿using Data.Contexts;
+﻿using System.Security.Cryptography.X509Certificates;
+using Data.Contexts;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,6 +56,19 @@ public class AccommodationRepository : IAccommodationRepository
             .Include(a => a.AccommodationSanitaryInfos)
             .ThenInclude(si => si.SanitaryType)
             .FirstOrDefaultAsync(a => a.Name.ToLower() == name.ToLower());
+    }
 
+    public async Task<Accommodation?> GetAccommodationByIdAsync(int id)
+    {
+        return await _dataContext.Accommodations
+            .Include(a => a.AccommodationType)
+            .Include(a => a.Address)
+            .Include(a => a.KitchenType)
+            .Include(a => a.Images)
+            .Include(a => a.SeasonPricings)
+            .ThenInclude(sp => sp.Season)
+            .Include(a => a.AccommodationSanitaryInfos)
+            .ThenInclude(si => si.SanitaryType)
+            .FirstOrDefaultAsync(a => a.Id == id);
     }
 }

@@ -1,22 +1,45 @@
 <div class="bookingOverview">
-<div class="searchfield">
-<form action="/suche" method="get" >
-  <input type="search" name="accommodationSearch" id="searchInput" placeholder="Id oder Name eingeben">
-  <button type="submit" id="searchButton">Suchen</button>
-</form>
-</div>
+  <div class="searchfield">
+  <form (ngSubmit)="search()">
+    <input type="search"
+           name="accommodationSearch"
+           id="searchInput"
+           placeholder="Id oder Name eingeben"
+           [(ngModel)]="searchValue"
+           required>
+    <button type="submit" id="searchButton">Suchen</button>
+  </form>
+  </div>
   <div class="manageAvailability">
-  <div class="bookinglist">
-<ul>
-  <li>Id: 1 Name: Hausi</li>
-  <li>Id: 2 Name: Sternhaus 1</li>
-  <li>Id: 3 Name: Moin Moin</li>
-  <li>Id: 4 Name: Sternhaus 2</li>
-</ul>
+    <div class="bookinglist">
+@if (accommodations.length === 0) {
+  <div>
+    Keine Unterkünfte gefunden.
   </div>
-  <div class="calendar">
-<img src="https://raw.githubusercontent.com/htmlelements/smart-calendar/master/smart-calendar.png" alt="Calendar">
-  </div>
+}
+
+@for (acc of accommodations; track acc.id) {
+  <li>
+    {{ acc.name }} (ID: {{ acc.id }})
+    <ul>
+      @if (bookings.length > 0) {
+        @for (booking of bookings; track booking.id) {
+          <li>
+            Buchung ID: {{ booking.id }}<br>
+            Start: {{ booking.startDate }}<br>
+            Ende: {{ booking.endDate }}
+          </li>
+        }
+      } @else {
+        <li>Keine Buchungen gefunden.</li>
+      }
+    </ul>
+  </li>
+}
+    </div>
+    <div class="calendar">
+      <img src="https://raw.githubusercontent.com/htmlelements/smart-calendar/master/smart-calendar.png" alt="Calendar">
+    </div>
     <div class="buttonGroup">
       <button type="submit" id="bookingButton">Belegen</button>
       <button type="submit" id="deleteButton">Löschen</button>

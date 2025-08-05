@@ -35,4 +35,11 @@ public class BookingService
 
     public async Task DeleteAsync(int id)
         => await _bookingRepository.DeleteAsync(id);
+
+    // NEU: Alle Bookings zu einer AccommodationId als DTOs
+    public async Task<List<BookingDto>> GetBookingsByAccommodationIdAsync(int accommodationId)
+    {
+        var bookings = await _bookingRepository.GetByAccommodationIdAsync(accommodationId);
+        return bookings.Select(BookingMapper.ToDto).ToList();
+    }
 }

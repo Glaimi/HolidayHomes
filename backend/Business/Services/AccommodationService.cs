@@ -1,5 +1,6 @@
 ﻿using Business.Dtos;
 using Business.Mappers;
+using Data.Models;
 using Data.Repositories;
 
 namespace Business.Services;
@@ -49,11 +50,15 @@ public class AccommodationService : IAccommodationService
     /// <summary>
     /// Gets the name of an accommodation by its ID.
     /// </summary>
-    public async Task<string?> GetAccommodationNameByIdAsync(int accommodationId)
+    public async Task<AccommodationDto?> GetAccommodationByIdAsync(int id)
     {
-        var accommodations = await _accommodationRepository.GetAllAccommodationsAsync();
-        var accommodation = accommodations.FirstOrDefault(a => a.Id == accommodationId);
-        return accommodation?.Name;
+
+        var accommodation = await _accommodationRepository.GetAccommodationByIdAsync(id);
+
+        if (accommodation == null)
+            return null;
+
+        return await _accommodationMapper.MapEntityToDto(accommodation);
     }
 
     public async Task<AccommodationDto?> GetAccommodationByNameAsync(string name)
