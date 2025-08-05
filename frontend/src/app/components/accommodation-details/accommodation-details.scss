@@ -126,6 +126,10 @@ tr .info-left{
 }
 
 .small-calendar {
-  transform: scale(0.5);
-  transform-origin: top left;
+  transform: scale(1);
+  max-width: 320px;
+}
+
+mat-calendar {
+  font-size: 13px;
 }
