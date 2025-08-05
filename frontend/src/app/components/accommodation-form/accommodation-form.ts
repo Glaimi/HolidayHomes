@@ -3,7 +3,14 @@ import {KitchenTypeService} from "../../services/kitchen-type-service";
 import {KitchenTypeModel} from '../../interfaces/kitchen-type-model';
 import {Observable} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators
+} from '@angular/forms';
 import {AccommodationTypeService} from '../../services/accommodation-type-service';
 import {AccommodationTypeModel} from '../../interfaces/accommodation-type-model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -37,26 +44,37 @@ export class AccommodationForm implements OnInit {
   private seasonService: SeasonService = inject(SeasonService);
   public seasons$!: Observable<SeasonModel[]>;
 
+  public minSquareMeters: number = 0;
+  public minNumberOfBeds: number = 0;
+  public minNumberOfBedrooms: number = 0;
+  public minNumberOfLivingRooms: number = 0;
+  public minNumberOfMixedRooms: number = 0;
+  public minNumberOfBathtubs: number = 0;
+  public minNumberOfShowers: number = 0;
+  public minSeasonAPrice: number = 0.0;
+  public minSeasonBPrice: number = 0.0;
+  public minSeasonCPrice: number = 0.0;
+
   public formGroup: FormGroup = new FormGroup({
     accommodationType: new FormControl(1),
-    landlordName: new FormControl(''),
-    accommodationName: new FormControl(''),
-    street: new FormControl(''),
-    city: new FormControl(''),
-    squareMeters: new FormControl(0),
-    numberOfBeds: new FormControl(0),
-    numberOfBedrooms: new FormControl(0),
-    numberOfLivingRooms: new FormControl(0),
-    numberOfMixedRooms: new FormControl(0),
-    numberOfBathtubs: new FormControl(0),
-    numberOfShowers: new FormControl(0),
+    landlordName: new FormControl('', this.notEmptyOrWhitespace),
+    accommodationName: new FormControl('', this.notEmptyOrWhitespace),
+    street: new FormControl('', this.notEmptyOrWhitespace),
+    city: new FormControl('', this.notEmptyOrWhitespace),
+    squareMeters: new FormControl(this.minSquareMeters, Validators.min(this.minSquareMeters)),
+    numberOfBeds: new FormControl(this.minNumberOfBeds, Validators.min(this.minNumberOfBeds)),
+    numberOfBedrooms: new FormControl(this.minNumberOfBedrooms, Validators.min(this.minNumberOfBedrooms)),
+    numberOfLivingRooms: new FormControl(this.minNumberOfLivingRooms, Validators.min(this.minNumberOfLivingRooms)),
+    numberOfMixedRooms: new FormControl(this.minNumberOfMixedRooms, Validators.min(this.minNumberOfMixedRooms)),
+    numberOfBathtubs: new FormControl(this.minNumberOfBathtubs, Validators.min(this.minNumberOfBathtubs)),
+    numberOfShowers: new FormControl(this.minNumberOfShowers, Validators.min(this.minNumberOfShowers)),
     kitchenType: new FormControl(1),
     seasonABookable: new FormControl(false),
-    seasonAPrice: new FormControl(0),
+    seasonAPrice: new FormControl(this.minSeasonAPrice, Validators.min(this.minSeasonAPrice)),
     seasonBBookable: new FormControl(false),
-    seasonBPrice: new FormControl(0),
+    seasonBPrice: new FormControl(this.minSeasonBPrice, Validators.min(this.minSeasonBPrice)),
     seasonCBookable: new FormControl(false),
-    seasonCPrice: new FormControl(0),
+    seasonCPrice: new FormControl(this.minSeasonCPrice, Validators.min(this.minSeasonCPrice)),
     shortTripAvailability: new FormControl(0),
     bedsheetsAvailability: new FormControl(0),
     towelsAvailability: new FormControl(0),
@@ -69,14 +87,6 @@ export class AccommodationForm implements OnInit {
     isSaunaAvailable: new FormControl(false),
     hints: new FormControl('')
   });
-
-  public minSquareMeters: number = 20;
-  public minNumberOfBeds: number = 0;
-  public minNumberOfBedrooms: number = 0;
-  public minNumberOfLivingRooms: number = 0;
-  public minNumberOfMixedRooms: number = 0;
-  public minNumberOfBathtubs: number = 0;
-  public minNumberOfShowers: number = 0;
 
   ngOnInit(): void {
     this.accommodationTypes$ = this.accommodationTypeService.getAllAccommodationTypes();
@@ -132,15 +142,15 @@ export class AccommodationForm implements OnInit {
     }
   }
 
-  getSanitaryInfos(): { sanitaryTypeId: number, amount: number}[] {
+  getSanitaryInfos(): { sanitaryTypeId: number, amount: number }[] {
     return [
-      { sanitaryTypeId: 1, amount: this.formGroup.get('numberOfShowers')?.value ?? 0 },
-      { sanitaryTypeId: 2, amount: this.formGroup.get('numberOfBathtubs')?.value ?? 0 }
+      {sanitaryTypeId: 1, amount: this.formGroup.get('numberOfShowers')?.value ?? 0},
+      {sanitaryTypeId: 2, amount: this.formGroup.get('numberOfBathtubs')?.value ?? 0}
     ];
   }
 
   getSeasonPricings(): Observable<{ seasonId: number, isBookable: boolean, price: number }[]> {
-    return this.seasons$.pipe(map(seasons => seasons.map( season => {
+    return this.seasons$.pipe(map(seasons => seasons.map(season => {
       if (season.title === 'A') {
         return {
           seasonId: season.id,
@@ -161,5 +171,70 @@ export class AccommodationForm implements OnInit {
         }
       }
     })));
+  }
+
+  // Validates that the field is not empty and doesn't contain whitespace only.
+  notEmptyOrWhitespace(control: AbstractControl): ValidationErrors | null {
+    const isValid: boolean = control.value.trim().length > 0;
+
+    console.log(control.value)
+
+    return isValid ? null : {emptyOrWhitespace: {value: control.value}}
+  }
+
+  get landlordName() {
+    return this.formGroup.get('landlordName')!;
+  }
+
+  get accommodationName() {
+    return this.formGroup.get('accommodationName')!;
+  }
+
+  get street() {
+    return this.formGroup.get('street')!;
+  }
+
+  get city() {
+    return this.formGroup.get('city')!;
+  }
+
+  get squareMeters() {
+    return this.formGroup.get('squareMeters')!;
+  }
+
+  get numberOfBeds() {
+    return this.formGroup.get('numberOfBeds')!;
+  }
+
+  get numberOfBedrooms() {
+    return this.formGroup.get('numberOfBedrooms')!;
+  }
+
+  get numberOfLivingRooms() {
+    return this.formGroup.get('numberOfLivingRooms')!;
+  }
+
+  get numberOfMixedRooms() {
+    return this.formGroup.get('numberOfMixedRooms')!;
+  }
+
+  get numberOfShowers() {
+    return this.formGroup.get('numberOfShowers')!;
+  }
+
+  get numberOfBathtubs() {
+    return this.formGroup.get('numberOfBathtubs')!;
+  }
+
+  get seasonAPrice() {
+    return this.formGroup.get('seasonAPrice')!;
+  }
+
+  get seasonBPrice() {
+    return this.formGroup.get('seasonBPrice')!;
+  }
+
+  get seasonCPrice() {
+    return this.formGroup.get('seasonCPrice')!;
   }
 }

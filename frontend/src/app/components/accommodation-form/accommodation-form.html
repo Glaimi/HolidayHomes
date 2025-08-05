@@ -1,4 +1,66 @@
 <form class="accommodation-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  @if (formGroup.invalid) {
+    <div class="errors">
+      <ul class="errors-list">
+        @if (landlordName.touched && landlordName.hasError('emptyOrWhitespace')) {
+          <li class="errors-list-entry">Vermietername darf nicht leer sein.</li>
+        }
+
+        @if (accommodationName.touched && accommodationName.hasError('emptyOrWhitespace')) {
+          <li class="error-list-entry">Name der Unterkunft darf nicht leer sein.</li>
+        }
+
+        @if (street.touched && street.hasError('emptyOrWhitespace')) {
+          <li class="errors-list-entry">Straße darf nicht leer sein.</li>
+        }
+
+        @if (city.touched && city.hasError('emptyOrWhitespace')) {
+          <li class="errors-list-entry">Ort darf nicht leer sein.</li>
+        }
+
+        @if (squareMeters.touched && squareMeters.hasError('min')) {
+          <li class="errors-list-entry">Die Größe der Unterkunft muss mindestens {{ minSquareMeters }} sein.</li>
+        }
+
+        @if (numberOfBeds.touched && numberOfBeds.hasError('min')) {
+          <li class="errors-list-entry">Die Anzahl der Betten muss mindestens {{ minNumberOfBeds }} sein.</li>
+        }
+
+        @if (numberOfBedrooms.touched && numberOfBedrooms.hasError('min')) {
+          <li class="errors-list-entry">Die Anzahl der Schlafzimmer muss mindestens {{ minNumberOfBedrooms }} sein.</li>
+        }
+
+        @if (numberOfLivingRooms.touched && numberOfLivingRooms.hasError('min')) {
+          <li class="errors-list-entry">Die Anzahl der Wohnräume muss mindestens {{ minNumberOfLivingRooms }} sein.</li>
+        }
+
+        @if (numberOfMixedRooms.touched && numberOfMixedRooms.hasError('min')) {
+          <li class="errors-list-entry">Die Anzahl der Wohn- / Schlafräume muss mindestens {{ minNumberOfMixedRooms }} sein.</li>
+        }
+
+        @if (numberOfShowers.touched && numberOfBathtubs.hasError('min')) {
+          <li class="errors-list-entry">Die Anzahl der Badezimmer mit Dusche muss mindestens {{ minNumberOfShowers }} sein.</li>
+        }
+
+        @if (numberOfBathtubs.touched && numberOfBathtubs.hasError('min')) {
+          <li class="errors-list-entry">Die Anzahl der Badezimmer mit Badewanne muss mindestens {{ minNumberOfBathtubs }} sein.</li>
+        }
+
+        @if (seasonAPrice.touched && seasonAPrice.hasError('min')) {
+          <li class="errors-list-entry">Der Preis für Saison A muss mindestens {{ minSeasonAPrice }} sein.</li>
+        }
+
+        @if (seasonBPrice.touched && seasonBPrice.hasError('min')) {
+          <li class="errors-list-entry">Der Preis für Saison B muss mindestens {{ minSeasonBPrice }} sein.</li>
+        }
+
+        @if (seasonCPrice.touched && seasonCPrice.hasError('min')) {
+          <li class="errors-list-entry">Der Preis für Saison C muss mindestens {{ minSeasonCPrice }} sein.</li>
+        }
+      </ul>
+    </div>
+  }
+
   <fieldset>
     <legend>Grunddaten</legend>
 
@@ -48,7 +110,8 @@
 
       <div class="form-group-vertical">
         <label for="number-of-bedrooms">Schlafzimmer</label>
-        <input type="number" id="number-of-bedrooms" formControlName="numberOfBedrooms" min="{{ minNumberOfBedrooms }}" required>
+        <input type="number" id="number-of-bedrooms" formControlName="numberOfBedrooms" min="{{ minNumberOfBedrooms }}"
+               required>
       </div>
     </div>
 
@@ -102,7 +165,7 @@
 
         <div class="form-group-vertical">
           <label for="season-a-price">Preis</label>
-          <input type="number" id="season-a-price" formControlName="seasonAPrice">
+          <input type="number" id="season-a-price" formControlName="seasonAPrice" min="0.0">
         </div>
       </div>
 
@@ -116,7 +179,7 @@
 
         <div class="form-group-vertical">
           <label for="season-b-price">Preis</label>
-          <input type="number" id="season-b-price" formControlName="seasonBPrice">
+          <input type="number" id="season-b-price" formControlName="seasonBPrice" min="0.0">
         </div>
       </div>
 
@@ -130,7 +193,7 @@
 
         <div class="form-group-vertical">
           <label for="season-b-price">Preis</label>
-          <input type="number" id="season-c-price" formControlName="seasonCPrice">
+          <input type="number" id="season-c-price" formControlName="seasonCPrice" min="0.0">
         </div>
       </div>
     </div>
