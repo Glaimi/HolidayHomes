@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import {AccommodationModel} from '../interfaces/accommodation-model';
 import { map } from 'rxjs/operators';
 import {ImageModel} from '../interfaces/image-model';
-import {BookingsModel} from '../interfaces/bookings-model';
 
 @Injectable({
   providedIn: 'root'
