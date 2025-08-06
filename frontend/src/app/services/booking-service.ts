@@ -24,4 +24,21 @@ export class BookingService {
   getBookingsByAccommodationId(accommodationId: number): Observable<BookingModel[]> {
     return this.http.get<BookingModel[]>(`http://localhost:5152/api/Booking?accommodationId=${accommodationId}`);
   }
+
+  bookAccommodation(accommodationId:number,startDate:Date,endDate:Date){
+    const url = `http://localhost:5152/api/Booking`;
+    const body = {
+      AccommodationId: accommodationId,
+      StartDate: startDate.toISOString().split('T', 1)[0],
+      EndDate: endDate.toISOString().split('T',1)[0]
+    }
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post(url,body, options);
+  }
+
+
 }

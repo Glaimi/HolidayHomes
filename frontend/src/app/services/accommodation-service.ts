@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {AccommodationModel} from '../interfaces/accommodation-model';
 import { map } from 'rxjs/operators';
@@ -27,21 +27,4 @@ export class AccommodationService {
     );
   }
 
-  bookAccommodation(accommodationId:number,startDate:Date,endDate:Date){
-    const url = `http://localhost:5152/api/Booking`;
-    const body = {
-      AccommodationId: accommodationId,
-      StartDate: startDate.toISOString().split('T', 1)[0],
-      EndDate: endDate.toISOString().split('T',1)[0]
-    }
-
-    console.log(body)
-
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.post(url,body, options);
-  }
 }
