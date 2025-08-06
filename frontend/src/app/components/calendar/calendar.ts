@@ -1,30 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatCalendar } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
-import { FormsModule } from '@angular/forms';
-import { DateRange } from '@angular/material/datepicker';
 
 const now = new Date();
 
 @Component({
   selector: 'app-calendar',
   imports: [
+    MatCalendar,
+    MatNativeDateModule,
+    FormsModule,
+    DatePipe,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatNativeDateModule,
-    FormsModule
+    MatInputModule
   ],
   templateUrl: './calendar.html',
   standalone: true,
-  styleUrls: ['./calendar.scss']
+  styleUrl: './calendar.scss'
 })
 export class Calendar implements OnInit {
-  startDate?: Date;
-  endDate?: Date;
+  displayedYear: number = now.getFullYear();
+  displayedMonth: number = now.getMonth();
+
+  // Für den auswählbaren Kalender
+  selectedDate: Date | null = null;
+  startDateSelected: Date | null = null;
+  endDateSelected: Date | null = null;
 
   min = '2025-08-06T00:00';
   labels: any = [];
@@ -174,36 +182,7 @@ export class Calendar implements OnInit {
     },
   ];
 
-  displayedYear: number = now.getFullYear();
-  displayedMonth: number = now.getMonth();
-
-  // Für Angular Material Datepicker
-  minDate: Date = new Date();
-  maxDate: Date = new Date(new Date().getFullYear(), new Date().getMonth() + 6, new Date().getDate());
-
-  // Für den Date Range Picker
-  dateRange: DateRange<Date> = new DateRange<Date>(null, null);
-
   constructor(private http: HttpClient) {}
-
-  getColors(start: Date, end: Date) {
-    return [
-      {
-        date: start,
-        cellCssClass: 'vacation-check-in',
-      },
-      {
-        date: end,
-        cellCssClass: 'vacation-check-out',
-      },
-      {
-        start: new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1),
-        end: new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1),
-        background: '#ffbaba80',
-        cellCssClass: 'vacation-booked',
-      },
-    ];
-  }
 
   ngOnInit(): void {
     this.loadMonth(this.displayedYear, this.displayedMonth);
@@ -255,6 +234,68 @@ export class Calendar implements OnInit {
     });
   }
 
+  onDateSelected(date: Date | null) {
+    if (!date) return;
+
+    console.log('Date selected:', date);
+    console.log('Current state - Start:', this.startDateSelected, 'End:', this.endDateSelected);
+
+    if (!this.startDateSelected) {
+      this.startDateSelected = date;
+      console.log('Set as start date:', this.startDateSelected);
+    } else if (!this.endDateSelected) {
+      if (date >= this.startDateSelected) {
+        this.endDateSelected = date;
+      } else {
+        this.endDateSelected = this.startDateSelected;
+        this.startDateSelected = date;
+      }
+      console.log('Set as end date. Final range - Start:', this.startDateSelected, 'End:', this.endDateSelected);
+    } else {
+      this.startDateSelected = date;
+      this.endDateSelected = null;
+      console.log('Reset and set new start date:', this.startDateSelected);
+    }
+  }
+
+  resetSelection() {
+    this.startDateSelected = null;
+    this.endDateSelected = null;
+    this.selectedDate = null;
+  }
+
+  // Funktion für visuelle Hervorhebung der ausgewählten Daten
+  dateClass = (date: Date): string => {
+    if (!date) return '';
+
+    const normalizeDate = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+    const currentDate = normalizeDate(date);
+    const startDate = this.startDateSelected ? normalizeDate(this.startDateSelected) : null;
+    const endDate = this.endDateSelected ? normalizeDate(this.endDateSelected) : null;
+
+    let classes = '';
+
+    if (startDate && currentDate.getTime() === startDate.getTime()) {
+      classes += 'selected-start-date ';
+      console.log('Start date found:', currentDate, 'Classes:', classes);
+    }
+    if (endDate && currentDate.getTime() === endDate.getTime()) {
+      classes += 'selected-end-date ';
+      console.log('End date found:', currentDate, 'Classes:', classes);
+    }
+    if (startDate && endDate && currentDate.getTime() > startDate.getTime() && currentDate.getTime() < endDate.getTime()) {
+      classes += 'selected-range-date ';
+      console.log('Range date found:', currentDate, 'Classes:', classes);
+    }
+
+    const result = classes.trim();
+    if (result) {
+      console.log('dateClass returning:', result, 'for date:', currentDate);
+    }
+    return result;
+  }
+
   prevMonth() {
     if (this.displayedMonth === 0) {
       this.displayedMonth = 11;
@@ -275,8 +316,22 @@ export class Calendar implements OnInit {
     this.loadMonth(this.displayedYear, this.displayedMonth);
   }
 
-  dateRangeAusgeben() {
-    console.log('Startdatum:', this.dateRange.start);
-    console.log('Enddatum:', this.dateRange.end);
+  getColors(start: Date, end: Date) {
+    return [
+      {
+        date: start,
+        cellCssClass: 'vacation-check-in',
+      },
+      {
+        date: end,
+        cellCssClass: 'vacation-check-out',
+      },
+      {
+        start: new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1),
+        end: new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1),
+        background: '#ffbaba80',
+        cellCssClass: 'vacation-booked',
+      },
+    ];
   }
 }

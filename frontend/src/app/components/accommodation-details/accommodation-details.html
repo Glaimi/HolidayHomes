@@ -75,12 +75,8 @@
     }
 
     <div class="small-calendar">
-      <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateSelected($event)"></mat-calendar>
+      <app-calendar></app-calendar>
     </div>
-    <p>Startdatum: {{ startDateSelected | date }}</p>
-    <p>Enddatum: {{ endDateSelected | date }}</p>
-    <button (click)="resetSelection()">Auswahl zurücksetzen</button>
-
   </div>
 
 
