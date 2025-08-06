@@ -4,5 +4,5 @@ export interface BookingModel {
   guestName?: string;
   startDate: string;
   endDate: string;
-  // Ergänze hier weitere Felder nach Bedarf
+
 }
