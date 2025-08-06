@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import {AccommodationModel} from '../interfaces/accommodation-model';
 import { map } from 'rxjs/operators';
 import {ImageModel} from '../interfaces/image-model';
-import { BookingModel } from '../interfaces/booking-model';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
