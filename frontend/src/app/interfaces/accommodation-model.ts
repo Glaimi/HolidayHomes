@@ -61,3 +61,12 @@ export interface AccommodationModel {
   reviewCount?: number;
   currentPrice?: number;
 }
+
+export interface SeasonPrisingCalculate {
+  seasonTitle?: string;
+  startDay?: number;
+  startMonth?:number;
+  endDay?:number;
+  endMonth?: number;
+  price?: number;
+}

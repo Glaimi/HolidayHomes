@@ -68,6 +68,33 @@
           {{seasonPricing.endDay}}.{{seasonPricing.endMonth}} - <strong>{{seasonPricing.price | number: '2.2':'de-DE'}} € / Nacht</strong>
         </p>
       }
+
+
+      <h3>preisberechnung</h3>
+
+      <div *ngIf="seasonPricingCurrent$ | async as pricingList">
+
+        <div *ngFor="let pricing of pricingList">
+          <p>
+            Saison: <strong>{{ pricing.seasonTitle }}</strong>
+          </p>
+          <p>
+            Zeitraum: {{ pricing.startDay }}.{{ pricing.startMonth }} – {{ pricing.endDay }}.{{ pricing.endMonth }}
+          </p>
+          <p>
+            Grundpreis pro Nacht: <strong>{{ pricing.price | number:'1.2-2':'de-DE' }} €</strong>
+          </p>
+          <p>
+            Anzahl der Nächte:
+            <strong>{{ calculateNumberOfNights(pricing.startDay, pricing.startMonth, pricing.endDay, pricing.endMonth) }}</strong>
+          </p>
+          <p>
+            Gesamtsumme (inkl. MwSt 19%):
+            <strong>{{ calculateTotal(pricing.price, pricing.startDay, pricing.startMonth, pricing.endDay, pricing.endMonth) | number:'1.2-2':'de-DE' }} €</strong>
+          </p>
+          <hr />
+        </div>
+      </div>
     </div>
 
     <div class="contact">
