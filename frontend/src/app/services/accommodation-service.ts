@@ -26,12 +26,4 @@ export class AccommodationService {
       map((accommodations) => accommodations.find(a => a.id == id))
     );
   }
-
-  searchAccommodation(id?: number, name?: string): Observable<AccommodationModel[]> {
-    throw new Error('searchAccommodation has moved to BookingService. Please use BookingService.');
-  }
-
-  getBookingsByAccommodationId(accommodationId: number): Observable<BookingModel[]> {
-    throw new Error('getBookingsByAccommodationId has moved to BookingService. Please use BookingService.');
-  }
 }
