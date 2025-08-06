@@ -1,5 +1,4 @@
 import {Component, HostListener} from '@angular/core';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +19,7 @@ export class Header {
     window.location.href = 'accommodation-list';
   }
 
-  // Change 100 to whatever scroll position you want
+  // Change the scroll position threshold to the desired value
   @HostListener('window:scroll', [])
   onWindowScroll() {
     this.isScrolled = window.scrollY > 100;

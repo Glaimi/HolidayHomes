@@ -9,11 +9,8 @@ import {NgStyle} from '@angular/common';
   ],
   templateUrl: './home.html',
   standalone: true,
-  styleUrl: './home.scss'
+  styleUrls: ['./home.scss']
 })
 export class Home {
-
-
-
 
 }

@@ -20,14 +20,17 @@ import { Calendar } from '../calendar/calendar';
 export class ManageAvailability {
   private bookingService = inject(BookingService)
 
-  @ViewChild('calendarRef') calendarComponent!: Calendar;
+  @ViewChild('calendarRef') calendarComponent!: any;
 
   accommodations: AccommodationModel[] = []
   bookings: BookingModel[] = [];
   searchValue: string = '';
   hasSearched: boolean = false;
   selectedAccommodation: AccommodationModel | null = null;
+  selectedBooking: BookingModel | null = null;
 
+
+  // Handle the response from the search API
   private handleSearchResponse(response: AccommodationModel[] | AccommodationModel | null | undefined): void {
     this.hasSearched = true;
     console.log('API response:', response);
@@ -44,23 +47,27 @@ export class ManageAvailability {
       this.bookingService.getBookingsByAccommodationId(accId).subscribe({
         next: (bookings: BookingModel[]) => {
           this.bookings = bookings;
+          this.resetBookingSelection(); // Reset booking selection after accommodation change
         },
         error: (err: any) => {
           this.hasSearched = true;
-          console.error('Fehler beim Laden der Buchungen:', err);
+          console.error('Error loading bookings:', err);
           this.bookings = [];
+          this.resetBookingSelection();
         }
       });
     } else {
       this.selectedAccommodation = null;
       this.bookings = [];
+      this.resetBookingSelection();
     }
   }
 
+  // Perform a search
   search() {
     this.hasSearched = false;
     if (!this.searchValue.trim()) {
-      console.warn('Bitte eine ID oder einen Namen eingeben.');
+      console.warn('Please enter an ID or a name.');
       return;
     }
 
@@ -71,7 +78,7 @@ export class ManageAvailability {
         next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
         error: (err: any) => {
           this.hasSearched = true;
-          console.error('Fehler bei der Unterkunftssuche:', err);
+          console.error('Error searching for accommodation:', err);
           this.accommodations = [];
           this.bookings = [];
         }
@@ -81,7 +88,7 @@ export class ManageAvailability {
         next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
         error: (err: any) => {
           this.hasSearched = true;
-          console.error('Fehler bei der Unterkunftssuche:', err);
+          console.error('Error searching for accommodation:', err);
           this.accommodations = [];
           this.bookings = [];
         }
@@ -89,7 +96,7 @@ export class ManageAvailability {
     }
   }
 
-  // Fügt eine neue Belegung hinzu
+  // Add a new booking
   belegen() {
     if (!this.selectedAccommodation) {
       alert('Bitte zuerst eine Unterkunft suchen und auswählen.');
@@ -104,11 +111,11 @@ export class ManageAvailability {
     this.bookingService.bookAccommodation(this.selectedAccommodation.id, start, end).subscribe({
       next: () => {
         alert('Belegung erfolgreich gespeichert.');
-        // Buchungen neu laden
+        // Load bookings again
         this.bookingService.getBookingsByAccommodationId(this.selectedAccommodation!.id).subscribe(b => this.bookings = b);
-        // Kalender-Auswahl zurücksetzen
+        // Reset calendar selection
         this.calendarComponent.resetSelection();
-        // Kalender-Buchungen neu laden (damit neue Belegung sofort sichtbar)
+        // Reload calendar bookings (to show new booking immediately)
         this.calendarComponent.loadBookings();
       },
       error: (err) => {
@@ -118,8 +125,47 @@ export class ManageAvailability {
     });
   }
 
-  // Löscht eine bestehende Belegung
+
+  // Select a booking
+  selectBooking(booking: BookingModel) {
+    // Toggle selection: deselect if already selected
+    if (this.selectedBooking && this.selectedBooking.id === booking.id) {
+      this.selectedBooking = null;
+    } else {
+      this.selectedBooking = booking;
+    }
+    setTimeout(() => {
+      if (this.calendarComponent && this.calendarComponent.refreshCalendar) {
+        this.calendarComponent.refreshCalendar();
+      }
+    });
+  }
+
+  // Reset booking selection
+  private resetBookingSelection() {
+    this.selectedBooking = null;
+    setTimeout(() => {
+      if (this.calendarComponent && this.calendarComponent.refreshCalendar) {
+        this.calendarComponent.refreshCalendar();
+      }
+    });
+  }
+
+  // Delete an existing booking
   loeschen() {
-    console.log('Löschen aufgerufen');
+    if (!this.selectedAccommodation || !this.selectedBooking) return;
+    this.bookingService.deleteBooking(this.selectedBooking.id).subscribe({
+      next: () => {
+        this.bookingService.getBookingsByAccommodationId(this.selectedAccommodation!.id)
+          .subscribe(b => this.bookings = b);
+        if (this.calendarComponent) {
+          this.calendarComponent.loadBookings();
+        }
+        this.selectedBooking = null;
+      },
+      error: err => {
+        console.error('Error deleting booking:', err);
+      }
+    });
   }
 }

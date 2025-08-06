@@ -32,27 +32,32 @@ export class Calendar implements OnInit, OnChanges {
   displayedYear: number = now.getFullYear();
   displayedMonth: number = now.getMonth();
 
-  // Bereichsauswahl-Properties für eigenen Kalender
+  // Selection properties for custom calendar
   startDateSelected: Date | null = null;
   endDateSelected: Date | null = null;
 
-  // Für den auswählbaren Kalender
+  // For the selectable calendar
   minDate: Date = new Date();
 
   @Input() accommodationId?: number;
+  @Input() highlightBooking: BookingModel | null = null;
   bookings: BookingModel[] = [];
   bookedDates: Date[] = [];
 
-  // Fehler-Property für das Template
+  // Error property for the template
   public selectionError: string | null = null;
 
-  @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
+  @ViewChild(MatCalendar) matCalendar!: MatCalendar<Date>;
 
-  constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef) {}
+  constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['accommodationId'] && this.accommodationId) {
       this.loadBookings();
+    }
+    if (changes['highlightBooking']) {
+      this.cdr.detectChanges();
     }
   }
 
@@ -73,12 +78,10 @@ export class Calendar implements OnInit, OnChanges {
             return days;
           });
           this.cdr.detectChanges();
-          if (this.calendar) {
-            this.calendar.updateTodaysDate(); // Kalender-Refresh erzwingen
-          }
+          this.refreshCalendar();
         },
         error: (err) => {
-          console.error('Fehler beim Laden der Buchungen:', err);
+          console.error('Error loading bookings:', err);
         }
       });
     }
@@ -92,16 +95,16 @@ export class Calendar implements OnInit, OnChanges {
     this.selectionError = null;
     if (!date) return;
 
-    // Immer neue Auswahl starten, wenn Enddatum gesetzt ist (auch nach Reload)
+    // Always start a new selection if the end date is set (also after reload)
     if (!this.startDateSelected || this.endDateSelected) {
       this.startDateSelected = date;
       this.endDateSelected = null;
     } else {
-      // Bereich bestimmen (egal ob vorwärts oder rückwärts gewählt)
+      // Determine the range (regardless of whether it's selected forwards or backwards)
       const start = this.startDateSelected < date ? this.startDateSelected : date;
       const end = this.startDateSelected > date ? this.startDateSelected : date;
 
-      // Prüfe, ob Bereich frei ist
+      // Check if the range is free
       let conflict = false;
       for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
         if (this.bookedDates.some(b =>
@@ -122,28 +125,22 @@ export class Calendar implements OnInit, OnChanges {
       this.startDateSelected = start;
       this.endDateSelected = end;
     }
-    // Keine Persistenz mehr
-    if (this.calendar) {
-      this.calendar.updateTodaysDate();
-    }
+    this.refreshCalendar();
     this.cdr.detectChanges();
   }
 
   resetSelection() {
     this.startDateSelected = null;
     this.endDateSelected = null;
-    // Keine Auswahl aus LocalStorage entfernen
-    if (this.calendar) {
-      this.calendar.updateTodaysDate();
-    }
+    this.refreshCalendar();
     this.cdr.detectChanges();
   }
 
   dateFilter = (date: Date | null): boolean => {
     if (!date) return false;
-    // Keine Vergangenheit und keine gebuchten Tage auswählbar
+    // No past dates and no booked dates are selectable
     const today = new Date();
-    today.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
     if (date < today) return false;
     return !this.bookedDates.some(b =>
       b.getFullYear() === date.getFullYear() &&
@@ -152,11 +149,20 @@ export class Calendar implements OnInit, OnChanges {
     );
   };
 
-  public dateClassCombined = (date: Date): string => {
-    const normalize = (d: Date | null) => d ? new Date(d.getFullYear(), d.getMonth(), d.getDate()) : null;
-    const current = normalize(date);
-
-    // Gebuchte Tage: rot
+  dateClassCombined = (date: Date): string => {
+    if (this.highlightBooking) {
+      // Convert strings to Date objects and set time to 0
+      const start = new Date(this.highlightBooking.startDate);
+      const end = new Date(this.highlightBooking.endDate);
+      start.setHours(0,0,0,0);
+      end.setHours(0,0,0,0);
+      const current = new Date(date);
+      current.setHours(0,0,0,0);
+      if (current >= start && current <= end) {
+        return 'highlighted-booking-date';
+      }
+    }
+    // ... Rest remains the same
     const isBooked = this.bookedDates.some(
       d => d.getFullYear() === date.getFullYear() &&
            d.getMonth() === date.getMonth() &&
@@ -164,7 +170,8 @@ export class Calendar implements OnInit, OnChanges {
     );
     if (isBooked) return 'booked-date';
 
-    // Auswahlbereich: nutze Angular Material Range-Klassen
+    const normalize = (d: Date | null) => d ? new Date(d.getFullYear(), d.getMonth(), d.getDate()) : null;
+    const current = normalize(date);
     const start = normalize(this.startDateSelected);
     const end = normalize(this.endDateSelected);
     if (start && end && current) {
@@ -174,4 +181,10 @@ export class Calendar implements OnInit, OnChanges {
     }
     return '';
   };
+
+  public refreshCalendar() {
+    if (this.matCalendar) {
+      this.matCalendar.updateTodaysDate();
+    }
+  }
 }

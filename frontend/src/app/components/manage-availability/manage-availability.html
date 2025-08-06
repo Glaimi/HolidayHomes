@@ -27,7 +27,7 @@
 
               @if (bookings.length > 0) {
                 @for (booking of bookings; track booking.id) {
-                  <div class="accommodationName">
+                  <div class="accommodationName booking-row" [class.selected]="selectedBooking?.id === booking.id" (click)="selectBooking(booking)">
                     <div class="bookingId">
                       <li>Buchung ID: {{ booking.id }}</li>
                     </div>
@@ -48,13 +48,17 @@
     </div>
 
     <div class="calendar">
-      <app-calendar #calendarRef [accommodationId]="selectedAccommodation?.id"></app-calendar>
+      <app-calendar
+        #calendarRef
+        [accommodationId]="selectedAccommodation?.id"
+        [highlightBooking]="selectedBooking">
+      </app-calendar>
     </div>
 
 
     <div class="buttonGroup">
       <button type="button" id="bookingButton" (click)="belegen()">Belegen</button>
-      <button type="button" id="deleteButton" (click)="loeschen()">Löschen</button>
+      <button type="button" id="deleteButton" (click)="loeschen()" [disabled]="!selectedBooking">Löschen</button>
     </div>
 
   </div>

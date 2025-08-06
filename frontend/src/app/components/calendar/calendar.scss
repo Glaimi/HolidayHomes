@@ -42,3 +42,19 @@
 .mat-calendar-body-in-range:not(.selected-range-date) .mat-calendar-body-cell-content {
   background: none !important;
 }
+
+.highlighted-booking-date .mat-calendar-body-cell-content {
+  background: #ff9800 !important; // Orange als Beispiel
+  color: #fff !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 2px #ff980066;
+}
+
+.mat-calendar-body-cell.highlighted-booking-date,
+.mat-calendar-body-cell.highlighted-booking-date .mat-calendar-body-cell-content {
+  background: #ffb300 !important; // Gelb-Orange
+  color: #fff !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 2px #ffb30066;
+  z-index: 2;
+}

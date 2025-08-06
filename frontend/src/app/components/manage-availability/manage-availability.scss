@@ -101,6 +101,17 @@
   margin-left: auto;
   margin-right: auto;
 }
-
-
-
+.booking-row.selected {
+  background: #1976d2;
+  color: #fff;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.booking-row {
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-bottom: 2px;
+}
+.booking-row:hover:not(.selected) {
+  background: #e3eafc;
+}
