@@ -51,11 +51,9 @@ export class Calendar implements OnInit {
   constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    // Auswahl aus LocalStorage wiederherstellen
-    const start = localStorage.getItem('calendarStart');
-    const end = localStorage.getItem('calendarEnd');
-    this.startDateSelected = start ? new Date(start) : null;
-    this.endDateSelected = end ? new Date(end) : null;
+
+    this.startDateSelected = null;
+    this.endDateSelected = null;
 
     if (this.accommodationId) {
       this.bookingService.getBookingsByAccommodationId(this.accommodationId).subscribe({
@@ -116,17 +114,21 @@ export class Calendar implements OnInit {
       this.startDateSelected = start;
       this.endDateSelected = end;
     }
-    // Auswahl persistent speichern
-    localStorage.setItem('calendarStart', this.startDateSelected ? this.startDateSelected.toISOString() : '');
-    localStorage.setItem('calendarEnd', this.endDateSelected ? this.endDateSelected.toISOString() : '');
+    // Keine Persistenz mehr
+    if (this.calendar) {
+      this.calendar.updateTodaysDate();
+    }
+    this.cdr.detectChanges();
   }
 
   resetSelection() {
     this.startDateSelected = null;
     this.endDateSelected = null;
-    // Auswahl aus LocalStorage entfernen
-    localStorage.removeItem('calendarStart');
-    localStorage.removeItem('calendarEnd');
+    // Keine Auswahl aus LocalStorage entfernen
+    if (this.calendar) {
+      this.calendar.updateTodaysDate();
+    }
+    this.cdr.detectChanges();
   }
 
   dateFilter = (date: Date | null): boolean => {
@@ -164,22 +166,4 @@ export class Calendar implements OnInit {
     }
     return '';
   };
-
-  prevMonth() {
-    if (this.displayedMonth === 0) {
-      this.displayedMonth = 11;
-      this.displayedYear--;
-    } else {
-      this.displayedMonth--;
-    }
-  }
-
-  nextMonth() {
-    if (this.displayedMonth === 11) {
-      this.displayedMonth = 0;
-      this.displayedYear++;
-    } else {
-      this.displayedMonth++;
-    }
-  }
 }

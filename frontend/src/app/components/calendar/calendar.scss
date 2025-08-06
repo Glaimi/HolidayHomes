@@ -24,3 +24,21 @@
 .date-selection-info button:hover {
   background: #1565c0;
 }
+
+// Entfernt grauen Hintergrund hinter hellblauem Kreis für Range
+.mat-calendar-body-cell.selected-range-date,
+.mat-calendar-body-cell.mat-calendar-body-in-range {
+  background: none !important;
+}
+
+.selected-range-date .mat-calendar-body-cell-content,
+.mat-calendar-body-in-range .mat-calendar-body-cell-content {
+  background-color: #90caf9 !important; // hellblauer Kreis
+  color: #0d47a1 !important;            // dunkle Schrift
+  border-radius: 50% !important;
+}
+
+// Standard-Range-Cell deaktivieren, wenn du eigene Klasse nutzt
+.mat-calendar-body-in-range:not(.selected-range-date) .mat-calendar-body-cell-content {
+  background: none !important;
+}
