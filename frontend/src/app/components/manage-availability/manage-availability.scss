@@ -41,6 +41,7 @@
 }
 .text{
   margin-left: 2.500rem;
+  font-weight: bold;
 }
 .scrolling-list{
   max-height: 300px;
@@ -53,21 +54,20 @@
 .scrolling-list li{
   list-style-type: none;
   margin-right: 1rem;
+  margin-top: 0.2rem;
 }
-.scrolling-list .seetern{
+.scrolling-list .accommodationName{
   display: flex;
   justify-content: center;
 }
 .calendar {
-  grid-area: calendar;
-  width: 150px;
+  width: 300px;
+  margin-top: -1.9rem;
 }
 .buttonGroup{
   margin-top: 150px;
   width: 100px;
   display: block;
-  justify-content: center;
-  margin-left: 150px;
 }
 #bookingButton {
   background-color: #007bff;
