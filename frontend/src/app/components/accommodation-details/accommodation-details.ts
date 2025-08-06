@@ -34,6 +34,7 @@ export class AccommodationDetails {
   accommodationImages$:Observable<ImageModel[]>;
   placeholderImage = 'placeholder.jpg';
   accommodationId:number;
+  bookingService: BookingService = inject(BookingService);
 
   constructor(private router: Router) {
     this.accommodationId = this.route.snapshot.params['id'];
@@ -47,7 +48,7 @@ export class AccommodationDetails {
 
   onDateSelected(date: Date | null) {
     if (!date) return;
-    
+
     if (!this.startDateSelected) {
       // Erstes Datum wird als Startdatum gesetzt
       this.startDateSelected = date;
@@ -78,7 +79,7 @@ export class AccommodationDetails {
     console.log("Enddatum", this.endDateSelected);
     console.log("ID", this.accommodationId);
 
-    this.accommodationService.bookAccommodation(this.accommodationId,this.startDateSelected,this.endDateSelected).subscribe(() => {
+    this.bookingService.bookAccommodation(this.accommodationId, this.startDate, this.endDate).subscribe(() => {
       console.log("Abgesendet")
     })
   }
