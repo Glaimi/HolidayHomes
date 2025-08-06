@@ -1,9 +1,9 @@
 import {Component, inject} from '@angular/core';
-import {AccommodationService} from '../../services/accommodation-service';
 import {AccommodationModel} from '../../interfaces/accommodation-model';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {BookingModel} from '../../interfaces/booking-model';
+import {BookingService} from '../../services/booking-service';
 
 @Component({
   selector: 'app-manage-availability',
@@ -16,7 +16,7 @@ import {BookingModel} from '../../interfaces/booking-model';
   styleUrl: './manage-availability.scss'
 })
 export class ManageAvailability {
-  private accommodationService = inject(AccommodationService)
+  private bookingService = inject(BookingService)
 
   accommodations: AccommodationModel[] = []
   bookings: BookingModel[] = [];
@@ -33,7 +33,7 @@ export class ManageAvailability {
     }
     if (this.accommodations.length > 0) {
       const accId = this.accommodations[0].id;
-      this.accommodationService.getBookingsByAccommodationId(accId).subscribe({
+      this.bookingService.getBookingsByAccommodationId(accId).subscribe({
         next: (bookings) => {
           this.bookings = bookings;
         },
@@ -56,7 +56,7 @@ export class ManageAvailability {
     const isNumeric = !isNaN(Number(this.searchValue));
 
     if (isNumeric) {
-      this.accommodationService.searchAccommodation(Number(this.searchValue), undefined).subscribe({
+      this.bookingService.searchAccommodation(Number(this.searchValue), undefined).subscribe({
         next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
         error: (err) => {
           console.error('Fehler bei der Unterkunftssuche:', err);
@@ -65,7 +65,7 @@ export class ManageAvailability {
         }
       });
     } else {
-      this.accommodationService.searchAccommodation(undefined, this.searchValue).subscribe({
+      this.bookingService.searchAccommodation(undefined, this.searchValue).subscribe({
         next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
         error: (err) => {
           console.error('Fehler bei der Unterkunftssuche:', err);
