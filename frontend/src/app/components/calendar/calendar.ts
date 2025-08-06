@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, ViewEncapsulation, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatCalendar } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -28,7 +28,7 @@ const now = new Date();
   styleUrl: './calendar.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class Calendar implements OnInit {
+export class Calendar implements OnInit, OnChanges {
   displayedYear: number = now.getFullYear();
   displayedMonth: number = now.getMonth();
 
@@ -39,7 +39,7 @@ export class Calendar implements OnInit {
   // Für den auswählbaren Kalender
   minDate: Date = new Date();
 
-  @Input() accommodationId!: number;
+  @Input() accommodationId?: number;
   bookings: BookingModel[] = [];
   bookedDates: Date[] = [];
 
@@ -50,11 +50,15 @@ export class Calendar implements OnInit {
 
   constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['accommodationId'] && this.accommodationId) {
+      this.loadBookings();
+    }
+  }
 
+  private loadBookings() {
     this.startDateSelected = null;
     this.endDateSelected = null;
-
     if (this.accommodationId) {
       this.bookingService.getBookingsByAccommodationId(this.accommodationId).subscribe({
         next: (bookings) => {
@@ -78,6 +82,10 @@ export class Calendar implements OnInit {
         }
       });
     }
+  }
+
+  ngOnInit(): void {
+    this.loadBookings();
   }
 
   onDateSelected(date: Date | null) {
