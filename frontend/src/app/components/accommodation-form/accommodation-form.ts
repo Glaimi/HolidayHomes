@@ -18,6 +18,10 @@ import {AccommodationModel} from '../../interfaces/accommodation-model';
 import {SeasonService} from "../../services/season-service";
 import {SeasonModel} from "../../interfaces/season-model";
 import {map} from "rxjs/operators";
+import {Router} from '@angular/router';
+import {AccommodationService} from '../../services/accommodation-service';
+import {SanitaryInfoModel} from '../../interfaces/sanitary-info-model';
+import {AddSeasonPricingDto} from '../../interfaces/add-season-pricing-dto';
 
 @Component({
   selector: 'app-accommodation-form',
@@ -29,8 +33,7 @@ import {map} from "rxjs/operators";
   styleUrl: './accommodation-form.scss'
 })
 export class AccommodationForm implements OnInit {
-  private http: HttpClient = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:5152/api/Accommodation';
+  private accommodationService: AccommodationService = inject(AccommodationService);
 
   // Needed for retrieving and displaying available accommodation types in the form
   private accommodationTypeService: AccommodationTypeService = inject(AccommodationTypeService);
@@ -85,7 +88,8 @@ export class AccommodationForm implements OnInit {
     isWashingMachineAvailable: new FormControl(false),
     isParkingAvailable: new FormControl(false),
     isSaunaAvailable: new FormControl(false),
-    hints: new FormControl('')
+    hints: new FormControl(''),
+    images: new FormControl(null)
   });
 
   ngOnInit(): void {
@@ -95,15 +99,7 @@ export class AccommodationForm implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.formGroup.value);
-
     if (this.formGroup.valid) {
-      const options = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        })
-      };
-
       // After the season pricings have been created, build the DTO and send it to the API
       this.getSeasonPricings().subscribe(seasonPricings => {
         const accommodationDto = {
@@ -133,23 +129,23 @@ export class AccommodationForm implements OnInit {
           seasonPricings
         };
 
-        this.http.post<AccommodationModel>(this.baseUrl, accommodationDto, options).subscribe(accommodation => {
-          console.log(accommodation);
-        });
+        this.accommodationService.saveAccommodation(accommodationDto).subscribe((accommodation) => {
+          console.log("Abgesendet!");
+        })
       })
     } else {
       console.warn('Unvollständige Formulardaten');
     }
   }
 
-  getSanitaryInfos(): { sanitaryTypeId: number, amount: number }[] {
+  getSanitaryInfos(): SanitaryInfoModel[] {
     return [
       {sanitaryTypeId: 1, amount: this.formGroup.get('numberOfShowers')?.value ?? 0},
       {sanitaryTypeId: 2, amount: this.formGroup.get('numberOfBathtubs')?.value ?? 0}
     ];
   }
 
-  getSeasonPricings(): Observable<{ seasonId: number, isBookable: boolean, price: number }[]> {
+  getSeasonPricings(): Observable<AddSeasonPricingDto[]> {
     return this.seasons$.pipe(map(seasons => seasons.map(season => {
       if (season.title === 'A') {
         return {
@@ -176,8 +172,6 @@ export class AccommodationForm implements OnInit {
   // Validates that the field is not empty and doesn't contain whitespace only.
   notEmptyOrWhitespace(control: AbstractControl): ValidationErrors | null {
     const isValid: boolean = control.value.trim().length > 0;
-
-    console.log(control.value)
 
     return isValid ? null : {emptyOrWhitespace: {value: control.value}}
   }
