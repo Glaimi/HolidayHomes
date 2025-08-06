@@ -48,19 +48,14 @@
     </div>
 
     <div class="calendar">
-      <app-calendar [accommodationId]="selectedAccommodation?.id"></app-calendar>
+      <app-calendar #calendarRef [accommodationId]="selectedAccommodation?.id"></app-calendar>
     </div>
 
 
     <div class="buttonGroup">
-      <button type="submit" id="bookingButton">Belegen</button>
-      <button type="submit" id="deleteButton">Löschen</button>
+      <button type="button" id="bookingButton" (click)="belegen()">Belegen</button>
+      <button type="button" id="deleteButton" (click)="loeschen()">Löschen</button>
     </div>
 
   </div>
-
-
-  <div class="acceptErrorSection">
-    <button type="submit" class="accept" id="acceptButton">Bestätigen</button>
-  </div>
-</section>
+  </section>

@@ -1,8 +1,15 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient,HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AccommodationModel } from '../interfaces/accommodation-model';
 import { BookingModel } from '../interfaces/booking-model';
+
+function toLocalDateString(date: Date): string {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +36,9 @@ export class BookingService {
     const url = `http://localhost:5152/api/Booking`;
     const body = {
       AccommodationId: accommodationId,
-      StartDate: startDate.toISOString().split('T', 1)[0],
-      EndDate: endDate.toISOString().split('T',1)[0]
-    }
+      StartDate: toLocalDateString(startDate),
+      EndDate: toLocalDateString(endDate)
+    };
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -39,6 +46,4 @@ export class BookingService {
     };
     return this.http.post(url,body, options);
   }
-
-
 }

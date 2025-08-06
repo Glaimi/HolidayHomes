@@ -56,7 +56,7 @@ export class Calendar implements OnInit, OnChanges {
     }
   }
 
-  private loadBookings() {
+  public loadBookings() {
     this.startDateSelected = null;
     this.endDateSelected = null;
     if (this.accommodationId) {

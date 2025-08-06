@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 import {AccommodationModel} from '../../interfaces/accommodation-model';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -19,6 +19,8 @@ import { Calendar } from '../calendar/calendar';
 })
 export class ManageAvailability {
   private bookingService = inject(BookingService)
+
+  @ViewChild('calendarRef') calendarComponent!: Calendar;
 
   accommodations: AccommodationModel[] = []
   bookings: BookingModel[] = [];
@@ -85,5 +87,39 @@ export class ManageAvailability {
         }
       });
     }
+  }
+
+  // Fügt eine neue Belegung hinzu
+  belegen() {
+    if (!this.selectedAccommodation) {
+      alert('Bitte zuerst eine Unterkunft suchen und auswählen.');
+      return;
+    }
+    if (!this.calendarComponent?.startDateSelected || !this.calendarComponent?.endDateSelected) {
+      alert('Bitte im Kalender einen Zeitraum auswählen.');
+      return;
+    }
+    const start = this.calendarComponent.startDateSelected;
+    const end = this.calendarComponent.endDateSelected;
+    this.bookingService.bookAccommodation(this.selectedAccommodation.id, start, end).subscribe({
+      next: () => {
+        alert('Belegung erfolgreich gespeichert.');
+        // Buchungen neu laden
+        this.bookingService.getBookingsByAccommodationId(this.selectedAccommodation!.id).subscribe(b => this.bookings = b);
+        // Kalender-Auswahl zurücksetzen
+        this.calendarComponent.resetSelection();
+        // Kalender-Buchungen neu laden (damit neue Belegung sofort sichtbar)
+        this.calendarComponent.loadBookings();
+      },
+      error: (err) => {
+        alert('Fehler beim Speichern der Belegung!');
+        console.error(err);
+      }
+    });
+  }
+
+  // Löscht eine bestehende Belegung
+  loeschen() {
+    console.log('Löschen aufgerufen');
   }
 }
