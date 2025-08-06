@@ -11,19 +11,19 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { AccommodationModel } from '../../interfaces/accommodation-model';
 import { AccommodationService } from '../../services/accommodation-service';
-import {AccommodationList} from '../accommodation-list/accommodation-list';
+
 
 @Component({
   selector: 'app-accommodation',
   standalone: true,
   imports: [CommonModule, RouterLink, FontAwesomeModule],
   templateUrl: './accommodation.html',
-  styleUrls: ['./accommodation.scss']
+  styleUrl: './accommodation.scss'
 })
 export class Accommodation implements OnInit, OnDestroy {
   accommodationImages: (string|null)[] = [];
   currentImageIndex = 0;
-  private imageChangeInterval: any;
+  private imageChangeInterval: ReturnType<typeof setInterval> | undefined;
   isLoadingImages = false;
   imageLoadError = false;
   placeholderImage = 'placeholder.jpg';
@@ -70,7 +70,7 @@ export class Accommodation implements OnInit, OnDestroy {
           if (images && images.length > 0) {
             // Process image URLs
             this.accommodationImages = images
-              .filter(img => img && img.url)  // Filter out any invalid images
+              .filter((img: { url?: string } | null) => img && img.url)  // Filter out any invalid images
               .map(img => {
                 // If the URL is relative, prepend the base URL
                 const imageUrl = img.url;
@@ -112,5 +112,3 @@ export class Accommodation implements OnInit, OnDestroy {
   }
 
 }
-
-

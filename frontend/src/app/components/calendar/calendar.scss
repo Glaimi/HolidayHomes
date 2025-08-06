@@ -1,0 +1,26 @@
+.calendar-container {
+  margin: 2rem 0;
+}
+
+.date-selection-info {
+  margin-top: 1rem;
+}
+
+.date-selection-info p {
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.date-selection-info button {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.date-selection-info button:hover {
+  background: #1565c0;
+}

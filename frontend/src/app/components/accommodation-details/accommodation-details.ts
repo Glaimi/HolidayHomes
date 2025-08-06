@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AccommodationService} from '../../services/accommodation-service';
+import {BookingService} from '../../services/booking-service';
+import {AsyncPipe, DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {AccommodationModel, SeasonPrisingCalculate} from '../../interfaces/accommodation-model';
-import {AsyncPipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {ImageModel} from '../../interfaces/image-model';
-
+import { Calendar } from '../calendar/calendar';
 
 @Component({
   selector: 'app-view.details',
@@ -14,7 +15,8 @@ import {ImageModel} from '../../interfaces/image-model';
     NgIf,
     NgForOf,
     DecimalPipe,
-
+    DatePipe,
+    Calendar
   ],
   templateUrl: './accommodation-details.html',
   standalone: true,
@@ -23,17 +25,19 @@ import {ImageModel} from '../../interfaces/image-model';
 export class AccommodationDetails {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   accommodationService: AccommodationService = inject(AccommodationService);
+  bookingService: BookingService = inject(BookingService);
   accommodationDetails$: Observable<AccommodationModel | undefined>;
   accommodationImages$:Observable<ImageModel[]>;
   placeholderImage = 'placeholder.jpg';
+  accommodationId:number;
 
   seasonPricingCurrent$: Observable<SeasonPrisingCalculate[]>;
 
   constructor() {
-    const id: number = this.route.snapshot.params['id'];
-    this.accommodationDetails$ = this.accommodationService.getAccommodationById(id);
-    this.accommodationImages$ = this.accommodationService.getAccommodationIdImage(id);
-    this.seasonPricingCurrent$ = this.accommodationService.getSeasonPricing(id);
+    this.accommodationId = this.route.snapshot.params['id'];
+    this.accommodationDetails$ = this.accommodationService.getAccommodationById(this.accommodationId);
+    this.accommodationImages$ = this.accommodationService.getAccommodationIdImage(this.accommodationId);
+    this.seasonPricingCurrent$ = this.accommodationService.getSeasonPricing(this.accommodationId);
 
   }
   calculateNumberOfNights(

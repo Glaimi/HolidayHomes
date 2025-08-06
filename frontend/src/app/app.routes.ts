@@ -39,6 +39,11 @@ export const routes: Routes = [
     title: 'Verfügbarkeit verwalten'
   },
   {
+    path: 'calendar',
+    loadComponent: () => import('./components/calendar/calendar').then(m => m.Calendar),
+    title: 'Kalender'
+  },
+  {
     path: '**', redirectTo: '',
   }
 ];
