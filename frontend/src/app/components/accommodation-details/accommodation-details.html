@@ -1,90 +1,96 @@
-<section class="accommodation-details" *ngIf="accommodationDetails$ | async as accommodation">
+<section class="accommodation-details">
+  @if (accommodationDetails$ | async; as accommodation) {
+    <div class="image-gallery">
+      @if (accommodationImages$ | async; as images) {
+        @if (!!images && images.length > 0) {
+          <div class="image-grid">
+            @for (image of images; track image) {
+              <img [src]="image.url" alt="Unterkunftsbild"/>
+            }
+          </div>
+        } @else {
+          <div class="image-grid">
+            <img [src]="placeholderImage" alt="Platzhalterbild"/>
+          </div>
+        }
+      }
+    </div>
 
-  <div class="image-gallery" *ngIf="accommodationImages$ | async as images">
-    <ng-container class="ng" *ngIf="images.length > 0; else placeholder">
-      <div class="image-grid">
-        <img *ngFor="let image of images" [src]="image.url" alt="Unterkunftsbild"/>
+    <h2>{{ accommodation.name }}</h2>
 
+    <table class="accommodation-table">
+      <tr>
+        <td class="info-left"><strong>Stadt:</strong> {{ accommodation.city }}</td>
+        <td class="info-right"><strong>Straße:</strong> {{ accommodation.street }}</td>
+      </tr>
+      <tr>
+        <td class="info-left"><strong>Vermieter:</strong> {{ accommodation.landLordName }}</td>
+        <td class="info-right"><strong>Anzahl Betten:</strong> {{ accommodation.numberOfBeds }}</td>
+      </tr>
+      <tr>
+        <td class="info-left"><strong>Fläche:</strong> {{ accommodation.squareMeter }} m²</td>
+        <td class="info-right"><strong>Schlafzimmer:</strong> {{ accommodation.numberOfBedrooms }}</td>
+      </tr>
+      <tr>
+        <td class="info-left"><strong>Wohnzimmer:</strong> {{ accommodation.numberOfLivingRooms }}</td>
+        <td class="info-right"><strong>Gemischte Räume:</strong> {{ accommodation.numberOfMixedRooms }}</td>
+      </tr>
+      <tr>
+        <td class="info-left"><strong>Küche:</strong> {{ accommodation.kitchen }}</td>
+        <td class="info-right"><strong>Kurzreisen:</strong> {{ accommodation.shortTripAvailability }}</td>
+      </tr>
+      <tr>
+        <td class="info-left"><strong>Bettwäsche:</strong> {{ accommodation.bedSheetsAvailability }}</td>
+        <td class="info-right"><strong>Handtücher:</strong> {{ accommodation.towelsAvailability }}</td>
+      </tr>
+      <tr>
+        <td class="info-left"><strong>W-Lan:</strong> {{ accommodation.isWifiAvailable ? 'Ja' : 'Nein' }}</td>
+        <td class="info-right"><strong>Hunde erlaubt:</strong> {{ accommodation.isDogAllowed ? 'Ja' : 'Nein' }}</td>
+      </tr>
+      <tr>
+        <td class="info-left"><strong>Rauchen erlaubt:</strong> {{ accommodation.isNonSmoking ? 'Nein' : 'Ja' }}</td>
+        <td class="info-right"><strong>Fernseher:</strong> {{ accommodation.isTelevisionAvailable ? 'Ja' : 'Nein' }}</td>
+      </tr>
+      <tr>
+        <td class="info-left">
+          <strong>Waschmaschine:</strong> {{ accommodation.isWashingMachineAvailable ? 'Ja' : 'Nein' }}
+        </td>
+        <td class="info-right"><strong>Parkplatz:</strong> {{ accommodation.isParkingAvailable ? 'Ja' : 'Nein' }}</td>
+      </tr>
+      <tr>
+        <td class="info-left"><strong>Sauna:</strong> {{ accommodation.isSaunaAvailable ? 'Ja' : 'Nein' }}</td>
+        <td class="info-right">
+          <strong>Badezimmer:</strong>
+          @if (!!accommodation.sanitaryInfos && accommodation.sanitaryInfos.length > 0) {
+            @for (sanitaryInfo of accommodation.sanitaryInfos; track sanitaryInfo) {
+              {{ sanitaryInfo.title }}
+            }
+          }
+        </td>
+      </tr>
+    </table>
+    <div><p><strong>Hinweise:</strong> {{ accommodation.hints }}</p></div>
+    <div class="pricing">
+      <h3>Preise:</h3>
+      @if (!!accommodation.seasonPricings && accommodation.seasonPricings.length > 0) {
+        @for (seasonPricing of accommodation.seasonPricings; track seasonPricing) {
+          <p>Saison: {{ seasonPricing.seasonTitle }} vom {{ seasonPricing.startDay }}.{{ seasonPricing.startMonth }} bis
+            {{ seasonPricing.endDay }}.{{ seasonPricing.endMonth }} -
+            <strong>{{ seasonPricing.price | number: '2.2':'de-DE' }} € / Nacht</strong>
+          </p>
+        }
+      }
+
+      <div class="small-calendar">
+        <app-calendar [accommodationId]="accommodation.id"></app-calendar>
       </div>
-    </ng-container>
-  </div>
-
-  <ng-template #placeholder>
-    <div class="image-grid">
-      <img [src]="placeholderImage" alt="Platzhalterbild"/>
     </div>
-  </ng-template>
 
-  <h2>{{ accommodation.name }}</h2>
-
-  <table class="accommodation-table">
-    <tr>
-      <td class="info-left"><strong>Stadt:</strong> {{ accommodation.city }}</td>
-      <td class="info-right"><strong>Straße:</strong> {{ accommodation.street }}</td>
-    </tr>
-    <tr>
-      <td class="info-left"><strong>Vermieter:</strong> {{ accommodation.landLordName }}</td>
-      <td class="info-right"><strong>Anzahl Betten:</strong> {{ accommodation.numberOfBeds }}</td>
-    </tr>
-    <tr>
-      <td class="info-left"><strong>Fläche:</strong> {{ accommodation.squareMeter }} m²</td>
-      <td class="info-right"><strong>Schlafzimmer:</strong> {{ accommodation.numberOfBedrooms }}</td>
-    </tr>
-    <tr>
-      <td class="info-left"><strong>Wohnzimmer:</strong> {{ accommodation.numberOfLivingRooms }}</td>
-      <td class="info-right"><strong>Gemischte Räume:</strong> {{ accommodation.numberOfMixedRooms }}</td>
-    </tr>
-    <tr>
-      <td class="info-left"><strong>Küche:</strong> {{ accommodation.kitchen }}</td>
-      <td class="info-right"><strong>Kurzreisen:</strong> {{ accommodation.shortTripAvailability }}</td>
-    </tr>
-    <tr>
-      <td class="info-left"><strong>Bettwäsche:</strong> {{ accommodation.bedSheetsAvailability }}</td>
-      <td class="info-right"><strong>Handtücher:</strong> {{ accommodation.towelsAvailability }}</td>
-    </tr>
-    <tr>
-      <td class="info-left"><strong>W-Lan:</strong> {{ accommodation.isWifiAvailable ? 'Ja' : 'Nein' }}</td>
-      <td class="info-right"><strong>Hunde erlaubt:</strong> {{ accommodation.isDogAllowed ? 'Ja' : 'Nein' }}</td>
-    </tr>
-    <tr>
-      <td class="info-left"><strong>Rauchen erlaubt:</strong> {{ accommodation.isNonSmoking ? 'Nein' : 'Ja' }}</td>
-      <td class="info-right"><strong>Fernseher:</strong> {{ accommodation.isTelevisionAvailable ? 'Ja' : 'Nein' }}</td>
-    </tr>
-    <tr>
-      <td class="info-left">
-        <strong>Waschmaschine:</strong> {{ accommodation.isWashingMachineAvailable ? 'Ja' : 'Nein' }}
-      </td>
-      <td class="info-right"><strong>Parkplatz:</strong> {{ accommodation.isParkingAvailable ? 'Ja' : 'Nein' }}</td>
-    </tr>
-    <tr>
-      <td class="info-left"><strong>Sauna:</strong> {{ accommodation.isSaunaAvailable ? 'Ja' : 'Nein' }}</td>
-      <td class="info-right">
-        <strong>Badezimmer:</strong>@for (sanitaryInfo of accommodation.sanitaryInfos; track sanitaryInfo) {
-        {{ sanitaryInfo.title }}
-      }</td>
-    </tr>
-  </table>
-  <div><p><strong>Hinweise:</strong> {{ accommodation.hints }}</p></div>
-  <div class="pricing">
-    <h3>Preise:</h3>
-    @for (seasonPricing of accommodation.seasonPricings; track seasonPricing) {
-      <p>Saison: {{ seasonPricing.seasonTitle }} vom {{ seasonPricing.startDay }}.{{ seasonPricing.startMonth }} bis
-        {{ seasonPricing.endDay }}.{{ seasonPricing.endMonth }} -
-        <strong>{{ seasonPricing.price | number: '2.2':'de-DE' }} € / Nacht</strong>
-      </p>
-    }
-
-    <div class="small-calendar">
-      <app-calendar [accommodationId]="accommodation.id"></app-calendar>
+    <div class="contact">
+      <p><em>Um die Unterkunft zu buchen oder die Verfügbarkeit zu prüfen, schreiben Sie uns bitte eine E-Mail oder rufen
+        Sie uns gerne an.</em></p>
+      <p><strong>E-Mail:</strong> info&#64;HolidayHome.de </p>
+      <p><strong>Telefon:</strong> 0421 123 456 789</p>
     </div>
-  </div>
-
-
-  <div class="contact">
-    <p><em>Um die Unterkunft zu buchen oder die Verfügbarkeit zu prüfen, schreiben Sie uns bitte eine E-Mail oder rufen
-      Sie uns gerne an.</em></p>
-    <p><strong>E-Mail:</strong> info&#64;HolidayHome.de </p>
-    <p><strong>Telefon:</strong> 0421 123 456 789</p>
-  </div>
-
+  }
 </section>

@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {AccommodationService} from '../../services/accommodation-service';
 import {BookingService} from '../../services/booking-service';
 import {AccommodationModel} from '../../interfaces/accommodation-model';
-import {AsyncPipe, DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, DatePipe, DecimalPipe} from '@angular/common';
 import {ImageModel} from '../../interfaces/image-model';
 import { Calendar } from '../calendar/calendar';
 
@@ -13,8 +13,6 @@ import { Calendar } from '../calendar/calendar';
   selector: 'app-view.details',
   imports: [
     AsyncPipe,
-    NgIf,
-    NgForOf,
     DecimalPipe,
     DatePipe,
     Calendar
