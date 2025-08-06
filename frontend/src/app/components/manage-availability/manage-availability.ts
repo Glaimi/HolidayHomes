@@ -4,12 +4,14 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {BookingModel} from '../../interfaces/booking-model';
 import {BookingService} from '../../services/booking-service';
+import { Calendar } from '../calendar/calendar';
 
 @Component({
   selector: 'app-manage-availability',
   imports: [
     CommonModule,
     FormsModule,
+    Calendar,
   ],
   templateUrl: './manage-availability.html',
   standalone: true,
@@ -22,6 +24,7 @@ export class ManageAvailability {
   bookings: BookingModel[] = [];
   searchValue: string = '';
   hasSearched: boolean = false;
+  selectedAccommodation: AccommodationModel | null = null;
 
   private handleSearchResponse(response: AccommodationModel[] | AccommodationModel | null | undefined): void {
     this.hasSearched = true;
@@ -35,6 +38,7 @@ export class ManageAvailability {
     }
     if (this.accommodations.length > 0) {
       const accId = this.accommodations[0].id;
+      this.selectedAccommodation = this.accommodations[0];
       this.bookingService.getBookingsByAccommodationId(accId).subscribe({
         next: (bookings: BookingModel[]) => {
           this.bookings = bookings;
@@ -46,6 +50,7 @@ export class ManageAvailability {
         }
       });
     } else {
+      this.selectedAccommodation = null;
       this.bookings = [];
     }
   }
