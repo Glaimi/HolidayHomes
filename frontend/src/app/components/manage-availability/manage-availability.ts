@@ -13,7 +13,7 @@ import {BookingService} from '../../services/booking-service';
   ],
   templateUrl: './manage-availability.html',
   standalone: true,
-  styleUrl: './manage-availability.scss'
+  styleUrls: ['./manage-availability.scss']
 })
 export class ManageAvailability {
   private bookingService = inject(BookingService)
@@ -36,10 +36,10 @@ export class ManageAvailability {
     if (this.accommodations.length > 0) {
       const accId = this.accommodations[0].id;
       this.bookingService.getBookingsByAccommodationId(accId).subscribe({
-        next: (bookings) => {
+        next: (bookings: BookingModel[]) => {
           this.bookings = bookings;
         },
-        error: (err) => {
+        error: (err: any) => {
           this.hasSearched = true;
           console.error('Fehler beim Laden der Buchungen:', err);
           this.bookings = [];
@@ -62,7 +62,7 @@ export class ManageAvailability {
     if (isNumeric) {
       this.bookingService.searchAccommodation(Number(this.searchValue), undefined).subscribe({
         next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
-        error: (err) => {
+        error: (err: any) => {
           this.hasSearched = true;
           console.error('Fehler bei der Unterkunftssuche:', err);
           this.accommodations = [];
@@ -72,7 +72,7 @@ export class ManageAvailability {
     } else {
       this.bookingService.searchAccommodation(undefined, this.searchValue).subscribe({
         next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
-        error: (err) => {
+        error: (err: any) => {
           this.hasSearched = true;
           console.error('Fehler bei der Unterkunftssuche:', err);
           this.accommodations = [];
