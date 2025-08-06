@@ -6,10 +6,11 @@ import {AccommodationModel} from '../../interfaces/accommodation-model';
 import {AsyncPipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {ImageModel} from '../../interfaces/image-model';
 import {
+  DateRange,
   MatCalendar,
   MatDatepickerActions,
   MatDatepickerApply,
-  MatDatepickerCancel, MatDatepickerModule,
+  MatDatepickerCancel, MatDatepickerControl, MatDatepickerModule, MatDatepickerPanel,
   MatDateRangePicker
 } from '@angular/material/datepicker';
 import {MatButton} from '@angular/material/button';
