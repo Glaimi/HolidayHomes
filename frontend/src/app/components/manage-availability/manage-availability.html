@@ -13,36 +13,37 @@
 
   <div class="content">
     <div class="bookinglist">
-      <!--      @if (accommodations.length === 0) {-->
-      <!--        <div>-->
-      <!--          <p>Keine Unterkünfte gefunden.</p>-->
-      <!--        </div>-->
-      <!--      }-->
-      @for (acc of accommodations; track acc.id) {
-
-        <p class="text">{{ acc.name }} (ID: {{ acc.id }})</p>
-        <div class="scrolling-list">
-
-          <ul>
-
-            @if (bookings.length > 0) {
-              @for (booking of bookings; track booking.id) {
-                <div class="seetern">
-                  <div class="id">
-                    <li>Buchung ID: {{ booking.id }}</li>
-                  </div>
-                  <div class="bookingTime">
-                    <li>Start: {{ booking.startDate }}</li>
-                    <li>Ende: {{ booking.endDate }}</li>
-                  </div>
-                </div>
-              }
-            } @else {
-              <li>Keine Buchungen gefunden.</li>
-            }
-
-          </ul>
+      @if (searchValue && accommodations.length === 0) {
+        <div>
+          <p>Keine Unterkünfte gefunden.</p>
         </div>
+      } @else {
+        @for (acc of accommodations; track acc.id) {
+
+          <p class="text">{{ acc.name }} (ID: {{ acc.id }})</p>
+          <div class="scrolling-list">
+
+            <ul>
+
+              @if (bookings.length > 0) {
+                @for (booking of bookings; track booking.id) {
+                  <div class="seetern">
+                    <div class="id">
+                      <li>Buchung ID: {{ booking.id }}</li>
+                    </div>
+                    <div>
+                      <li>Start: {{ booking.startDate }}</li>
+                      <li>Ende: {{ booking.endDate }}</li>
+                    </div>
+                  </div>
+                }
+              } @else if (searchValue){
+                <li class="error">Keine Buchungen gefunden.</li>
+              }
+
+            </ul>
+          </div>
+        }
       }
     </div>
 

@@ -30,7 +30,7 @@
 .content{
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 1000px;
   margin-top: 45px;
 }
@@ -43,7 +43,11 @@
   margin-left: 2.500rem;
 }
 .scrolling-list{
-  width: 400px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 320px;
   display: flex;
 }
 .scrolling-list li{
@@ -59,6 +63,7 @@
   width: 150px;
 }
 .buttonGroup{
+  margin-top: 150px;
   width: 100px;
   display: block;
   justify-content: center;
