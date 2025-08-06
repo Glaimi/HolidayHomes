@@ -27,8 +27,8 @@
 
               @if (bookings.length > 0) {
                 @for (booking of bookings; track booking.id) {
-                  <div class="seetern">
-                    <div class="id">
+                  <div class="accommodationName">
+                    <div class="bookingId">
                       <li>Buchung ID: {{ booking.id }}</li>
                     </div>
                     <div>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="calendar">
-      <img src="https://raw.githubusercontent.com/htmlelements/smart-calendar/master/smart-calendar.png" alt="Calendar">
+    <app-calendar></app-calendar>
     </div>
 
 

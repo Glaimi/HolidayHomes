@@ -4,12 +4,14 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {BookingModel} from '../../interfaces/booking-model';
 import {BookingService} from '../../services/booking-service';
+import {Calendar} from '../calendar/calendar';
 
 @Component({
   selector: 'app-manage-availability',
   imports: [
     CommonModule,
     FormsModule,
+    Calendar,
   ],
   templateUrl: './manage-availability.html',
   standalone: true,
