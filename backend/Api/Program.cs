@@ -64,7 +64,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(optionsBuilder =>
     {
-        optionsBuilder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
+        optionsBuilder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback).AllowAnyHeader().AllowAnyMethod();
     });
 });
 
