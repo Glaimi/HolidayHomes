@@ -13,53 +13,39 @@
 
   --padding-body: 5rem 8rem 3rem 8rem;
   --marging-body: 3rem auto;
-
 }
-body{
+
+html,
+body {
+  height: 100%;
+}
+
+/* Default (Large screens - Desktop) */
+
+body {
   margin: 0;
   padding: 0;
-
-}
-/* Default (Large screens - Desktop) */
-body {
   font-size: 16px;
-}
-
-/* Large desktops and wide screens */
-@media (min-width: 1200px) {
-  body {
-    font-size: 17px;
-
-  }
-}
-
-/* Laptops and small desktops */
-@media (min-width: 992px) and (max-width: 1199px) {
-  body {
-    font-size: 16px;
-
-  }
-}
-
-/* Tablets (iPads, etc.) */
-@media (min-width: 768px) and (max-width: 991px) {
-  body {
-    font-size: 15px;
-
-  }
-}
-
-/* Mobile devices */
-@media (max-width: 767px) {
-  body {
-    font-size: 14px;
-
-  }
-}
-
-html, body { height: 100%; }
-body { margin: 0;
   font-family: "Roboto", sans-serif;
+}
+
+/*******************************
+ * Form Inputs & Buttons
+ *******************************/
+
+.input,
+.input-small {
+  height: 1rem;
+  padding: 0.1rem 0.25rem;
+  font-size: 0.8rem;
+}
+
+.input {
+  width: 100%;
+}
+
+.input-small {
+  width: 2.5rem;
 }
 
 .primary-button {
@@ -79,5 +65,99 @@ body { margin: 0;
   }
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*******************************
+ * Dropdown
+ *******************************/
+
+// Wrapper for the sort dropdown
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+  min-width: 260px;
+}
+
+// Dropdown toggle button
+.dropdown-button {
+  font-family: "Roboto", sans-serif;
+  background-color: #f3f3f3;
+  color: black;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+// Dropdown content container
+.dropdown-menu {
+  margin-top: -24px;
+  top: 100%;
+  padding: 0;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+  width: 100%;
+}
+
+// Modifier class to toggle visibility
+.dropdown-menu.show {
+  display: block;
+}
+
+
+// First item in dropdown (removes top border if needed)
+.dropdown-item:first-child {
+  border-top: none;
+}
+
+// Individual dropdown item styling
+.dropdown-item {
+  font-family: "Roboto", sans-serif;
+  color: black;
+  padding: 12px ;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// Hover effect for dropdown items
+.dropdown-item:hover {
+  background-color: #ddd;
+}
+
+/*******************************
+ * Media Queries
+ *******************************/
+
+@media (min-width: 1200px) {
+  body {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+  }
+}
