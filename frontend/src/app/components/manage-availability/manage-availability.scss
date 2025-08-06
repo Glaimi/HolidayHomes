@@ -1,28 +1,21 @@
-.bookingOverview {
-  margin-top: 60px;
-  position: relative;
-  display: grid;
-  gap: 20px;
-  padding: 0 20px;
+.manageAvailability {
+  max-width: 1200px;
+  margin: 30px 30px;
 }
-
 .searchfield {
+  position: relative;
   display: flex;
   justify-content: center;
   width: 100%;
   margin: 0 auto;
 }
-
 #searchInput {
-  background-size: 100px;
-  padding: .4rem 6rem;
+  width: 300px;
+  height: 36px;
   font-size: 1rem;
   border-radius: .5rem;
-  width: auto;
-  margin: 0;
   display: inline-block;
 }
-
 #searchButton {
   background-color: #007bff;
   border: none;
@@ -34,19 +27,48 @@
   display: inline-block;
   margin-left: 5px;
 }
-
+.content{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 1000px;
+  margin-top: 45px;
+}
 .bookinglist {
   grid-area: list;
   width: 300px;
-  margin-top: 100px;
+  margin-top: 5px;
 }
-
+.text{
+  margin-left: 2.500rem;
+}
+.scrolling-list{
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 320px;
+  display: flex;
+}
+.scrolling-list li{
+  list-style-type: none;
+  margin-right: 1rem;
+}
+.scrolling-list .seetern{
+  display: flex;
+  justify-content: center;
+}
 .calendar {
   grid-area: calendar;
-  margin-left: 500px;
-  margin-top: 4px;
+  width: 150px;
 }
-
+.buttonGroup{
+  margin-top: 150px;
+  width: 100px;
+  display: block;
+  justify-content: center;
+  margin-left: 150px;
+}
 #bookingButton {
   background-color: #007bff;
   border: none;
@@ -55,12 +77,7 @@
   color: white;
   border-radius: .5rem;
   cursor: pointer;
-  position: absolute;
-  top: -220px;
-  left: 50%;
-  transform: translateX(-50%);
 }
-
 #deleteButton {
   background-color: #ca0606;
   border: none;
@@ -69,11 +86,8 @@
   color: white;
   border-radius: .5rem;
   cursor: pointer;
-  position: absolute;
-  top: -180px;
-  left: calc(50% - 121px);
+  margin-top: 10px;
 }
-
 #acceptButton {
   background-color: #007bff;
   border: none;
@@ -88,55 +102,5 @@
   margin-right: auto;
 }
 
-.manageAvailability {
-  margin-top: -30px;
-}
-
-@media (max-width: 1200px) {
-  .calendar {
-    margin-left: 300px;
-  }
-}
-
-  .calendar {
-    margin-top: -100px;
-    margin-left: 580px;
-  }
-
-  .bookinglist {
-    margin-top: 60px;
-    margin-left: 120px;
-    width: 100%;
-  }
-
-  .buttonGroup {
-    height: auto;
-    margin-top: -250px;
-    margin-left: 600px;
-  }
-
-  #bookingButton,
-  #deleteButton {
-    position: static;
-    transform: none;
-    margin-top: 10px;
-    margin-left: 300px;
-    display: block;
-  }
 
 
-@media (max-width: 600px) {
-  #searchInput {
-    padding: .4rem 3rem;
-  }
-
-  #acceptButton {
-    margin-top: 500px;
-    padding: .5rem 4rem;
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
-.acceptErrorSection{
-  margin-top: 200px;
-}

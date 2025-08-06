@@ -1,52 +1,69 @@
-<div class="bookingOverview">
+<section class="manageAvailability">
   <div class="searchfield">
-  <form (ngSubmit)="search()">
-    <input type="search"
-           name="accommodationSearch"
-           id="searchInput"
-           placeholder="Id oder Name eingeben"
-           [(ngModel)]="searchValue"
-           required>
-    <button type="submit" id="searchButton">Suchen</button>
-  </form>
+    <form (ngSubmit)="search()">
+      <input type="search"
+             name="accommodationSearch"
+             id="searchInput"
+             placeholder="Id oder Name eingeben"
+             [(ngModel)]="searchValue"
+             required>
+      <button type="submit" id="searchButton">Suchen</button>
+    </form>
   </div>
-  <div class="manageAvailability">
-    <div class="bookinglist">
-@if (accommodations.length === 0) {
-  <div>
-    Keine Unterkünfte gefunden.
-  </div>
-}
 
-@for (acc of accommodations; track acc.id) {
-  <li>
-    {{ acc.name }} (ID: {{ acc.id }})
-    <ul>
-      @if (bookings.length > 0) {
-        @for (booking of bookings; track booking.id) {
-          <li>
-            Buchung ID: {{ booking.id }}<br>
-            Start: {{ booking.startDate }}<br>
-            Ende: {{ booking.endDate }}
-          </li>
-        }
+  <div class="content">
+    <div class="bookinglist">
+      @if (searchValue && accommodations.length === 0) {
+        <div>
+          <p>Keine Unterkünfte gefunden.</p>
+        </div>
       } @else {
-        <li>Keine Buchungen gefunden.</li>
+        @for (acc of accommodations; track acc.id) {
+
+          <p class="text">{{ acc.name }} (ID: {{ acc.id }})</p>
+          <div class="scrolling-list">
+
+            <ul>
+
+              @if (bookings.length > 0) {
+                @for (booking of bookings; track booking.id) {
+                  <div class="seetern">
+                    <div class="id">
+                      <li>Buchung ID: {{ booking.id }}</li>
+                    </div>
+                    <div>
+                      <li>Start: {{ booking.startDate }}</li>
+                      <li>Ende: {{ booking.endDate }}</li>
+                    </div>
+                  </div>
+                }
+              } @else if (searchValue){
+                <li class="error">Keine Buchungen gefunden.</li>
+              }
+
+            </ul>
+          </div>
+        }
       }
-    </ul>
-  </li>
-}
     </div>
+
     <div class="calendar">
       <img src="https://raw.githubusercontent.com/htmlelements/smart-calendar/master/smart-calendar.png" alt="Calendar">
     </div>
+
+
     <div class="buttonGroup">
       <button type="submit" id="bookingButton">Belegen</button>
       <button type="submit" id="deleteButton">Löschen</button>
     </div>
+
   </div>
+
+
   <div class="acceptErrorSection">
     <button type="submit" class="accept" id="acceptButton">Bestätigen</button>
   </div>
+</section>
 
-</div>
+
+
