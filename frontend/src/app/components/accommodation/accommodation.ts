@@ -18,7 +18,7 @@ import { AccommodationService } from '../../services/accommodation-service';
   standalone: true,
   imports: [CommonModule, RouterLink, FontAwesomeModule],
   templateUrl: './accommodation.html',
-  styleUrls: ['./accommodation.scss']
+  styleUrl: './accommodation.scss'
 })
 export class Accommodation implements OnInit, OnDestroy {
   accommodationImages: (string|null)[] = [];

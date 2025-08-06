@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {AccommodationModel} from '../interfaces/accommodation-model';
 import { map } from 'rxjs/operators';
 import {ImageModel} from '../interfaces/image-model';
+import { BookingModel } from '../interfaces/booking-model';
 
 
 @Injectable({

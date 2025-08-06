@@ -2,23 +2,11 @@ import { Component, inject } from '@angular/core';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AccommodationService} from '../../services/accommodation-service';
-import {AccommodationModel} from '../../interfaces/accommodation-model';
-import {AsyncPipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
-import {ImageModel} from '../../interfaces/image-model';
-import {
-  MatCalendar,
-  MatDatepickerActions,
-  MatDatepickerApply,
-  MatDatepickerCancel, MatDatepickerModule,
-  MatDateRangePicker
-} from '@angular/material/datepicker';
-import {MatButton} from '@angular/material/button';
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
 import {BookingService} from '../../services/booking-service';
-
-
+import {AccommodationModel} from '../../interfaces/accommodation-model';
+import {AsyncPipe, DatePipe, DecimalPipe, NgForOf, NgIf} from '@angular/common';
+import {ImageModel} from '../../interfaces/image-model';
+import { Calendar } from '../calendar/calendar';
 
 @Component({
   selector: 'app-view.details',
@@ -27,23 +15,8 @@ import {BookingService} from '../../services/booking-service';
     NgIf,
     NgForOf,
     DecimalPipe,
-    MatCalendar,
-    MatDateRangePicker,
-    MatDatepickerActions,
-    MatButton,
-    MatDatepickerCancel,
-    MatDatepickerApply,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormField,
-    MatLabel,
-    MatHint,
-    MatSuffix,
-    MatLabel,
-    FormsModule
-  ],
-  providers:[
-    MatDatepickerModule,
+    DatePipe,
+    Calendar
   ],
   templateUrl: './accommodation-details.html',
   standalone: true,
@@ -52,28 +25,15 @@ import {BookingService} from '../../services/booking-service';
 export class AccommodationDetails {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   accommodationService: AccommodationService = inject(AccommodationService);
+  bookingService: BookingService = inject(BookingService);
   accommodationDetails$: Observable<AccommodationModel | undefined>;
   accommodationImages$:Observable<ImageModel[]>;
   placeholderImage = 'placeholder.jpg';
   accommodationId:number;
-  bookingService: BookingService = inject(BookingService);
 
   constructor() {
     this.accommodationId = this.route.snapshot.params['id'];
     this.accommodationDetails$ = this.accommodationService.getAccommodationById(this.accommodationId);
     this.accommodationImages$ = this.accommodationService.getAccommodationIdImage(this.accommodationId);
-  }
-
-  startDate!:Date;
-  endDate!:Date;
-
-  dateRangeAusgeben(){
-    console.log("Startdatum", this.startDate);
-    console.log("Enddatum", this.endDate);
-    console.log("ID", this.accommodationId);
-
-    this.bookingService.bookAccommodation(this.accommodationId, this.startDate, this.endDate).subscribe(() => {
-      console.log("Abgesendet")
-    })
   }
 }

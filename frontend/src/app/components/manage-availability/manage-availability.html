@@ -14,7 +14,7 @@
   <div class="content">
     <div class="bookinglist">
       @if (searchValue && accommodations.length === 0) {
-        <div>
+        <div  [hidden]="!hasSearched">
           <p>Keine Unterkünfte gefunden.</p>
         </div>
       } @else {

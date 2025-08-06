@@ -1,0 +1,44 @@
+.calendar-container {
+  margin: 2rem 0;
+}
+
+.date-selection-info {
+  margin-top: 1rem;
+}
+
+.date-selection-info p {
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.date-selection-info button {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.date-selection-info button:hover {
+  background: #1565c0;
+}
+
+// Entfernt grauen Hintergrund hinter hellblauem Kreis für Range
+.mat-calendar-body-cell.selected-range-date,
+.mat-calendar-body-cell.mat-calendar-body-in-range {
+  background: none !important;
+}
+
+.selected-range-date .mat-calendar-body-cell-content,
+.mat-calendar-body-in-range .mat-calendar-body-cell-content {
+  background-color: #90caf9 !important; // hellblauer Kreis
+  color: #0d47a1 !important;            // dunkle Schrift
+  border-radius: 50% !important;
+}
+
+// Standard-Range-Cell deaktivieren, wenn du eigene Klasse nutzt
+.mat-calendar-body-in-range:not(.selected-range-date) .mat-calendar-body-cell-content {
+  background: none !important;
+}
