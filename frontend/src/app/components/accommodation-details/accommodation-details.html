@@ -74,27 +74,13 @@
       </p>
     }
 
-    <!--      <mat-form-field class="example-form-field">-->
-    <!--        <mat-label>Zeitraum eingeben</mat-label>-->
-    <!--        <mat-date-range-input [rangePicker]="rangePicker">-->
-    <!--          <input  [(ngModel)]="startDate" matStartDate placeholder="Start date" />-->
-    <!--          <input  [(ngModel)]="endDate" matEndDate placeholder="End date" />-->
-    <!--        </mat-date-range-input>-->
-    <!--        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>-->
-    <!--        <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>-->
-    <!--        <mat-date-range-picker #rangePicker>-->
-    <!--          <mat-date-range-picker-actions>-->
-    <!--            <button matButton matDateRangePickerCancel>Cancel</button>-->
-    <!--            <button matButton="elevated" matDateRangePickerApply>Apply</button>-->
-    <!--          </mat-date-range-picker-actions>-->
-    <!--        </mat-date-range-picker>-->
-    <!--      </mat-form-field>-->
-
-    <!--      <button (click)="dateRangeAusgeben()">Jetzt Buchen</button>-->
-
     <div class="small-calendar">
-      <mat-calendar></mat-calendar>
+      <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateSelected($event)"></mat-calendar>
     </div>
+    <p>Startdatum: {{ startDateSelected | date }}</p>
+    <p>Enddatum: {{ endDateSelected | date }}</p>
+    <button (click)="resetSelection()">Auswahl zurücksetzen</button>
+
   </div>
 
 

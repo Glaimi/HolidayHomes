@@ -1,0 +1,16 @@
+<div class="calendar-header">
+  <button (click)="displayedMonth = displayedMonth - 1 >= 0 ? displayedMonth - 1 : 11; displayedYear = displayedMonth === 11 ? displayedYear - 1 : displayedYear">&#8592;</button>
+  <span>{{ displayedYear }} - {{ displayedMonth + 1 }}</span>
+  <button (click)="displayedMonth = displayedMonth + 1 <= 11 ? displayedMonth + 1 : 0; displayedYear = displayedMonth === 0 ? displayedYear + 1 : displayedYear">&#8594;</button>
+</div>
+
+<!-- Angular Material Date Range Picker -->
+<mat-form-field appearance="fill">
+  <mat-label>Zeitraum wählen</mat-label>
+  <mat-date-range-input [rangePicker]="picker" [(ngModel)]="dateRange" [min]="minDate" [max]="maxDate">
+    <input matStartDate placeholder="Startdatum" />
+    <input matEndDate placeholder="Enddatum" />
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
