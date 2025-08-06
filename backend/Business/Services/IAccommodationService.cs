@@ -5,7 +5,7 @@ namespace Business.Services;
 public interface IAccommodationService
 {
     Task<List<AccommodationDto>> GetAllAccommodationsAsync();
-    Task<string?> GetAccommodationNameByIdAsync(int id);
+    Task<AccommodationDto?> GetAccommodationByIdAsync(int id);
 
     Task<AccommodationDto?> GetAccommodationByNameAsync(string name);
 }

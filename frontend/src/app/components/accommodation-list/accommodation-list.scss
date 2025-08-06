@@ -27,9 +27,8 @@
   border: 1px solid #ccc;
   width: 100%;
   box-sizing: border-box;
-  margin: 3auto 2rem auto;
+  margin: 1.5rem auto 0 auto;
   max-width: 1400px;
-  margin-top: 24px;
 
   // Wrapper for all filter input controls
   .filter-inner {
@@ -111,16 +110,10 @@
   flex: 1 1 200px;
 }
 
-
-// Smaller input field for compact numeric fields (e.g. m², rooms)
-.input-small {
-  width: 40px;
-  height: 1rem;
-  padding: 0.1rem 0.25rem;
-  font-size: 0.8rem;
+.error-message{
+  color: red;
+  margin-top: 9px;
 }
-
-
 
 // Responsive adjustments
 
@@ -144,74 +137,7 @@
     grid-template-columns: 1fr;
     max-width: 500px;
   }
-}
 
-// Wrapper for the sort dropdown
-.dropdown-container {
-  position: relative;
-  display: inline-block;
-  min-width: 260px;
-}
-// Dropdown toggle button
-.dropdown-button {
-  font-family: "Roboto", sans-serif;
-  background-color: #f3f3f3;
-  color: black;
-  margin-top: 24px;
-  margin-bottom: 24px;
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-// Dropdown content container
-.dropdown-menu {
-  margin-top: -24px;
-  top: 100%;
-  padding: 0;
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  width: 100%;
-}
-
-// Modifier class to toggle visibility
-.dropdown-menu.show {
-  display: block;
-}
-
-
-// First item in dropdown (removes top border if needed)
-.dropdown-item:first-child {
-  border-top: none;
-}
-
-// Individual dropdown item styling
-.dropdown-item {
-  font-family: "Roboto", sans-serif;
-  color: black;
-  padding: 12px ;
-  text-decoration: none;
-  display: block;
-  cursor: pointer;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-// Hover effect for dropdown items
-.dropdown-item:hover {
-  background-color: #ddd;
-}
-
-@media (max-width: 768px) {
   .button-div {
     grid-template-columns: 1fr;
   }
@@ -220,9 +146,4 @@
     width: 100%;
     text-align: center;
   }
-}
-// error message style
-.error-message{
-  color: red;
-  margin-top: 9px;
 }

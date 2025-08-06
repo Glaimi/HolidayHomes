@@ -36,5 +36,5 @@ public interface IAccommodationRepository
 
     Task<Accommodation?> GetAccommodationByNameAsync(string name);
 
-
+    Task<Accommodation?> GetAccommodationByIdAsync(int id);
 }
