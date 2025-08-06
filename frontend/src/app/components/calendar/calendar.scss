@@ -24,24 +24,3 @@
 .date-selection-info button:hover {
   background: #1565c0;
 }
-
-/* Höhere Spezifität für stabile Styles */
-app-calendar .mat-calendar-body-cell.selected-start-date .mat-calendar-body-cell-content,
-app-calendar .mat-calendar-body-cell.selected-end-date .mat-calendar-body-cell-content,
-.mat-calendar-body-cell.selected-start-date .mat-calendar-body-cell-content,
-.mat-calendar-body-cell.selected-end-date .mat-calendar-body-cell-content {
-  background-color: #1976d2 !important;
-  color: #fff !important;
-  border-radius: 50% !important;
-  font-weight: bold !important;
-  box-shadow: none !important;
-}
-
-app-calendar .mat-calendar-body-cell.selected-range-date .mat-calendar-body-cell-content,
-.mat-calendar-body-cell.selected-range-date .mat-calendar-body-cell-content {
-  background-color: #e3f2fd !important;
-  color: #1976d2 !important;
-  border-radius: 50% !important;
-  font-weight: 500 !important;
-  box-shadow: none !important;
-}

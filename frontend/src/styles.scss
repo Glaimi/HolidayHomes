@@ -163,3 +163,35 @@ body {
     font-size: 14px;
   }
 }
+
+/* Calendar Date Range Selection - Global Styles */
+body .mat-calendar-body-cell.selected-start-date .mat-calendar-body-cell-content,
+body .mat-calendar-body-cell.selected-end-date .mat-calendar-body-cell-content {
+  background-color: #1976d2 !important;
+  color: #fff !important;
+  border-radius: 50% !important;
+  font-weight: bold !important;
+}
+
+body .mat-calendar-body-cell.selected-range-date .mat-calendar-body-cell-content {
+  background-color: #e3f2fd !important;
+  color: #1976d2 !important;
+  border-radius: 50% !important;
+  font-weight: 500 !important;
+}
+
+/* Calendar Date Range Selection - Global Styles (maximal specificity) */
+html body .mat-calendar-body-cell.selected-start-date .mat-calendar-body-cell-content,
+html body .mat-calendar-body-cell.selected-end-date .mat-calendar-body-cell-content {
+  background-color: #1976d2 !important;
+  color: #fff !important;
+  border-radius: 50% !important;
+  font-weight: bold !important;
+}
+
+html body .mat-calendar-body-cell.selected-range-date .mat-calendar-body-cell-content {
+  background-color: #e3f2fd !important;
+  color: #1976d2 !important;
+  border-radius: 50% !important;
+  font-weight: 500 !important;
+}

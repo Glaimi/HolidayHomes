@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatCalendar } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -23,7 +23,8 @@ const now = new Date();
   ],
   templateUrl: './calendar.html',
   standalone: true,
-  styleUrl: './calendar.scss'
+  styleUrl: './calendar.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class Calendar implements OnInit {
   displayedYear: number = now.getFullYear();
