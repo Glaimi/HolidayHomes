@@ -13,7 +13,7 @@
   <div class="manageAvailability">
     <div class="bookinglist">
 @if (accommodations.length === 0) {
-  <div>
+  <div [hidden]="!hasSearched">
     Keine Unterkünfte gefunden.
   </div>
 }

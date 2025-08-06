@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatCalendar } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -7,6 +7,8 @@ import { DatePipe } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { BookingService } from '../../services/booking-service';
+import { BookingModel } from '../../interfaces/booking-model';
 
 const now = new Date();
 
@@ -30,272 +32,138 @@ export class Calendar implements OnInit {
   displayedYear: number = now.getFullYear();
   displayedMonth: number = now.getMonth();
 
-  // Für den auswählbaren Kalender
-  selectedDate: Date | null = null;
+  // Bereichsauswahl-Properties für eigenen Kalender
   startDateSelected: Date | null = null;
   endDateSelected: Date | null = null;
 
-  min = '2025-08-06T00:00';
-  labels: any = [];
-  invalid: any = [];
-  colors: any = [];
-  monthColors = [
-    {
-      background: '#b2f1c080',
-      start: '2025-01-01T00:00',
-      end: '2025-01-31T00:00',
-      cellCssClass: 'md-book-rental-bg-off',
-      recurring: {
-        repeat: 'yearly',
-        month: 1,
-        day: 1,
-      },
-    },
-    {
-      background: '#b2f1c080',
-      start: '2025-02-01T00:00',
-      end: '2025-02-28T00:00',
-      cellCssClass: 'md-book-rental-bg-off',
-      recurring: {
-        repeat: 'yearly',
-        month: 2,
-        day: 1,
-      },
-    },
-    {
-      background: '#b2f1c080',
-      cellCssClass: 'md-book-rental-bg-off',
-      recurring: {
-        repeat: 'yearly',
-        month: 2,
-        day: 29,
-      },
-    },
-    {
-      background: '#a3cdff80',
-      start: '2025-03-01T00:00',
-      end: '2025-03-31T23:59',
-      cellCssClass: 'md-book-rental-bg-pre',
-      recurring: {
-        repeat: 'yearly',
-        month: 3,
-        day: 1,
-      },
-    },
-    {
-      background: '#a3cdff80',
-      start: '2025-04-01T00:00',
-      end: '2025-04-30T00:00',
-      cellCssClass: 'md-book-rental-bg-pre',
-      recurring: {
-        repeat: 'yearly',
-        month: 4,
-        day: 1,
-      },
-    },
-    {
-      background: '#a3cdff80',
-      start: '2025-05-01T00:00',
-      end: '2025-05-31T00:00',
-      cellCssClass: 'md-book-rental-bg-pre',
-      recurring: {
-        repeat: 'yearly',
-        month: 5,
-        day: 1,
-      },
-    },
-    {
-      background: '#f7f7bb80',
-      start: '2025-06-01T00:00',
-      end: '2025-06-30T00:00',
-      cellCssClass: 'md-book-rental-bg-in',
-      recurring: {
-        repeat: 'yearly',
-        month: 6,
-        day: 1,
-      },
-    },
-    {
-      background: '#f7f7bb80',
-      start: '2025-07-01T00:00',
-      end: '2025-07-31T00:00',
-      cellCssClass: 'md-book-rental-bg-in',
-      recurring: {
-        repeat: 'yearly',
-        month: 7,
-        day: 1,
-      },
-    },
-    {
-      background: '#f7f7bb80',
-      start: '2025-08-01T00:00',
-      end: '2025-08-31T00:00',
-      cellCssClass: 'md-book-rental-bg-in',
-      recurring: {
-        repeat: 'yearly',
-        month: 8,
-        day: 1,
-      },
-    },
-    {
-      background: '#f7f7bb80',
-      start: '2025-09-01T00:00',
-      end: '2025-09-30T00:00',
-      cellCssClass: 'md-book-rental-bg-in',
-      recurring: {
-        repeat: 'yearly',
-        month: 9,
-        day: 1,
-      },
-    },
-    {
-      background: '#f7f7bb80',
-      start: '2025-10-01T00:00',
-      end: '2025-10-31T23:59',
-      cellCssClass: 'md-book-rental-bg-in',
-      recurring: {
-        repeat: 'yearly',
-        month: 10,
-        day: 1,
-      },
-    },
-    {
-      background: '#b2f1c080',
-      start: '2025-11-01T00:00',
-      end: '2025-11-30T00:00',
-      cellCssClass: 'md-book-rental-bg-off',
-      recurring: {
-        repeat: 'yearly',
-        month: 11,
-        day: 1,
-      },
-    },
-    {
-      background: '#b2f1c080',
-      start: '2025-12-01T00:00',
-      end: '2025-12-31T00:00',
-      cellCssClass: 'md-book-rental-bg-off',
-      recurring: {
-        repeat: 'yearly',
-        month: 12,
-        day: 1,
-      },
-    },
-  ];
+  // Für den auswählbaren Kalender
+  minDate: Date = new Date();
 
-  constructor(private http: HttpClient) {}
+  @Input() accommodationId!: number;
+  bookings: BookingModel[] = [];
+  bookedDates: Date[] = [];
+
+  // Fehler-Property für das Template
+  public selectionError: string | null = null;
+
+  @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
+
+  constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.loadMonth(this.displayedYear, this.displayedMonth);
-  }
+    // Auswahl aus LocalStorage wiederherstellen
+    const start = localStorage.getItem('calendarStart');
+    const end = localStorage.getItem('calendarEnd');
+    this.startDateSelected = start ? new Date(start) : null;
+    this.endDateSelected = end ? new Date(end) : null;
 
-  loadMonth(year: number, month: number) {
-    this.http.jsonp('https://trial.mobiscroll.com/getrentals/?year=' + year + '&month=' + month, 'callback').subscribe((data: any) => {
-      const prices = data.prices;
-      const bookings = data.bookings;
-      const labels: any = [];
-      const invalids: any = [];
-      let colors: any = [];
-      let endDate = new Date(year, month, 1, 0, 0);
-
-      for (const price of prices) {
-        const booked = bookings.find((b: { checkIn: any }) => {
-          const checkInDate = new Date(b.checkIn);
-          // YYYY-M-D Format erzeugen
-          const jsFormatted = `${checkInDate.getFullYear()}-${checkInDate.getMonth() + 1}-${checkInDate.getDate()}`;
-          return jsFormatted === price.date;
-        });
-        if (booked) {
-          const checkIn = new Date(booked.checkIn);
-          const checkOut = new Date(booked.checkOut);
-          const newCheckOut = new Date(checkOut.getFullYear(), checkOut.getMonth(), checkOut.getDate() - 1);
-          colors = [...colors, ...this.getColors(checkIn, checkOut)];
-          labels.push({
-            start: checkIn,
-            end: newCheckOut,
-            text: 'booked',
-            textColor: '#1e1e1ecc',
+    if (this.accommodationId) {
+      this.bookingService.getBookingsByAccommodationId(this.accommodationId).subscribe({
+        next: (bookings) => {
+          this.bookings = bookings;
+          this.bookedDates = bookings.flatMap(b => {
+            const start = new Date(b.startDate);
+            const end = new Date(b.endDate);
+            const days = [];
+            for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+              days.push(new Date(d));
+            }
+            return days;
           });
-          invalids.push({
-            start: checkIn,
-            end: newCheckOut,
-          });
-          endDate = checkOut;
-        } else if (new Date(price.date) >= endDate) {
-          labels.push({
-            date: new Date(price.date),
-            text: price.text,
-            textColor: price.textColor,
-          });
+          this.cdr.detectChanges();
+          if (this.calendar) {
+            this.calendar.updateTodaysDate(); // Kalender-Refresh erzwingen
+          }
+        },
+        error: (err) => {
+          console.error('Fehler beim Laden der Buchungen:', err);
         }
-      }
-      this.labels = labels;
-      this.invalid = invalids;
-      this.colors = [...colors, ...this.monthColors];
-    });
+      });
+    }
   }
 
   onDateSelected(date: Date | null) {
+    this.selectionError = null;
     if (!date) return;
 
-    console.log('Date selected:', date);
-    console.log('Current state - Start:', this.startDateSelected, 'End:', this.endDateSelected);
-
-    if (!this.startDateSelected) {
-      this.startDateSelected = date;
-      console.log('Set as start date:', this.startDateSelected);
-    } else if (!this.endDateSelected) {
-      if (date >= this.startDateSelected) {
-        this.endDateSelected = date;
-      } else {
-        this.endDateSelected = this.startDateSelected;
-        this.startDateSelected = date;
-      }
-      console.log('Set as end date. Final range - Start:', this.startDateSelected, 'End:', this.endDateSelected);
-    } else {
+    // Immer neue Auswahl starten, wenn Enddatum gesetzt ist (auch nach Reload)
+    if (!this.startDateSelected || this.endDateSelected) {
       this.startDateSelected = date;
       this.endDateSelected = null;
-      console.log('Reset and set new start date:', this.startDateSelected);
+    } else {
+      // Bereich bestimmen (egal ob vorwärts oder rückwärts gewählt)
+      const start = this.startDateSelected < date ? this.startDateSelected : date;
+      const end = this.startDateSelected > date ? this.startDateSelected : date;
+
+      // Prüfe, ob Bereich frei ist
+      let conflict = false;
+      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        if (this.bookedDates.some(b =>
+          b.getFullYear() === d.getFullYear() &&
+          b.getMonth() === d.getMonth() &&
+          b.getDate() === d.getDate()
+        )) {
+          conflict = true;
+          break;
+        }
+      }
+
+      if (conflict) {
+        this.selectionError = 'Der gewählte Zeitraum enthält bereits gebuchte Tage!';
+        return;
+      }
+
+      this.startDateSelected = start;
+      this.endDateSelected = end;
     }
+    // Auswahl persistent speichern
+    localStorage.setItem('calendarStart', this.startDateSelected ? this.startDateSelected.toISOString() : '');
+    localStorage.setItem('calendarEnd', this.endDateSelected ? this.endDateSelected.toISOString() : '');
   }
 
   resetSelection() {
     this.startDateSelected = null;
     this.endDateSelected = null;
-    this.selectedDate = null;
+    // Auswahl aus LocalStorage entfernen
+    localStorage.removeItem('calendarStart');
+    localStorage.removeItem('calendarEnd');
   }
 
-  // Funktion für visuelle Hervorhebung der ausgewählten Daten
-  dateClass = (date: Date): string => {
-    if (!date) return '';
+  dateFilter = (date: Date | null): boolean => {
+    if (!date) return false;
+    // Keine Vergangenheit und keine gebuchten Tage auswählbar
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    if (date < today) return false;
+    return !this.bookedDates.some(b =>
+      b.getFullYear() === date.getFullYear() &&
+      b.getMonth() === date.getMonth() &&
+      b.getDate() === date.getDate()
+    );
+  };
 
-    const normalizeDate = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  public dateClassCombined = (date: Date): string => {
+    const normalize = (d: Date | null) => d ? new Date(d.getFullYear(), d.getMonth(), d.getDate()) : null;
+    const current = normalize(date);
 
-    const currentDate = normalizeDate(date);
-    const startDate = this.startDateSelected ? normalizeDate(this.startDateSelected) : null;
-    const endDate = this.endDateSelected ? normalizeDate(this.endDateSelected) : null;
+    // Gebuchte Tage: rot
+    const isBooked = this.bookedDates.some(
+      d => d.getFullYear() === date.getFullYear() &&
+           d.getMonth() === date.getMonth() &&
+           d.getDate() === date.getDate()
+    );
+    if (isBooked) return 'booked-date';
 
-    let classes = '';
-
-    if (startDate && currentDate.getTime() === startDate.getTime()) {
-      classes += 'selected-start-date ';
-      console.log('Start date found:', currentDate, 'Classes:', classes);
+    // Auswahlbereich: nutze Angular Material Range-Klassen
+    const start = normalize(this.startDateSelected);
+    const end = normalize(this.endDateSelected);
+    if (start && end && current) {
+      if (current.getTime() === start.getTime()) return 'mat-calendar-body-range-start';
+      if (current.getTime() === end.getTime()) return 'mat-calendar-body-range-end';
+      if (current > start && current < end) return 'mat-calendar-body-in-range';
     }
-    if (endDate && currentDate.getTime() === endDate.getTime()) {
-      classes += 'selected-end-date ';
-      console.log('End date found:', currentDate, 'Classes:', classes);
-    }
-    if (startDate && endDate && currentDate.getTime() > startDate.getTime() && currentDate.getTime() < endDate.getTime()) {
-      classes += 'selected-range-date ';
-      console.log('Range date found:', currentDate, 'Classes:', classes);
-    }
-
-    const result = classes.trim();
-    if (result) {
-      console.log('dateClass returning:', result, 'for date:', currentDate);
-    }
-    return result;
-  }
+    return '';
+  };
 
   prevMonth() {
     if (this.displayedMonth === 0) {
@@ -304,7 +172,6 @@ export class Calendar implements OnInit {
     } else {
       this.displayedMonth--;
     }
-    this.loadMonth(this.displayedYear, this.displayedMonth);
   }
 
   nextMonth() {
@@ -314,25 +181,5 @@ export class Calendar implements OnInit {
     } else {
       this.displayedMonth++;
     }
-    this.loadMonth(this.displayedYear, this.displayedMonth);
-  }
-
-  getColors(start: Date, end: Date) {
-    return [
-      {
-        date: start,
-        cellCssClass: 'vacation-check-in',
-      },
-      {
-        date: end,
-        cellCssClass: 'vacation-check-out',
-      },
-      {
-        start: new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1),
-        end: new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1),
-        background: '#ffbaba80',
-        cellCssClass: 'vacation-booked',
-      },
-    ];
   }
 }

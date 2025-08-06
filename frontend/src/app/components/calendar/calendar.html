@@ -1,9 +1,12 @@
 <div class="calendar-container">
   <mat-calendar
-    [(selected)]="selectedDate"
+    [dateClass]="dateClassCombined"
+    [dateFilter]="dateFilter"
     (selectedChange)="onDateSelected($event)"
-    [dateClass]="dateClass">
-  </mat-calendar>
+  ></mat-calendar>
+  @if (selectionError) {
+    <div class="calendar-error">{{ selectionError }}</div>
+  }
 </div>
 
 <div class="date-selection-info">

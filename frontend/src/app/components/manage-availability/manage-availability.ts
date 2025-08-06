@@ -21,8 +21,10 @@ export class ManageAvailability {
   accommodations: AccommodationModel[] = []
   bookings: BookingModel[] = [];
   searchValue: string = '';
+  hasSearched: boolean = false;
 
   private handleSearchResponse(response: AccommodationModel[] | AccommodationModel | null | undefined): void {
+    this.hasSearched = true;
     console.log('API response:', response);
     if (Array.isArray(response)) {
       this.accommodations = response;
@@ -38,6 +40,7 @@ export class ManageAvailability {
           this.bookings = bookings;
         },
         error: (err) => {
+          this.hasSearched = true;
           console.error('Fehler beim Laden der Buchungen:', err);
           this.bookings = [];
         }
@@ -48,6 +51,7 @@ export class ManageAvailability {
   }
 
   search() {
+    this.hasSearched = false;
     if (!this.searchValue.trim()) {
       console.warn('Bitte eine ID oder einen Namen eingeben.');
       return;
@@ -59,6 +63,7 @@ export class ManageAvailability {
       this.bookingService.searchAccommodation(Number(this.searchValue), undefined).subscribe({
         next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
         error: (err) => {
+          this.hasSearched = true;
           console.error('Fehler bei der Unterkunftssuche:', err);
           this.accommodations = [];
           this.bookings = [];
@@ -68,6 +73,7 @@ export class ManageAvailability {
       this.bookingService.searchAccommodation(undefined, this.searchValue).subscribe({
         next: (response: AccommodationModel[] | AccommodationModel | null | undefined) => this.handleSearchResponse(response),
         error: (err) => {
+          this.hasSearched = true;
           console.error('Fehler bei der Unterkunftssuche:', err);
           this.accommodations = [];
           this.bookings = [];
