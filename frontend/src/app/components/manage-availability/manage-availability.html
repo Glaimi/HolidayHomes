@@ -48,7 +48,7 @@
     </div>
 
     <div class="calendar">
-    <app-calendar></app-calendar>
+      <app-calendar [accommodationId]="selectedAccommodation?.id"></app-calendar>
     </div>
 
 
@@ -64,6 +64,3 @@
     <button type="submit" class="accept" id="acceptButton">Bestätigen</button>
   </div>
 </section>
-
-
-
