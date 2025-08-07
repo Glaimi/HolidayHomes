@@ -21,7 +21,5 @@ export class ImageUpload {
 
       this.onChangeCallback(input.files);
     }
-
-    console.log(this.filenames);
   }
 }

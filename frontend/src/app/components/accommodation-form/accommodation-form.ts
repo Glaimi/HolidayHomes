@@ -91,7 +91,7 @@ export class AccommodationForm implements OnInit {
     isParkingAvailable: new FormControl(false),
     isSaunaAvailable: new FormControl(false),
     hints: new FormControl(''),
-    image: new FormControl(null)
+    images: new FormControl(null)
   });
 
   get landlordName() {
@@ -157,9 +157,7 @@ export class AccommodationForm implements OnInit {
   }
 
   onFileSelected(files: FileList): void {
-    console.log(files);
-
-    this.formGroup.patchValue({image: files[0]});
+    this.formGroup.patchValue({images: files});
   }
 
   onSubmit(): void {
@@ -194,13 +192,17 @@ export class AccommodationForm implements OnInit {
         };
 
         this.accommodationService.saveAccommodation(accommodationDto).subscribe((accommodation) => {
-          const imageFormData: FormData = new FormData();
+          const images: FileList = this.formGroup.get('images')!.value;
 
-          imageFormData.append("file", this.formGroup.get('image')!.value);
+          for (let i = 0; i < images.length; i++) {
+            const formData: FormData = new FormData();
 
-          this.accommodationService
-            .uploadAccommodationImage(accommodation.id, imageFormData)
-            .subscribe(() => console.log("Abgesendet!"));
+            formData.append("file", images[i]);
+
+            this.accommodationService
+                .uploadAccommodationImage(accommodation.id, formData)
+                .subscribe(() => console.log(`Bild ${images[i].name} hochgeladen.`));
+          }
         });
       })
     } else {
