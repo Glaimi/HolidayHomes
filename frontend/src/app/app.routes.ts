@@ -5,6 +5,7 @@ import {AccommodationList} from './components/accommodation-list/accommodation-l
 import {Privacy} from './components/privacy/privacy';
 import {AccommodationDetails} from './components/accommodation-details/accommodation-details';
 import {ManageAvailability} from './components/manage-availability/manage-availability';
+import {AccommodationForm} from './components/accommodation-form/accommodation-form';
 
 
 export const routes: Routes = [
@@ -42,6 +43,11 @@ export const routes: Routes = [
     path: 'calendar',
     loadComponent: () => import('./components/calendar/calendar').then(m => m.Calendar),
     title: 'Kalender'
+  },
+  {
+    path: 'add-accommodation',
+    component: AccommodationForm,
+    title: "Unterkunft hinzufügen"
   },
   {
     path: '**', redirectTo: '',

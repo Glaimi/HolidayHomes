@@ -44,12 +44,17 @@ builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
 builder.Services.AddScoped<AccommodationMapper>();
 builder.Services.AddScoped<AccommodationTypeRepository>();
 builder.Services.AddScoped<AccommodationTypeService>();
+builder.Services.AddScoped<AccommodationTypeMapper>();
 builder.Services.AddScoped<KitchenTypeRepository>();
 builder.Services.AddScoped<KitchenTypeService>();
 builder.Services.AddScoped<AddressRepository>();
 builder.Services.AddScoped<AddressService>();
 builder.Services.AddScoped<SanitaryTypeRepository>();
 builder.Services.AddScoped<SanitaryTypeService>();
+builder.Services.AddScoped<SanitaryTypeMapper>();
+builder.Services.AddScoped<SeasonRepository>();
+builder.Services.AddScoped<SeasonService>();
+builder.Services.AddScoped<SeasonMapper>();
 builder.Services.AddScoped<SeasonPricingRepository>();
 builder.Services.AddScoped<SeasonPricingService>();
 builder.Services.AddScoped<SeasonPricingMapper>();
@@ -64,7 +69,9 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(optionsBuilder =>
     {
-        optionsBuilder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback).AllowAnyHeader().AllowAnyMethod();
+        optionsBuilder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback)
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
@@ -85,6 +92,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
 // UseStaticFiles is for ImageService to serve images.
 app.UseHttpsRedirection();
 app.UseStaticFiles();

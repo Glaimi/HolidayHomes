@@ -17,4 +17,19 @@ public class SeasonPricingMapper
             Price = entity.Price
         };
     }
+
+    public SeasonPricing MapDtoToEntity(AddSeasonPricingDto dto)
+    {
+        return new SeasonPricing
+        {
+            SeasonId = dto.SeasonId,
+            IsBookable = dto.IsBookable,
+            Price = dto.Price
+        };
+    }
+
+    public List<SeasonPricing> MapDtosToEntities(List<AddSeasonPricingDto> dtos)
+    {
+        return dtos.Select(MapDtoToEntity).ToList();
+    }
 }

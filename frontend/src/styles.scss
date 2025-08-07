@@ -6,6 +6,14 @@
   --color: #f5932f;
   --white-color: #ffffff;
 
+  /* Colors for alert boxes */
+  --alert-color-bg: rgba(239, 61, 61, 0.25);
+  --alert-color-border: #ef3d3d;
+
+  /* Colors for forms */
+  --form-color-bg: #f3f3f3;
+  --form-color-border: #ccc;
+
   --padding: 1rem;
   --margin: 1rem;
 
@@ -32,22 +40,80 @@ body {
 }
 
 /*******************************
+ * Layout
+ *******************************/
+
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  &-column {
+    flex: 1 1 200px;
+    min-width: 200px;
+  }
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+
+  &:not(:first-of-type) {
+    margin-top: 1rem;
+  }
+
+  & > * {
+    margin: 0 !important;
+  }
+}
+
+/*******************************
+ * Forms
+ *******************************/
+
+fieldset {
+  margin: 1.5rem 0 0 0;
+  padding: 2rem;
+  background: var(--form-color-bg);
+  border: 1px solid var(--form-color-border);
+}
+
+legend {
+  background: var(--form-color-bg);
+}
+
+.form-group-vertical {
+  display: flex;
+  flex-direction: column;
+
+  &:not(:first-of-type) {
+    margin-top: 1rem;
+  }
+
+  & > .input {
+    margin-top: 0.25rem;
+  }
+}
+
+.form-group-horizontal {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/*******************************
  * Form Inputs & Buttons
  *******************************/
 
-.input,
-.input-small {
-  height: 1rem;
-  padding: 0.1rem 0.25rem;
-  font-size: 0.8rem;
-}
-
 .input {
-  width: 100%;
+  padding: 0.25rem 0.4rem;
+  font-size: 1rem;
 }
 
 .input-small {
   width: 2.5rem;
+  padding: 0.1rem 0.25rem;
+  font-size: 0.8rem;
 }
 
 .primary-button {
@@ -64,6 +130,11 @@ body {
 
   &:hover {
     background: #0056b3;
+  }
+
+  &:disabled {
+    background: #0056b3;
+    cursor: not-allowed;
   }
 }
 
@@ -150,17 +221,29 @@ body {
   body {
     font-size: 16px;
   }
+
+  .grid-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
   body {
     font-size: 15px;
   }
+
+  .grid-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 767px) {
   body {
     font-size: 14px;
+  }
+
+  .grid-row {
+    grid-template-columns: 1fr;
   }
 }
 

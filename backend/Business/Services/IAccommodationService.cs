@@ -8,4 +8,6 @@ public interface IAccommodationService
     Task<AccommodationDto?> GetAccommodationByIdAsync(int id);
 
     Task<AccommodationDto?> GetAccommodationByNameAsync(string name);
+    Task<string?> GetAccommodationNameByIdAsync(int id);
+    Task<AccommodationDto> SaveAccommodationAsync(AddAccommodationDto dto);
 }

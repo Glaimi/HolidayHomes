@@ -27,6 +27,17 @@ public class AccommodationService : IAccommodationService
         _accommodationMapper = accommodationMapper;
     }
 
+    public async Task<AccommodationDto> SaveAccommodationAsync(AddAccommodationDto dto)
+    {
+        Accommodation accommodation = await _accommodationMapper.MapDtoToEntity(dto);
+
+        await _accommodationRepository.SaveAccommodationAsync(accommodation);
+
+        AccommodationDto savedDto = await _accommodationMapper.MapEntityToDto(accommodation);
+
+        return savedDto;
+    }
+
     /// <summary>
     /// Retrieves all accommodations and maps them to DTOs.
     /// </summary>

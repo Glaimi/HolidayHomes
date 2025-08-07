@@ -1,0 +1,302 @@
+<div class="accommodation-form-container">
+  <form class="accommodation-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <fieldset>
+      <legend>Grunddaten</legend>
+
+      <div class="form-group-vertical">
+        <label for="accommodation-type">Art der Unterkunft</label>
+        <select id="accommodation-type" class="input" formControlName="accommodationType">
+          @for (accommodationType of accommodationTypes$ | async; track accommodationType) {
+            <option value="{{ accommodationType.id }}">{{ accommodationType.title }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group-vertical">
+        <label for="landlord-name">Vermietername</label>
+        <input type="text" id="landlord-name" class="input" formControlName="landlordName" required>
+      </div>
+
+      <div class="form-group-vertical">
+        <label for="accommodation-name">Name der Unterkunft</label>
+        <input type="text" id="accommodation-name" class="input" formControlName="accommodationName">
+      </div>
+
+      <div class="form-group-vertical">
+        <label for="street">Straße</label>
+        <input type="text" id="street" class="input" formControlName="street">
+      </div>
+
+      <div class="form-group-vertical">
+        <label for="city">Ort</label>
+        <input type="text" id="city" class="input" formControlName="city">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Ausstattung</legend>
+
+      <div class="grid-row">
+        <div class="form-group-vertical">
+          <label for="square-meters">Größe in m²</label>
+          <input type="number" id="square-meters" class="input" formControlName="squareMeters"
+                 min="{{ minSquareMeters }}">
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="number-of-beds">Betten</label>
+          <input type="number" id="number-of-beds" class="input" formControlName="numberOfBeds"
+                 min="{{ minNumberOfBeds }}">
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="number-of-bedrooms">Schlafzimmer</label>
+          <input type="number" id="number-of-bedrooms" class="input" formControlName="numberOfBedrooms"
+                 min="{{ minNumberOfBedrooms }}">
+        </div>
+      </div>
+
+      <div class="grid-row">
+        <div class="form-group-vertical">
+          <label for="number-of-living-rooms">Wohnräume</label>
+          <input type="number" id="number-of-living-rooms" class="input" formControlName="numberOfLivingRooms"
+                 min="{{ minNumberOfLivingRooms }}">
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="number-of-mixed-rooms">Wohn- / Schlafräume</label>
+          <input type="number" id="number-of-mixed-rooms" class="input" formControlName="numberOfMixedRooms"
+                 min="{{ minNumberOfMixedRooms }}">
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="kitchen-type">Art der Küche</label>
+          <select id="kitchen-type" class="input" formControlName="kitchenType">
+            @for (kitchenType of kitchenTypes$ | async; track kitchenType.id) {
+              <option value="{{ kitchenType.id }}">{{ kitchenType.title }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-row">
+        <div class="form-group-vertical">
+          <label for="number-shower-wc">Anzahl Dusche / WC</label>
+          <input type="number" id="number-shower-wc" class="input" formControlName="numberOfShowers"
+                 min="{{ minNumberOfShowers }}">
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="number-bathtub-wc">Anzahl Badewanne / WC</label>
+          <input type="number" id="number-bathtub-wc" class="input" formControlName="numberOfBathtubs"
+                 min="{{ minNumberOfBathtubs }}">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Preise</legend>
+
+      <div class="grid-row">
+        <div>
+          <p>Saison A</p>
+
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="season-a-bookable" formControlName="seasonABookable">
+            <label for="season-a-bookable">Buchbar</label>
+          </div>
+
+          <div class="form-group-vertical">
+            <label for="season-a-price">Preis</label>
+            <input type="number" id="season-a-price" class="input" formControlName="seasonAPrice" min="0.0">
+          </div>
+        </div>
+
+        <div>
+          <p>Saison B</p>
+
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="season-b-bookable" formControlName="seasonBBookable">
+            <label for="season-b-bookable">Buchbar</label>
+          </div>
+
+          <div class="form-group-vertical">
+            <label for="season-b-price">Preis</label>
+            <input type="number" id="season-b-price" class="input" formControlName="seasonBPrice" min="0.0">
+          </div>
+        </div>
+
+        <div>
+          <p>Saison C</p>
+
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="season-c-bookable" formControlName="seasonCBookable">
+            <label for="season-b-bookable">Buchbar</label>
+          </div>
+
+          <div class="form-group-vertical">
+            <label for="season-b-price">Preis</label>
+            <input type="number" id="season-c-price" class="input" formControlName="seasonCPrice" min="0.0">
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Weitere Angaben</legend>
+
+      <div class="grid-row">
+        <div class="form-group-vertical">
+          <label for="short-trip">Kurzreise</label>
+          <select id="short-trip" class="input" formControlName="shortTripAvailability">
+            <option value="0">Verfügbar</option>
+            <option value="2">Gegen Aufpreis</option>
+            <option value="1">Nicht verfügbar</option>
+          </select>
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="bedsheets">Bettwäsche</label>
+          <select id="bedsheets" class="input" formControlName="bedsheetsAvailability">
+            <option value="0">Verfügbar</option>
+            <option value="2">Gegen Aufpreis</option>
+            <option value="1">Nicht verfügbar</option>
+          </select>
+        </div>
+
+        <div class="form-group-vertical">
+          <label for="towels">Handtücher</label>
+          <select id="towels" class="input" formControlName="towelsAvailability">
+            <option value="0">Verfügbar</option>
+            <option value="2">Gegen Aufpreis</option>
+            <option value="1">Nicht verfügbar</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex-row accommodation-form-features">
+        <div class="flex-row-column">
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="wifi" formControlName="isWifiAvailable">
+            <label for="wifi">WLAN vorhanden</label>
+          </div>
+        </div>
+
+        <div class="flex-row-column">
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="dogs-allowed" formControlName="isDogsAllowed">
+            <label for="dogs-allowed">Hunde erlaubt</label>
+          </div>
+        </div>
+
+        <div class="flex-row-column">
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="non-smoking" formControlName="isNonSmoking">
+            <label for="non-smoking">Nichtraucher</label>
+          </div>
+        </div>
+
+        <div class="flex-row-column">
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="tv" formControlName="isTelevisionAvailable">
+            <label for="tv">TV vorhanden</label>
+          </div>
+        </div>
+
+        <div class="flex-row-column">
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="washing-machine" formControlName="isWashingMachineAvailable">
+            <label for="washing-machine">Waschmaschine</label>
+          </div>
+        </div>
+
+        <div class="flex-row-column">
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="parking" formControlName="isParkingAvailable">
+            <label for="parking">Hauseigener Parkplatz</label>
+          </div>
+        </div>
+
+        <div class="flex-row-column">
+          <div class="form-group-horizontal">
+            <input type="checkbox" id="sauna" formControlName="isSaunaAvailable">
+            <label for="sauna">Sauna vorhanden</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group-vertical">
+        <label for="hints">Zusatzinformationen</label>
+        <textarea id="hints" class="input" formControlName="hints" cols="30" rows="10"></textarea>
+      </div>
+    </fieldset>
+
+    <app-image-upload [onChangeCallback]="onFileSelected.bind(this)"></app-image-upload>
+
+    <div class="errors">
+      @if (landlordName.dirty && landlordName.hasError('emptyOrWhitespace')) {
+        <div class="error">Vermietername darf nicht leer sein.</div>
+      }
+
+      @if (accommodationName.dirty && accommodationName.hasError('emptyOrWhitespace')) {
+        <div class="error">Name der Unterkunft darf nicht leer sein.</div>
+      }
+
+      @if (street.dirty && street.hasError('emptyOrWhitespace')) {
+        <div class="error">Straße darf nicht leer sein.</div>
+      }
+
+      @if (city.dirty && city.hasError('emptyOrWhitespace')) {
+        <div class="error">Ort darf nicht leer sein.</div>
+      }
+
+      @if (squareMeters.dirty && squareMeters.hasError('min')) {
+        <div class="error">Die Größe der Unterkunft muss mindestens {{ minSquareMeters }} sein.</div>
+      }
+
+      @if (numberOfBeds.dirty && numberOfBeds.hasError('min')) {
+        <div class="error">Die Anzahl der Betten muss mindestens {{ minNumberOfBeds }} sein.</div>
+      }
+
+      @if (numberOfBedrooms.dirty && numberOfBedrooms.hasError('min')) {
+        <li class="errors-list-entry">Die Anzahl der Schlafzimmer muss
+          mindestens {{ minNumberOfBedrooms }} sein.
+        </li>
+      }
+
+      @if (numberOfLivingRooms.dirty && numberOfLivingRooms.hasError('min')) {
+        <div class="error">Die Anzahl der Wohnräume muss mindestens {{ minNumberOfLivingRooms }} sein.</div>
+      }
+
+      @if (numberOfMixedRooms.dirty && numberOfMixedRooms.hasError('min')) {
+        <div class="errors-list-entry">
+          Die Anzahl der Wohn- / Schlafräume muss mindestens {{ minNumberOfMixedRooms }} sein.
+        </div>
+      }
+
+      @if (numberOfShowers.dirty && numberOfBathtubs.hasError('min')) {
+        <div class="error">Die Anzahl der Badezimmer mit Dusche muss mindestens {{ minNumberOfShowers }} sein.</div>
+      }
+
+      @if (numberOfBathtubs.dirty && numberOfBathtubs.hasError('min')) {
+        <div class="error">Die Anzahl der Badezimmer mit Badewanne muss mindestens {{ minNumberOfBathtubs }} sein.</div>
+      }
+
+      @if (seasonAPrice.dirty && seasonAPrice.hasError('min')) {
+        <div class="error">Der Preis für Saison A muss mindestens {{ minSeasonAPrice }} sein.</div>
+      }
+
+      @if (seasonBPrice.dirty && seasonBPrice.hasError('min')) {
+        <div class="error">Der Preis für Saison B muss mindestens {{ minSeasonBPrice }} sein.</div>
+      }
+
+      @if (seasonCPrice.dirty && seasonCPrice.hasError('min')) {
+        <div class="error">Der Preis für Saison C muss mindestens {{ minSeasonCPrice }} sein.</div>
+      }
+    </div>
+
+    <div class="accommodation-form-buttons">
+      <button type="submit" [disabled]="formGroup.invalid" class="primary-button">Speichern</button>
+    </div>
+  </form>
+</div>
