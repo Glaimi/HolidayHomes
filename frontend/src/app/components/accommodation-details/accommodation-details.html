@@ -82,8 +82,22 @@
       }
 
       <div class="small-calendar">
-        <app-calendar [accommodationId]="accommodation.id"></app-calendar>
+        <app-calendar
+          [accommodationId]="accommodation.id"
+          (dateRangeChange)="onDateRangeSelected($event.start, $event.end)"
+        ></app-calendar>
       </div>
+      @if (datePriceList.length > 0) {
+        <b>Gesamtpreis für den Zeitraum: {{ totalPrice | currency:'EUR' }}</b>
+        <ul>
+          @for (item of datePriceList; track item.date) {
+            <li>
+              {{ item.date | date: 'dd.MM.yyyy' }}:
+              {{ item.price | currency:'EUR' }} ({{ item.season }})
+            </li>
+          }
+        </ul>
+      }
     </div>
 
     <div class="contact">

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, ViewEncapsulation, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, ViewEncapsulation, Input, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatCalendar } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -48,6 +48,8 @@ export class Calendar implements OnInit, OnChanges {
   public selectionError: string | null = null;
 
   @ViewChild(MatCalendar) matCalendar!: MatCalendar<Date>;
+
+  @Output() dateRangeChange = new EventEmitter<{ start: Date, end: Date }>();
 
   constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef) {
   }
@@ -124,6 +126,10 @@ export class Calendar implements OnInit, OnChanges {
 
       this.startDateSelected = start;
       this.endDateSelected = end;
+      // Emit Event wenn beide gesetzt
+      if (this.startDateSelected && this.endDateSelected) {
+        this.dateRangeChange.emit({ start: this.startDateSelected, end: this.endDateSelected });
+      }
     }
     this.refreshCalendar();
     this.cdr.detectChanges();
@@ -165,8 +171,8 @@ export class Calendar implements OnInit, OnChanges {
     // ... Rest remains the same
     const isBooked = this.bookedDates.some(
       d => d.getFullYear() === date.getFullYear() &&
-           d.getMonth() === date.getMonth() &&
-           d.getDate() === date.getDate()
+        d.getMonth() === date.getMonth() &&
+        d.getDate() === date.getDate()
     );
     if (isBooked) return 'booked-date';
 
