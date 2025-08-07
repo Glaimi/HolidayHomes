@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {AccommodationModel} from '../interfaces/accommodation-model';
+import {AccommodationModel, SeasonPrisingCalculate} from '../interfaces/accommodation-model';
 import { map } from 'rxjs/operators';
 import {ImageModel} from '../interfaces/image-model';
 import { BookingModel } from '../interfaces/booking-model';
@@ -28,4 +28,12 @@ export class AccommodationService {
     );
   }
 
+
+  // getSeasonPricing(id: number): Observable<SeasonPrisingCalculate> {
+  //   return this.http.get<SeasonPrisingCalculate>(`http://localhost:5152/api/SeasonPricing/${id}`);
+  // }
+
+  getSeasonPricing(id: number): Observable<SeasonPrisingCalculate[]> {
+    return this.http.get<SeasonPrisingCalculate[]>(`http://localhost:5152/api/SeasonPricing/${id}`);
+  }
 }

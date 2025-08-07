@@ -4,6 +4,8 @@ section {
   /* Füge zentrierte Ausrichtung und max-width hinzu: */
   width:100%;
   max-width: 1200px;
+  min-width: 1200px;
+  overflow-x: auto;;
   background: rgba(255,255,255,0.7); /* Optional, für bessere Lesbarkeit */
   border-radius: 8px; /* Optional */
   padding: 5rem 20rem;
@@ -49,6 +51,8 @@ p{
   section{
     font-size: 1.4rem;
     padding: 5rem 7rem;
+    min-width: 800px;
+    max-width: 800px;
 
   }.contact{
   font-size: 1.4rem;
@@ -66,6 +70,8 @@ p{
   section{
     font-size: 1.1rem;
     padding: 3rem 4rem;
+    min-width: 450px;
+    max-width: 450px;
   }
   h2{
     padding-bottom: 40px;
@@ -81,6 +87,8 @@ p{
   section{
     padding: 1rem 1rem;
     font-size: 0.9rem;
+    min-width: 250px;
+    max-width: 250px;
   }
   h2{
     font-family: "Lexend Exa", serif;
