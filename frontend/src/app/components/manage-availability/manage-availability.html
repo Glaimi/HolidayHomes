@@ -1,0 +1,71 @@
+<section class="manageAvailability">
+  <div class="searchfield">
+    <form (ngSubmit)="search()">
+      <input type="search"
+             name="accommodationSearch"
+             id="searchInput"
+             placeholder="Id oder Name eingeben"
+             [(ngModel)]="searchValue"
+             required>
+      <button type="submit" id="searchButton">Suchen</button>
+    </form>
+  </div>
+
+  <div class="content">
+    <div class="bookinglist">
+      @if (searchValue && accommodations.length === 0) {
+        <div [hidden]="!hasSearched">
+          <p>Keine Unterkünfte gefunden.</p>
+        </div>
+      } @else {
+        @for (acc of accommodations; track acc.id) {
+
+          <p class="text">{{ acc.name }} (ID: {{ acc.id }})</p>
+          <div class="scrolling-list">
+
+            <ul>
+
+              @if (bookings.length > 0) {
+                @for (booking of bookings; track booking.id) {
+                  <div class="accommodationName booking-row" [class.selected]="selectedBooking?.id === booking.id"
+                       (click)="selectBooking(booking)">
+                    <div class="bookingId">
+                      <li>Buchung ID: {{ booking.id }}</li>
+                    </div>
+                    <div>
+                      <li>Start: {{ booking.startDate }}</li>
+                      <li>Ende: {{ booking.endDate }}</li>
+                    </div>
+                  </div>
+                }
+              } @else if (searchValue) {
+                <li class="error">Keine Buchungen gefunden.</li>
+              }
+
+            </ul>
+          </div>
+        }
+      }
+    </div>
+
+    <div class="calendar">
+      <app-calendar
+        #calendarRef
+        [accommodationId]="selectedAccommodation?.id"
+        [highlightBooking]="selectedBooking">
+      </app-calendar>
+    </div>
+
+
+    <div class="buttonGroup">
+      <button type="button" id="bookingButton" (click)="belegen()">Belegen</button>
+      <button type="button" id="deleteButton" (click)="loeschen()" [disabled]="!selectedBooking">Löschen</button>
+    </div>
+
+  </div>
+
+
+  <div class="acceptErrorSection">
+
+  </div>
+</section>

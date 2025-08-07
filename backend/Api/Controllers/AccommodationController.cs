@@ -41,6 +41,40 @@ namespace Api.Controllers
 
             return Ok(accommodations);
         }
+
+
+
+        /// <summary>
+        /// Searches for a specific accommodation by Id or Name.
+        /// </summary>
+        /// <param name="id">Optional accommodation Id.</param>
+        /// <param name="name">Optional accommodation name.</param>
+        /// <returns>The matching accommodation or a NotFound response.</returns>
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchAccommodation([FromQuery] int? id, [FromQuery] string? name)
+        {
+            if (!id.HasValue && string.IsNullOrWhiteSpace(name))
+                return BadRequest("Bitte geben Sie entweder eine Id oder einen Namen an.");
+
+            if (id.HasValue)
+            {
+                var accommodationDto = await _accommodationService.GetAccommodationByIdAsync(id.Value);
+                if (accommodationDto == null)
+                    return NotFound($"Keine Unterkunft mit Id {id} gefunden.");
+                return Ok(accommodationDto);
+            }
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                var accommodationDto = await _accommodationService.GetAccommodationByNameAsync(name);
+                if (accommodationDto == null)
+                    return NotFound($"Keine Unterkunft mit Namen '{name}' gefunden.");
+
+                return Ok(accommodationDto);
+            }
+
+            return BadRequest("Ungültige Parameter.");
+        }
     }
 }
-
+ 

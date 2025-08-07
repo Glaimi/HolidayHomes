@@ -1,0 +1,117 @@
+.manageAvailability {
+  max-width: 1200px;
+  margin: 30px 30px;
+}
+.searchfield {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+#searchInput {
+  width: 300px;
+  height: 36px;
+  font-size: 1rem;
+  border-radius: .5rem;
+  display: inline-block;
+}
+#searchButton {
+  background-color: #007bff;
+  border: none;
+  padding: .5rem 2rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: .5rem;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 5px;
+}
+.content{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 1000px;
+  margin-top: 45px;
+}
+.bookinglist {
+  grid-area: list;
+  width: 300px;
+  margin-top: 5px;
+}
+.text{
+  margin-left: 2.500rem;
+  font-weight: bold;
+}
+.scrolling-list{
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 320px;
+  display: flex;
+}
+.scrolling-list li{
+  list-style-type: none;
+  margin-right: 1rem;
+  margin-top: 0.2rem;
+}
+.scrolling-list .accommodationName{
+  display: flex;
+  justify-content: center;
+}
+.calendar {
+  width: 300px;
+  margin-top: -1.9rem;
+}
+.buttonGroup{
+  margin-top: 150px;
+  width: 100px;
+  display: block;
+}
+#bookingButton {
+  background-color: #007bff;
+  border: none;
+  padding: .5rem 2rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: .5rem;
+  cursor: pointer;
+}
+#deleteButton {
+  background-color: #ca0606;
+  border: none;
+  padding: .5rem 2rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: .5rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+#acceptButton {
+  background-color: #007bff;
+  border: none;
+  padding: .5rem 14rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: .5rem;
+  cursor: pointer;
+  margin-top: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.booking-row.selected {
+  background: #1976d2;
+  color: #fff;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.booking-row {
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-bottom: 2px;
+}
+.booking-row:hover:not(.selected) {
+  background: #e3eafc;
+}

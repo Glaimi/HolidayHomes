@@ -32,6 +32,7 @@ import {ImageUpload} from '../image-upload/image-upload';
     ImageUpload
   ],
   templateUrl: './accommodation-form.html',
+  standalone: true,
   styleUrl: './accommodation-form.scss'
 })
 export class AccommodationForm implements OnInit {

@@ -146,4 +146,6 @@ public class Accommodation
     /// Collection of images associated with the accommodation (1:n).
     /// </summary>
     public List<Image> Images { get; set; } = new List<Image>();
+
+    public ICollection<Booking> Bookings { get; set; } = new List<Booking>(); // Collection navigation containing dependents
 }

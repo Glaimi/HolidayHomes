@@ -15,6 +15,7 @@ public class HolidayHomeDbContext : DbContext
     public DbSet<SanitaryType> SanitaryTypes { get; set; }
     public DbSet<Season> Seasons { get; set; }
     public DbSet<SeasonPricing> SeasonPricings { get; set; }
+    public DbSet<Booking> Bookings { get; set; }
 
     public HolidayHomeDbContext(DbContextOptions<HolidayHomeDbContext> options) : base(options) { }
 

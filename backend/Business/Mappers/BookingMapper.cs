@@ -1,0 +1,25 @@
+using Business.Dtos;
+using Data.Models;
+
+namespace Business.Mappers;
+
+public static class BookingMapper
+{
+    public static BookingDto ToDto(Booking entity)
+        => new BookingDto
+        {
+            Id = entity.Id,
+            StartDate = entity.StartDate,
+            EndDate = entity.EndDate,
+            AccommodationId = entity.AccommodationId,
+            AccommodationName = entity.Accommodation?.Name
+        };
+
+    public static Booking ToEntity(BookingDto dto)
+        => new Booking
+        {
+            StartDate = dto.StartDate,
+            EndDate = dto.EndDate,
+            AccommodationId = dto.AccommodationId
+        };
+}

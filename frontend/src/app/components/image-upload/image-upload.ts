@@ -4,6 +4,7 @@ import {Component, Input} from '@angular/core';
   selector: 'app-image-upload',
   imports: [],
   templateUrl: './image-upload.html',
+  standalone: true,
   styleUrl: './image-upload.scss'
 })
 export class ImageUpload {
