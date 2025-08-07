@@ -23,6 +23,8 @@ public class AccommodationRepository : IAccommodationRepository
         _dataContext.Accommodations.Add(accommodation);
         await _dataContext.SaveChangesAsync();
 
+
+
         return accommodation;
     }
 
