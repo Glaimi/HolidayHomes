@@ -14,7 +14,6 @@ import { Calendar } from '../calendar/calendar';
   imports: [
     AsyncPipe,
     DecimalPipe,
-    DatePipe,
     Calendar
   ],
   templateUrl: './accommodation-details.html',
