@@ -14,7 +14,7 @@
   <div class="content">
     <div class="bookinglist">
       @if (searchValue && accommodations.length === 0) {
-        <div  [hidden]="!hasSearched">
+        <div [hidden]="!hasSearched">
           <p>Keine Unterkünfte gefunden.</p>
         </div>
       } @else {
@@ -27,7 +27,8 @@
 
               @if (bookings.length > 0) {
                 @for (booking of bookings; track booking.id) {
-                  <div class="accommodationName booking-row" [class.selected]="selectedBooking?.id === booking.id" (click)="selectBooking(booking)">
+                  <div class="accommodationName booking-row" [class.selected]="selectedBooking?.id === booking.id"
+                       (click)="selectBooking(booking)">
                     <div class="bookingId">
                       <li>Buchung ID: {{ booking.id }}</li>
                     </div>
@@ -37,7 +38,7 @@
                     </div>
                   </div>
                 }
-              } @else if (searchValue){
+              } @else if (searchValue) {
                 <li class="error">Keine Buchungen gefunden.</li>
               }
 
@@ -67,4 +68,4 @@
   <div class="acceptErrorSection">
 
   </div>
-  </section>
+</section>
