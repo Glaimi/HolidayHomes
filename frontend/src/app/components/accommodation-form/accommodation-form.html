@@ -231,6 +231,8 @@
       </div>
     </fieldset>
 
+    <app-image-upload [onChangeCallback]="onFileSelected.bind(this)"></app-image-upload>
+
     <div class="errors">
       @if (landlordName.dirty && landlordName.hasError('emptyOrWhitespace')) {
         <div class="error">Vermietername darf nicht leer sein.</div>

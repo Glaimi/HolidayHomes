@@ -22,12 +22,14 @@ import {Router} from '@angular/router';
 import {AccommodationService} from '../../services/accommodation-service';
 import {SanitaryInfoModel} from '../../interfaces/sanitary-info-model';
 import {AddSeasonPricingDto} from '../../interfaces/add-season-pricing-dto';
+import {ImageUpload} from '../image-upload/image-upload';
 
 @Component({
   selector: 'app-accommodation-form',
   imports: [
     AsyncPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageUpload
   ],
   templateUrl: './accommodation-form.html',
   styleUrl: './accommodation-form.scss'
@@ -89,92 +91,8 @@ export class AccommodationForm implements OnInit {
     isParkingAvailable: new FormControl(false),
     isSaunaAvailable: new FormControl(false),
     hints: new FormControl(''),
-    images: new FormControl(null)
+    image: new FormControl(null)
   });
-
-  ngOnInit(): void {
-    this.accommodationTypes$ = this.accommodationTypeService.getAllAccommodationTypes();
-    this.kitchenTypes$ = this.kitchenTypeService.getAllKitchenTypes();
-    this.seasons$ = this.seasonService.getAllSeasons();
-  }
-
-  onSubmit(): void {
-    if (this.formGroup.valid) {
-      // After the season pricings have been created, build the DTO and send it to the API
-      this.getSeasonPricings().subscribe(seasonPricings => {
-        const accommodationDto = {
-          accommodationTypeId: this.formGroup.get('accommodationType')?.value,
-          kitchenTypeId: this.formGroup.get('kitchenType')?.value,
-          name: this.formGroup.get('accommodationName')?.value,
-          street: this.formGroup.get('street')?.value,
-          city: this.formGroup.get('city')?.value,
-          hints: this.formGroup.get('hints')?.value,
-          landLordName: this.formGroup.get('landlordName')?.value,
-          squareMeter: this.formGroup.get('squareMeters')?.value,
-          numberOfBedrooms: this.formGroup.get('numberOfBedrooms')?.value,
-          numberOfBeds: this.formGroup.get('numberOfBeds')?.value,
-          numberOfMixedRooms: this.formGroup.get('numberOfMixedRooms')?.value,
-          numberOfLivingRooms: this.formGroup.get('numberOfLivingRooms')?.value,
-          isDogAllowed: this.formGroup.get('isDogsAllowed')?.value,
-          isWifiAvailable: this.formGroup.get('isWifiAvailable')?.value,
-          isNonSmoking: this.formGroup.get('isNonSmoking')?.value,
-          isTelevisionAvailable: this.formGroup.get('isTelevisionAvailable')?.value,
-          isWashingMachineAvailable: this.formGroup.get('isWashingMachineAvailable')?.value,
-          isParkingAvailable: this.formGroup.get('isParkingAvailable')?.value,
-          isSaunaAvailable: this.formGroup.get('isSaunaAvailable')?.value,
-          bedSheetsAvailability: this.formGroup.get('bedsheetsAvailability')?.value,
-          shortTripAvailability: this.formGroup.get('shortTripAvailability')?.value,
-          towelsAvailability: this.formGroup.get('towelsAvailability')?.value,
-          accommodationSanitaryInfos: this.getSanitaryInfos(),
-          seasonPricings
-        };
-
-        this.accommodationService.saveAccommodation(accommodationDto).subscribe((accommodation) => {
-          console.log("Abgesendet!");
-        })
-      })
-    } else {
-      console.warn('Unvollständige Formulardaten');
-    }
-  }
-
-  getSanitaryInfos(): SanitaryInfoModel[] {
-    return [
-      {sanitaryTypeId: 1, amount: this.formGroup.get('numberOfShowers')?.value ?? 0},
-      {sanitaryTypeId: 2, amount: this.formGroup.get('numberOfBathtubs')?.value ?? 0}
-    ];
-  }
-
-  getSeasonPricings(): Observable<AddSeasonPricingDto[]> {
-    return this.seasons$.pipe(map(seasons => seasons.map(season => {
-      if (season.title === 'A') {
-        return {
-          seasonId: season.id,
-          isBookable: this.formGroup.get('seasonABookable')?.value,
-          price: this.formGroup.get('seasonAPrice')?.value
-        }
-      } else if (season.title === 'B') {
-        return {
-          seasonId: season.id,
-          isBookable: this.formGroup.get('seasonBBookable')?.value,
-          price: this.formGroup.get('seasonBPrice')?.value
-        }
-      } else {
-        return {
-          seasonId: season.id,
-          isBookable: this.formGroup.get('seasonCBookable')?.value,
-          price: this.formGroup.get('seasonCPrice')?.value
-        }
-      }
-    })));
-  }
-
-  // Validates that the field is not empty and doesn't contain whitespace only.
-  notEmptyOrWhitespace(control: AbstractControl): ValidationErrors | null {
-    const isValid: boolean = control.value.trim().length > 0;
-
-    return isValid ? null : {emptyOrWhitespace: {value: control.value}}
-  }
 
   get landlordName() {
     return this.formGroup.get('landlordName')!;
@@ -230,5 +148,101 @@ export class AccommodationForm implements OnInit {
 
   get seasonCPrice() {
     return this.formGroup.get('seasonCPrice')!;
+  }
+
+  ngOnInit(): void {
+    this.accommodationTypes$ = this.accommodationTypeService.getAllAccommodationTypes();
+    this.kitchenTypes$ = this.kitchenTypeService.getAllKitchenTypes();
+    this.seasons$ = this.seasonService.getAllSeasons();
+  }
+
+  onFileSelected(files: FileList): void {
+    console.log(files);
+
+    this.formGroup.patchValue({image: files[0]});
+  }
+
+  onSubmit(): void {
+    if (this.formGroup.valid) {
+      // After the season pricings have been created, build the DTO and send it to the API
+      this.getSeasonPricings().subscribe(seasonPricings => {
+        const accommodationDto = {
+          accommodationTypeId: this.formGroup.get('accommodationType')?.value,
+          kitchenTypeId: this.formGroup.get('kitchenType')?.value,
+          name: this.formGroup.get('accommodationName')?.value,
+          street: this.formGroup.get('street')?.value,
+          city: this.formGroup.get('city')?.value,
+          hints: this.formGroup.get('hints')?.value,
+          landLordName: this.formGroup.get('landlordName')?.value,
+          squareMeter: this.formGroup.get('squareMeters')?.value,
+          numberOfBedrooms: this.formGroup.get('numberOfBedrooms')?.value,
+          numberOfBeds: this.formGroup.get('numberOfBeds')?.value,
+          numberOfMixedRooms: this.formGroup.get('numberOfMixedRooms')?.value,
+          numberOfLivingRooms: this.formGroup.get('numberOfLivingRooms')?.value,
+          isDogAllowed: this.formGroup.get('isDogsAllowed')?.value,
+          isWifiAvailable: this.formGroup.get('isWifiAvailable')?.value,
+          isNonSmoking: this.formGroup.get('isNonSmoking')?.value,
+          isTelevisionAvailable: this.formGroup.get('isTelevisionAvailable')?.value,
+          isWashingMachineAvailable: this.formGroup.get('isWashingMachineAvailable')?.value,
+          isParkingAvailable: this.formGroup.get('isParkingAvailable')?.value,
+          isSaunaAvailable: this.formGroup.get('isSaunaAvailable')?.value,
+          bedSheetsAvailability: this.formGroup.get('bedsheetsAvailability')?.value,
+          shortTripAvailability: this.formGroup.get('shortTripAvailability')?.value,
+          towelsAvailability: this.formGroup.get('towelsAvailability')?.value,
+          accommodationSanitaryInfos: this.getSanitaryInfos(),
+          seasonPricings
+        };
+
+        this.accommodationService.saveAccommodation(accommodationDto).subscribe((accommodation) => {
+          const imageFormData: FormData = new FormData();
+
+          imageFormData.append("file", this.formGroup.get('image')!.value);
+
+          this.accommodationService
+            .uploadAccommodationImage(accommodation.id, imageFormData)
+            .subscribe(() => console.log("Abgesendet!"));
+        });
+      })
+    } else {
+      console.warn('Unvollständige Formulardaten');
+    }
+  }
+
+  getSanitaryInfos(): SanitaryInfoModel[] {
+    return [
+      {sanitaryTypeId: 1, amount: this.formGroup.get('numberOfShowers')?.value ?? 0},
+      {sanitaryTypeId: 2, amount: this.formGroup.get('numberOfBathtubs')?.value ?? 0}
+    ];
+  }
+
+  getSeasonPricings(): Observable<AddSeasonPricingDto[]> {
+    return this.seasons$.pipe(map(seasons => seasons.map(season => {
+      if (season.title === 'A') {
+        return {
+          seasonId: season.id,
+          isBookable: this.formGroup.get('seasonABookable')?.value,
+          price: this.formGroup.get('seasonAPrice')?.value
+        }
+      } else if (season.title === 'B') {
+        return {
+          seasonId: season.id,
+          isBookable: this.formGroup.get('seasonBBookable')?.value,
+          price: this.formGroup.get('seasonBPrice')?.value
+        }
+      } else {
+        return {
+          seasonId: season.id,
+          isBookable: this.formGroup.get('seasonCBookable')?.value,
+          price: this.formGroup.get('seasonCPrice')?.value
+        }
+      }
+    })));
+  }
+
+  // Validates that the field is not empty and doesn't contain whitespace only.
+  notEmptyOrWhitespace(control: AbstractControl): ValidationErrors | null {
+    const isValid: boolean = control.value.trim().length > 0;
+
+    return isValid ? null : {emptyOrWhitespace: {value: control.value}}
   }
 }
