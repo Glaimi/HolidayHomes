@@ -20,7 +20,7 @@ import { Calendar } from '../calendar/calendar';
   standalone: true,
   styleUrl: './accommodation-details.scss'
 })
-export class AccommodationDetails implements OnInit{
+export class AccommodationDetails {
   // Inject the ActivatedRoute to access route parameters.
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   // Inject the AccommodationService to fetch accommodation data.
@@ -36,6 +36,8 @@ export class AccommodationDetails implements OnInit{
   // Store the accommodation ID from route parameters.
   accommodationId:number;
 
+  // seasonPricingCurrent$: Observable<SeasonPrisingCalculate[]>;
+
   //SeasonPrisingCalculate$: Observable<SeasonPrisingCalculate[]>;
 
   seasonPricingData: SeasonPricingCalculate[] = [];
@@ -46,6 +48,14 @@ export class AccommodationDetails implements OnInit{
   selectedEndMonth?: number;
 
   constructor() {
+    // Get the accommodation ID from route parameters.
+    this.accommodationId = this.route.snapshot.params['id'];
+    // Fetch accommodation details using the AccommodationService.
+    this.accommodationDetails$ = this.accommodationService.getAccommodationById(this.accommodationId);
+    // Fetch accommodation images using the AccommodationService.
+    this.accommodationImages$ = this.accommodationService.getAccommodationIdImage(this.accommodationId);
+    // this.seasonPricingCurrent$ = this.accommodationService.getSeasonPricing(this.accommodationId);
+
     // Get the accommodation ID from route parameters.
     this.accommodationId = this.route.snapshot.params['id'];
     // Fetch accommodation details using the AccommodationService.

@@ -1,13 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component, inject,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, ViewEncapsulation, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatCalendar } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -61,7 +52,7 @@ export class Calendar implements OnInit, OnChanges {
 
   @ViewChild(MatCalendar) matCalendar!: MatCalendar<Date>;
 
-  constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef, private accommodationService: AccommodationService) {
+  constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -139,49 +130,9 @@ export class Calendar implements OnInit, OnChanges {
 
       this.startDateSelected = start;
       this.endDateSelected = end;
-
-      // ich habe hier auskommentiert, weil diese kode funktionierte wie unten
-      // this.accommodationService.getCalculatedPrice(this.accommodationId, this.startDateSelected, this.endDateSelected).subscribe(
-      //   {
-      //     next: (result: number) => {
-      //       console.log(result)
-      //       this.totalPrice = result;
-      //     }
-      //   }
-      // );
     }
     this.refreshCalendar();
     this.cdr.detectChanges();
-    // if (this.accommodationId && this.startDateSelected && this.endDateSelected) {
-    //   this.accommodationService
-    //     .getCalculatedPrice(this.accommodationId, this.startDateSelected, this.endDateSelected).subscribe({
-    //       next: price => {
-    //         this.totalPrice = price;
-    //         console.log(price)
-    //
-    //         this.cdr.detectChanges();
-    //       },
-    //       error: err => {
-    //         console.error('Preisberechnung fehlgeschlagen', err);
-    //       }
-    //     });
-    // }
-    if (this.accommodationId && this.startDateSelected && this.endDateSelected) {
-      const formattedStart = this.startDateSelected.toLocaleDateString('sv-SE'); // yyyy-MM-dd
-      const formattedEnd = this.endDateSelected.toLocaleDateString('sv-SE');
-
-      this.accommodationService
-        .getCalculatedPrice(this.accommodationId, formattedStart, formattedEnd)
-        .subscribe({
-          next: price => {
-            this.totalPrice = price;
-            this.cdr.detectChanges();
-          },
-          error: err => {
-            console.error('Preisberechnung fehlgeschlagen', err);
-          }
-        });
-    }
   }
 
   resetSelection() {
@@ -220,8 +171,8 @@ export class Calendar implements OnInit, OnChanges {
     // ... Rest remains the same
     const isBooked = this.bookedDates.some(
       d => d.getFullYear() === date.getFullYear() &&
-        d.getMonth() === date.getMonth() &&
-        d.getDate() === date.getDate()
+           d.getMonth() === date.getMonth() &&
+           d.getDate() === date.getDate()
     );
     if (isBooked) return 'booked-date';
 
