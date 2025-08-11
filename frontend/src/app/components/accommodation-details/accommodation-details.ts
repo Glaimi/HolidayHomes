@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AccommodationService} from '../../services/accommodation-service';
 import {BookingService} from '../../services/booking-service';
-import {AccommodationModel} from '../../interfaces/accommodation-model';
+import {AccommodationModel, SeasonPricingCalculate} from '../../interfaces/accommodation-model';
 import {AsyncPipe, DatePipe, DecimalPipe} from '@angular/common';
 import {ImageModel} from '../../interfaces/image-model';
 import { Calendar } from '../calendar/calendar';
@@ -20,7 +20,7 @@ import { Calendar } from '../calendar/calendar';
   standalone: true,
   styleUrl: './accommodation-details.scss'
 })
-export class AccommodationDetails {
+export class AccommodationDetails implements OnInit{
   // Inject the ActivatedRoute to access route parameters.
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   // Inject the AccommodationService to fetch accommodation data.
@@ -36,7 +36,14 @@ export class AccommodationDetails {
   // Store the accommodation ID from route parameters.
   accommodationId:number;
 
-  // seasonPricingCurrent$: Observable<SeasonPrisingCalculate[]>;
+  //SeasonPrisingCalculate$: Observable<SeasonPrisingCalculate[]>;
+
+  seasonPricingData: SeasonPricingCalculate[] = [];
+
+  selectedStartDay?: number;
+  selectedStartMonth?: number;
+  selectedEndDay?: number;
+  selectedEndMonth?: number;
 
   constructor() {
     // Get the accommodation ID from route parameters.
@@ -45,9 +52,21 @@ export class AccommodationDetails {
     this.accommodationDetails$ = this.accommodationService.getAccommodationById(this.accommodationId);
     // Fetch accommodation images using the AccommodationService.
     this.accommodationImages$ = this.accommodationService.getAccommodationIdImage(this.accommodationId);
-    // this.seasonPricingCurrent$ = this.accommodationService.getSeasonPricing(this.accommodationId);
+    //this.SeasonPrisingCalculate$ = this.accommodationService.getCalculatedPrice(this.accommodationId);
 
   }
+
+  ngOnInit(): void {
+    // this.accommodationService.getCalculatedPrice(this.accommodationId)
+    //   .subscribe(data => this.seasonPricingData = data);
+  }
+  onDateRangeSelected(range: {startDay: number, startMonth: number, endDay: number, endMonth: number}) {
+    this.selectedStartDay = range.startDay;
+    this.selectedStartMonth = range.startMonth;
+    this.selectedEndDay = range.endDay;
+    this.selectedEndMonth = range.endMonth;
+  }
+
   calculateNumberOfNights(
     startDay: number | undefined,
     startMonth: number | undefined,
@@ -72,15 +91,17 @@ export class AccommodationDetails {
     return nights;
   }
 
-  calculateTotal(pricePerNight: number | undefined, startDay: number | undefined, startMonth: number | undefined, endDay: number | undefined, endMonth: number | undefined): number {
-    // If any required parameter is undefined, return 0
-    if (pricePerNight === undefined || startDay === undefined || startMonth === undefined ||
-      endDay === undefined || endMonth === undefined) {
-      return 0;
-    }
-    const nights = this.calculateNumberOfNights(startDay, startMonth, endDay, endMonth);
-    const total = nights * pricePerNight;
-    return total * 1.19; // inkl. MwSt (19%)
+  get totalNights(): number {
+    return this.calculateNumberOfNights(
+      this.selectedStartDay,
+      this.selectedStartMonth,
+      this.selectedEndDay,
+      this.selectedEndMonth
+    );
   }
 
+
 }
+
+
+

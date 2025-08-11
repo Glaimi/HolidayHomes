@@ -13,6 +13,11 @@ public class SeasonPricingRepository
         _dataContext = dataContext;
     }
 
+    public async Task<IEnumerable<object>> GetByAccommodationIdAsync(int accommodationId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<SeasonPricing>> GetSeasonPricingsByAccommodationIdAsync(int accommodationId)
     {
         return await _dataContext.SeasonPricings

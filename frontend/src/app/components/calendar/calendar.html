@@ -10,7 +10,18 @@
 </div>
 
 <div class="date-selection-info">
-  <p>Startdatum: {{ startDateSelected | date }}</p>
-  <p>Enddatum: {{ endDateSelected | date }}</p>
+  <p>Startdatum : {{ startDateSelected | date }}</p>
+  <p>Enddatum : {{ endDateSelected | date }}</p>
+
   <button (click)="resetSelection()">Auswahl zurücksetzen</button>
 </div>
+<div>
+  <br/>
+  <p class="total-price">
+    Gesamtpreis : {{totalPrice | number: '1.2-2':'de-DE'}}  € (inkl. MwSt.) bei {{ calculateSelectedDaysInternal() }} Nächten
+  </p>
+</div>
+
+
+
+

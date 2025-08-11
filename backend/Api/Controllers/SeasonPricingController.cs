@@ -34,8 +34,35 @@ namespace Api.Controllers
             {
                 return BadRequest("Ungültiges Datumsformat. Bitte yyyy-MM-ddd verwenden.");
             }
-            var price = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(accommodationId, dateTime);
+            var price = await _seasonPricingService.GetCurrentPriceByAccommodationIdAsync(accommodationId,dateTime);
             return Ok(price);
         }
+
+
+        [HttpGet("{accommodationId}/calculated")]
+        public async Task<ActionResult> GetCalculatedPrice(
+        int accommodationId,
+        [FromQuery] string startDate,
+        [FromQuery] string endDate)
+        {
+            if (!DateTime.TryParseExact(startDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var start))
+            {
+                return BadRequest("Ungültiges Startdatum. Bitte Format yyyy-MM-dd verwenden.");
+            }
+
+            if (!DateTime.TryParseExact(endDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var end))
+            {
+                return BadRequest("Ungültiges Enddatum. Bitte Format yyyy-MM-dd verwenden.");
+            }
+
+            if (end < start)
+            {
+                return BadRequest("Enddatum darf nicht vor dem Startdatum liegen.");
+            }
+
+            var price = await _seasonPricingService.GetTotalPrice(accommodationId, start, end);
+            return Ok(price);
+        }
+
     }
 }

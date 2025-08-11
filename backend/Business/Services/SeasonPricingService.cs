@@ -61,4 +61,55 @@ public class SeasonPricingService
 
         return currentSeasonPricing.Price;
     }
+
+    public async Task<double> GetTotalPrice(int accommodationId, DateTime startDate, DateTime endDate)
+    {
+        if (endDate < startDate)
+            throw new ArgumentException("Enddatum darf nicht vor dem Startdatum liegen.");
+
+        // Preise abrufen
+        List<SeasonPricing> seasonPricings =
+            await _seasonPricingRepository.GetSeasonPricingsByAccommodationIdAsync(accommodationId);
+
+        if (seasonPricings.Count < 1)
+        {
+            return 0.0;
+        }
+
+        double totalPrice = 0.0;
+
+        for (DateTime date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
+        {
+            // Preis für das aktuelle Datum ermitteln
+            SeasonPricing? currentPricing = seasonPricings.Find(sp =>
+            {
+                DateTime seasonStart = new DateTime(date.Year, sp.Season.StartMonth, sp.Season.StartDay);
+                DateTime seasonEnd = new DateTime(date.Year, sp.Season.EndMonth, sp.Season.EndDay);
+
+                // Berücksichtige auch Saisons, die über den Jahreswechsel gehen (z. B. 15.12. – 10.01.)
+                if (seasonEnd < seasonStart)
+                {
+                    seasonEnd = seasonEnd.AddYears(1);
+                    if (date.Month == 1) seasonStart = seasonStart.AddYears(-1);
+                }
+
+                return date >= seasonStart && date <= seasonEnd;
+            });
+
+            if (currentPricing != null)
+            {
+                totalPrice += currentPricing.Price;
+            }
+            else
+            {
+                // Optional: Entweder 0 berechnen oder Exception werfen
+                // totalPrice += 0;
+                // Oder: throw new Exception($"Keine Preisinformation für Datum {date:yyyy-MM-dd} gefunden.");
+            }
+        }
+
+        return totalPrice;
+    }
+
+
 }

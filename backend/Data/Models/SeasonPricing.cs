@@ -1,7 +1,14 @@
-﻿namespace Data.Models;
+﻿
+namespace Data.Models;
 
 public class SeasonPricing
 {
+    public readonly TimeOnly EndMonth;
+    public readonly DateTimeKind EndDay;
+    public readonly DateTimeKind StartDay;
+    public readonly TimeOnly StartMonth;
+    public readonly string? SeasonTitle;
+
     /// <summary>
     /// Price for the accommodation during the specific season.
     /// </summary>

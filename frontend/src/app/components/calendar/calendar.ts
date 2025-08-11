@@ -1,14 +1,24 @@
-import { Component, OnInit, OnChanges, SimpleChanges, ViewEncapsulation, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component, inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatCalendar } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import {DatePipe, DecimalPipe} from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BookingService } from '../../services/booking-service';
 import { BookingModel } from '../../interfaces/booking-model';
+import {AccommodationService} from '../../services/accommodation-service';
 
 const now = new Date();
 
@@ -21,7 +31,8 @@ const now = new Date();
     DatePipe,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    DecimalPipe
   ],
   templateUrl: './calendar.html',
   standalone: true,
@@ -46,10 +57,11 @@ export class Calendar implements OnInit, OnChanges {
 
   // Error property for the template
   public selectionError: string | null = null;
+  public totalPrice: number | null = null;
 
   @ViewChild(MatCalendar) matCalendar!: MatCalendar<Date>;
 
-  constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef) {
+  constructor(private http: HttpClient, private bookingService: BookingService, private cdr: ChangeDetectorRef, private accommodationService: AccommodationService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -91,8 +103,11 @@ export class Calendar implements OnInit, OnChanges {
     this.loadBookings();
   }
 
+
   onDateSelected(date: Date | null) {
     this.selectionError = null;
+    this.totalPrice = null;
+
     if (!date) return;
 
     // Always start a new selection if the end date is set (also after reload)
@@ -124,9 +139,49 @@ export class Calendar implements OnInit, OnChanges {
 
       this.startDateSelected = start;
       this.endDateSelected = end;
+
+      // ich habe hier auskommentiert, weil diese kode funktionierte wie unten
+      // this.accommodationService.getCalculatedPrice(this.accommodationId, this.startDateSelected, this.endDateSelected).subscribe(
+      //   {
+      //     next: (result: number) => {
+      //       console.log(result)
+      //       this.totalPrice = result;
+      //     }
+      //   }
+      // );
     }
     this.refreshCalendar();
     this.cdr.detectChanges();
+    // if (this.accommodationId && this.startDateSelected && this.endDateSelected) {
+    //   this.accommodationService
+    //     .getCalculatedPrice(this.accommodationId, this.startDateSelected, this.endDateSelected).subscribe({
+    //       next: price => {
+    //         this.totalPrice = price;
+    //         console.log(price)
+    //
+    //         this.cdr.detectChanges();
+    //       },
+    //       error: err => {
+    //         console.error('Preisberechnung fehlgeschlagen', err);
+    //       }
+    //     });
+    // }
+    if (this.accommodationId && this.startDateSelected && this.endDateSelected) {
+      const formattedStart = this.startDateSelected.toLocaleDateString('sv-SE'); // yyyy-MM-dd
+      const formattedEnd = this.endDateSelected.toLocaleDateString('sv-SE');
+
+      this.accommodationService
+        .getCalculatedPrice(this.accommodationId, formattedStart, formattedEnd)
+        .subscribe({
+          next: price => {
+            this.totalPrice = price;
+            this.cdr.detectChanges();
+          },
+          error: err => {
+            console.error('Preisberechnung fehlgeschlagen', err);
+          }
+        });
+    }
   }
 
   resetSelection() {
@@ -165,8 +220,8 @@ export class Calendar implements OnInit, OnChanges {
     // ... Rest remains the same
     const isBooked = this.bookedDates.some(
       d => d.getFullYear() === date.getFullYear() &&
-           d.getMonth() === date.getMonth() &&
-           d.getDate() === date.getDate()
+        d.getMonth() === date.getMonth() &&
+        d.getDate() === date.getDate()
     );
     if (isBooked) return 'booked-date';
 
@@ -187,4 +242,19 @@ export class Calendar implements OnInit, OnChanges {
       this.matCalendar.updateTodaysDate();
     }
   }
+
+  // Calculate the number of selected days
+  calculateSelectedDaysInternal(): number {
+    if (!this.startDateSelected || !this.endDateSelected) {
+      return 0;
+    }
+
+    const start = new Date(this.startDateSelected);
+    const end = new Date(this.endDateSelected);
+    const diffInMs = end.getTime() - start.getTime();
+    const days = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    return days +1;
+  }
+
 }
+
